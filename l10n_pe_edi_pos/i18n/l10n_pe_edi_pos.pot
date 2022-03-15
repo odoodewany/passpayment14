@@ -1,0 +1,464 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_pe_edi_pos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-26 00:22+0000\n"
+"PO-Revision-Date: 2021-02-26 00:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid ", is not valid."
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid ". Visit"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Follow the instructions"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "<i class=\"fa fa-fw fa-arrow-right\"/>Request an account"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid ""
+"<i title=\"Send now\" role=\"img\" aria-label=\"Send now\" class=\"fa fa-fw "
+"fa-cloud-upload\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Activation</span>"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">Send invoices automatically</span>\n"
+"                            <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" role=\"img\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid ""
+"<span class=\"o_form_label\">Send your electronic invoices by PSE / OSE</span>\n"
+"                        <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" role=\"img\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid "ALERT"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "AMOUNT IN LETTERS:"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_config__invoice_journal_ids
+msgid "Accounting Invoice Journal"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.pos_config_view_form
+msgid "Auto check to button Invoice on POS Payment Screen"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_config__auto_check_invoice
+msgid "Auto create Invoice"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "CHANGE"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "CLIENT"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "CURRENCY:"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "Choose the period to send invoices"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "Choose your PSE / OSE provider"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_config__default_partner_id
+msgid "Client by default"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "Configure Journals for Electronic invoices"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "Configure Shops and Tokens"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model,name:l10n_pe_edi_pos.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "DATE DUE:"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "DATE INVOICE:"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "DESCRIPTION"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "DISCOUNT"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "DNI :"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.pos_config_view_form
+msgid "Default client"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_config__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_order__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/ClientListScreen/ClientDetailsEdit.xml:0
+#, python-format
+msgid "Doc. type"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_config__l10n_pe_edi_send_invoice
+msgid "Electronic Invoicing"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.pos_config_view_form
+msgid "Electronic invoicing"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_config__id
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_order__id
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "IGV 18%"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "IGV:"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "Interval"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Payment/PaymentScreen.xml:0
+#, python-format
+msgid "Invoice"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Payment/PaymentScreen.xml:0
+#, python-format
+msgid "Invoice Document Type"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.pos_config_view_form
+msgid "Invoice Journals"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,help:l10n_pe_edi_pos.field_pos_config__invoice_journal_ids
+msgid "Invoice journals for Electronic invoices."
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_order__invoice_journal_id
+msgid "Journal account"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_config____last_update
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_pos_order____last_update
+#: model:ir.model.fields,field_description:l10n_pe_edi_pos.field_res_partner____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "Logo"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "Next Run"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/ClientListScreen/ClientDetailsEdit.xml:0
+#, python-format
+msgid "None"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "P.U."
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "PAYMENT METHOD :"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.res_config_settings_view_form
+msgid "Peruvian Electronic Invoicing"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid "Please select a Document type."
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model,name:l10n_pe_edi_pos.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model,name:l10n_pe_edi_pos.model_pos_order
+msgid "Point of Sale Orders"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "Printed representation of"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "QTY."
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "RUC :"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/ClientListScreen/ClientDetailsEdit.xml:0
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/ClientListScreen/ClientListScreen.xml:0
+#, python-format
+msgid "RUC/DNI"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "RUC:"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Receipt/ElectronicInvoice.js:0
+#, python-format
+msgid "Remaining unsynced orders"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "SUB-TOTAL"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid "Select the Identification type of the client: name"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.pos_config_view_form
+msgid ""
+"Select the client by default for Electronic invoices. It could bue used for "
+"Documents type 'Boleta'"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_pe_edi_pos.pos_config_view_form
+msgid "Select the journals for Electronic invoices"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "Served by"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "TOTAL"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/xml/Screens/Receipt/OdooFactReceipt.xml:0
+#, python-format
+msgid "TOTAL TO PAY"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid "The DNI of the client: "
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid "The RUC  of the client: "
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid "The RUC of the client: "
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Payment/PaymentScreen.js:0
+#, python-format
+msgid "The document type 'Factura' is valid only for clients with valid RUC."
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#. openerp-web
+#: code:addons/l10n_pe_edi_pos/static/src/js/Screens/Receipt/ElectronicInvoice.js:0
+#, python-format
+msgid "There are unsynced orders. Do you want to sync these orders?"
+msgstr ""
+
+#. module: l10n_pe_edi_pos
+#: model:ir.model.fields,help:l10n_pe_edi_pos.field_pos_config__default_partner_id
+msgid "This client will be set by default in the order"
+msgstr ""
