@@ -44,22 +44,22 @@ def _create_journal_debit(env):
                     'sequence_override_regex': r'^(?P<prefix1>.*?)(?P<seq>\d*)(?P<suffix>\D*?)$',
                     })
     # Create journal for Debit note
-    company_with_debit_note_journal = env['account.journal'].search([('l10n_latam_document_type_id','=',env.ref('l10n_pe_edi_odoofact.document_type08').id)]).mapped('company_id')
-    company_without_debit_note_journal = company_ids - company_with_debit_note_journal
-    for company in company_without_debit_note_journal:
-        env['account.journal'].create({
-                        'name': _('Debit note'), 
-                        'code': _('DEB'),
-                        'type': 'sale',
-                        'l10n_pe_edi_is_einvoice': True, 
-                        'l10n_latam_document_type_id': env.ref('l10n_pe_edi_odoofact.document_type08').id,
-                        'l10n_pe_edi_shop_id': company.l10n_pe_edi_shop_ids and company.l10n_pe_edi_shop_ids[0].id or False,
-                        'sequence_override_regex': r'^(?P<prefix1>.*?)(?P<seq>\d*)(?P<suffix>\D*?)$',
-                        'sequence': 6,
-                        'company_id': company.id,
-                        'show_on_dashboard': True,                        
-                        'color': 11,
-                    })
+    # company_with_debit_note_journal = env['account.journal'].search([('l10n_latam_document_type_id','=',env.ref('l10n_pe_edi_odoofact.document_type08').id)]).mapped('company_id')
+    # company_without_debit_note_journal = company_ids - company_with_debit_note_journal
+    # for company in company_without_debit_note_journal:
+    #     env['account.journal'].create({
+    #                     'name': _('Debit note'), 
+    #                     'code': _('DEB'),
+    #                     'type': 'sale',
+    #                     'l10n_pe_edi_is_einvoice': True, 
+    #                     'l10n_latam_document_type_id': env.ref('l10n_pe_edi_odoofact.document_type08').id,
+    #                     'l10n_pe_edi_shop_id': company.l10n_pe_edi_shop_ids and company.l10n_pe_edi_shop_ids[0].id or False,
+    #                     'sequence_override_regex': r'^(?P<prefix1>.*?)(?P<seq>\d*)(?P<suffix>\D*?)$',
+    #                     'sequence': 6,
+    #                     'company_id': company.id,
+    #                     'show_on_dashboard': True,                        
+    #                     'color': 11,
+    #                 })
 
 def _l10n_pe_edi_odoofact_init(cr, registry):
     env = api.Environment(cr, SUPERUSER_ID, {})
