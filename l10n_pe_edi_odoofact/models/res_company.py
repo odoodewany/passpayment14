@@ -16,7 +16,7 @@ import paramiko
 
 from odoo.fields import Date, Datetime
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError, UserError, AccessError
+from odoo.exceptions import ValidationError, UserError, AccessError, Warning
 
 _logger = logging.getLogger(__name__)
 
