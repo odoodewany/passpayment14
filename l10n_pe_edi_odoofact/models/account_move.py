@@ -480,15 +480,10 @@ class AccountMove(models.Model):
 			# sftp.put(fullpath, os.path.join(path_to_write_to, title))
 			if os.path.isfile(fullpath):
 				try:
-					sftp.stat(os.path.join(path_to_write_to, title))
-					_logger.debug('File %s already exists on the remote FTP Server ------ skipped', fullpath)
-				# This means the file does not exist (remote) yet!
-				except IOError:
-					try:
-						sftp.put(fullpath, os.path.join(path_to_write_to, title))
-						_logger.info('Copying File % s------ success', fullpath)
-					except Exception as err:
-						_logger.critical('We couldn\'t write the file to the remote server. Error: %s', str(err))
+					sftp.put(fullpath, os.path.join(path_to_write_to, title))
+					_logger.info('Copying File % s------ success', fullpath)
+				except Exception as err:
+					_logger.critical('We couldn\'t write the file to the remote server. Error: %s', str(err))
 			# Close the SFTP session.
 			sftp.close()
 			s.close()
@@ -551,8 +546,9 @@ class AccountMove(models.Model):
 				_logger.critical('Error connecting to remote server! Error: %s', str(error))
 			sftp.chdir(path_to_write_to)
 			try:
-				sftp.get(os.path.join(path_to_write_to, title), path_file_sent)
-				_logger.info('Copying File % s------ success', path_file_sent)
+				if sftp.stat(os.path.join(path_to_write_to, title)):
+					sftp.get(os.path.join(path_to_write_to, title), path_file_sent)
+					_logger.info('Copying File % s------ success', path_file_sent)
 			except Exception as err:
 				_logger.critical('We couldn\'t write the file from the remote server. Error: %s', str(err))
 			sftp.close()

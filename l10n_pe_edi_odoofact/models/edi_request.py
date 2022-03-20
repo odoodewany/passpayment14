@@ -155,8 +155,9 @@ class EdiRequest(models.Model):
 				_logger.critical('Error connecting to remote server! Error: %s', str(error))
 			sftp.chdir(path_to_write_to)
 			try:
-				sftp.get(os.path.join(path_to_write_to, 'R' + title + '.zip'), path_file_rpta)
-				_logger.info('Copying File % s------ success', path_file_rpta)
+				if sftp.stat(os.path.join(path_to_write_to, 'R' + title + '.zip')):
+					sftp.get(os.path.join(path_to_write_to, 'R' + title + '.zip'), path_file_rpta)
+					_logger.info('Copying File % s------ success', path_file_rpta)
 			except Exception as err:
 				_logger.critical('We couldn\'t write the file from the remote server. Error: %s', str(err))
 			sftp.close()
