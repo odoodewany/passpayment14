@@ -443,12 +443,11 @@ class AccountMove(models.Model):
 		# Connection by paramiko
 		try:
 			# Store all values in variables
-			dir = my_path
-			path_to_write_to = '/home/debian/sfs/soyisodigital/sfs/DATA'
-			ip_host = '51.79.67.147'
-			port_host = 22
-			username_login = 'debian'
-			password_login = 'UXfF43TZF4CH'
+			path_to_write_to = self.company_id.sftp_path + '/DATA'
+			ip_host = self.company_id.sftp_host
+			port_host = self.company_id.sftp_port
+			username_login = self.company_id.sftp_user
+			password_login = self.company_id.sftp_password
 			_logger.debug('sftp remote path: %s', path_to_write_to)
 
 			try:
