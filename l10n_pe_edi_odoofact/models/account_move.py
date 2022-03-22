@@ -881,6 +881,10 @@ class AccountMove(models.Model):
 		res = super(AccountMove, self).action_invoice_sent()
 		template = self.env.ref('l10n_pe_edi_odoofact.email_template_edi_invoice', raise_if_not_found=False)
 		if template:
+			old_xml = template.attachment_ids.filtered(
+				lambda line: line.datas_fname and line.datas_fname.endswith('.xml'))
+			if old_xml:
+				old_xml.unlink()
 			for edi_format in self.journal_id.edi_format_ids:
 				edi_doc = self.env['account.edi.document'].search([('edi_format_id','=',edi_format.id),('move_id','=',self.id)])
 				if edi_doc:
