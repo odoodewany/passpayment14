@@ -520,14 +520,7 @@ class AccountMove(models.Model):
 			enviarComprobanteSunat = driver.find_element_by_id("btnEnviar")
 			enviarComprobanteSunat.click()
 
-	def responseXML(self):
-		if self.state in ['draft','cancel']:
-			return False
-		ruc_inv = self.company_id.vat
-		num_inv = str(self.l10n_pe_edi_number).rjust(8, '0')
-		title = ruc_inv +'-'+ self.l10n_latam_document_type_id.code +'-'+ self.l10n_pe_edi_serie + '-' + num_inv + '.zip'
-		path_file_sent  = self.company_id.sfs_path + '/ENVIO/' + title
-		
+	def envioXML(self, title, path_file_sent):
 		# Connection by paramiko
 		try:
 			path_to_write_to = self.company_id.sftp_path + '/ENVIO'
@@ -558,7 +551,8 @@ class AccountMove(models.Model):
 				s.close()
 			except:
 				pass
-			
+
+	def writeXML(self, path_file_sent):
 		if os.path.exists(path_file_sent):
 			archive = zipfile.ZipFile(path_file_sent, 'r')
 			for filename in archive.namelist():
@@ -582,7 +576,17 @@ class AccountMove(models.Model):
 								'state': 'to_send',
 								'attachment_id': attachment.id,
 							})
-		_logger.info("Sent ---------------->")
+
+	def responseXML(self):
+		if self.state in ['draft','cancel']:
+			return False
+		ruc_inv = self.company_id.vat
+		num_inv = str(self.l10n_pe_edi_number).rjust(8, '0')
+		title = ruc_inv +'-'+ self.l10n_latam_document_type_id.code +'-'+ self.l10n_pe_edi_serie + '-' + num_inv + '.zip'
+		path_file_sent  = self.company_id.sfs_path + '/ENVIO/' + title
+		self.envioXML(title, path_file_sent)
+		self.writeXML(path_file_sent)
+		# _logger.info("Sent ---------------->")
 		return self.invoice_return_xml()
 
 	def invoice_return_xml(self):
@@ -868,9 +872,20 @@ class AccountMove(models.Model):
 		""" Open a window to compose an email, with the edi invoice template
 			message loaded by default
 		"""
+		ruc_inv = self.company_id.vat
+		num_inv = str(self.l10n_pe_edi_number).rjust(8, '0')
+		title = ruc_inv +'-'+ self.l10n_latam_document_type_id.code +'-'+ self.l10n_pe_edi_serie + '-' + num_inv + '.zip'
+		path_file_sent  = self.company_id.sfs_path + '/ENVIO/' + title
+		self.writeXML(path_file_sent)
+		# 
 		res = super(AccountMove, self).action_invoice_sent()
 		template = self.env.ref('l10n_pe_edi_odoofact.email_template_edi_invoice', raise_if_not_found=False)
 		if template:
+			for edi_format in self.journal_id.edi_format_ids:
+				edi_doc = self.env['account.edi.document'].search([('edi_format_id','=',edi_format.id),('move_id','=',self.id)])
+				if edi_doc:
+					attatchment_id = edi_doc.attachment_id.id
+					template.write({'attachment_ids': [(4, attatchment_id, 0)]})
 			res['context'].update({'default_template_id': template and template.id or False})
 		return res
 
