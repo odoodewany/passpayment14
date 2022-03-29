@@ -104,7 +104,7 @@
                 </tr>
             </table>   
             <br/>
-            <table id="products_header" style="width:100%; font-size:small" class="soticket-table">                   
+            <table id="products_header" style="width:100%; font-size:x-small" class="soticket-table">                   
                 <tr style="border-top:1px dashed black; border-bottom:1px dashed black" class="top-dashed bottom-dashed">
                     <th class="text-center">QTY.</th>
                     <th class="text-center">DESCRIPTION</th>
