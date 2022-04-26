@@ -48,6 +48,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="o_setting_left_pane">
+                                    <field name="l10n_pe_edi_print_invoice"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label string="Print invoice report" for="l10n_pe_edi_print_invoice"/>
+                                </div>
 
                             </div>
                         </div>
