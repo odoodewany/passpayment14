@@ -181,9 +181,9 @@
                     
                     <t t-esc="o.company_id.partner_id.street"/><br/>
                     <t t-esc="o.company_id.partner_id.country_id"/> 
-                    <t t-if="company.partner_id.state_id" - t-esc="company.partner_id.state_id.name"/>
-                    <t t-if="company.partner_id.city_id" - t-esc="company.partner_id.city_id.name"/>
-                    <t t-if="company.partner_id.l10n_pe_district" - t-esc="company.partner_id.l10n_pe_district.name"/>
+                    <t t-if="company.partner_id.state_id"> - <t t-esc="company.partner_id.state_id.name"/><t/>
+                    <t t-if="company.partner_id.city_id"> - <t t-esc="company.partner_id.city_id.name"/><t/>
+                    <t t-if="company.partner_id.l10n_pe_district"> - <t t-esc="company.partner_id.l10n_pe_district.name"/><t/>
 
                     <!-- <t t-if="o.user_id">
                       <div class="cashier">
