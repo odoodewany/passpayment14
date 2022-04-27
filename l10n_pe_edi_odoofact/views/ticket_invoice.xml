@@ -203,7 +203,7 @@
                     </t -->
                     <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/>
                     <br/>
-                    <span class="font-weight-bold text-uppercase" t t-esc="o.name"/>
+                    <span class="font-weight-bold text-uppercase" t-esc="o.name"/>
                     <br/>
                     <!-- t t-if="o.refund_invoice_id">
                         <t t-if="o.refund_type == 'credit'"><strong>Tipo de Nota de Credito: </strong><t t-esc="o.credit_note_type.name"/></t>
