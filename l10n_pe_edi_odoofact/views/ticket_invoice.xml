@@ -126,15 +126,15 @@
           <t t-call="web.basic_layout">
             <div class="page">
               <style>
-		body{
-		font-family: "Courier";
-		}
-                .invoice-ticket {
-                text-align: left;
-                width: 340px;
-		margin: 0;
-		padding-left: 0;
-		padding-right: 0;
+                body{
+                font-family: "Courier";
+                }
+                            .invoice-ticket {
+                            text-align: left;
+                            width: 340px;
+                margin: 0;
+                padding-left: 0;
+                padding-right: 0;
                 background-color: white;
                 font-size: 13px;
                 padding-bottom:30px;
@@ -166,24 +166,24 @@
                 <div class="invoice-center-align">
                   <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" width="150px"/>
                   <div class="info">
-                    <t t-esc='o.company_id.name'/>
-                    <t t-if='o.company_id.phone'>
+                    <t t-esc="o.company_id.name"/>
+                    <t t-if="o.company_id.phone">
                       <div>Tel:
-                      <t t-esc='o.company_id.phone'/>
+                      <t t-esc="o.company_id.phone"/>
                       </div>
                     </t>
-                    <t t-if='o.company_id.vat'>
+                    <t t-if="o.company_id.vat">
                       <div>RUC:
-                      <t t-esc='o.company_id.vat'/>
+                      <t t-esc="o.company_id.vat"/>
                       </div>
                     </t>
-                    <span class="company_address" t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
-                    <t t-if='o.user_id'>
-                      <div class='cashier'>
+                    <span class="company_address" t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                    <t t-if="o.user_id">
+                      <div class="cashier">
                         <div>--------------------------------</div>
-                        <div>Atentido por
-                        <t t-esc='o.user_id.name'/>
-                        </div>
+                        <!-- <div>Atentido por
+                        <t t-esc="o.user_id.name"/>
+                        </div> -->
                       </div>
                     </t>
                   </div>
@@ -221,15 +221,15 @@
                       <br/>
                       <t t-esc="o.partner_id.catalog_06_id.name"/>:
                       <t t-esc="o.partner_id.vat"/>
-		      <div name="extra-customer-info">
-		      </div>
+                      <div name="extra-customer-info">
+                      </div>
 		      
                       <br/>
                     </t>
                   </t>
                 </div>
 
-                <table class='invoice-lines'>
+                <table class="invoice-lines">
                   <thead>
                     <tr>
                       <td>CANT</td>
@@ -245,7 +245,7 @@
                           <span t-field="line.quantity"/>
                         </td>
                         <td t-attf-class="text-left">
-                          <span t-field="line.name" />
+                          <span t-field="line.name"/>
                         </td>
                         <td class="text-right">
                           <span t-field="line.price_total"/>
@@ -255,11 +255,11 @@
                   </tbody>
                 </table>
                 <br/>
-                <table class='invoice-lines'>
+                <table class="invoice-lines">
                   <tr>
                     <td>Subtotal:</td>
                     <td class="text-right">
-                      <span t-field="o.amount_untaxed" />
+                      <span t-field="o.amount_untaxed"/>
                     </td>
                   </tr>
                   <t t-foreach="o.tax_line_ids" t-as="taxdetail">
@@ -268,7 +268,7 @@
                         <span t-field="taxdetail.name"/>
                       </td>
                       <td class="text-right">
-                        <span t-field="taxdetail.amount_total" />
+                        <span t-field="taxdetail.amount_total"/>
                       </td>
                     </tr>
                   </t>
@@ -277,7 +277,7 @@
                       Total Valor de Venta - Op. Gravadas
                     </td>
                     <td class="text-right">
-                      <span t-field="o.op_gravadas_total" />
+                      <span t-field="o.op_gravadas_total"/>
                     </td>
                   </tr>
                   <tr t-if="o.op_exoneradas_total">
@@ -285,7 +285,7 @@
                       Total Valor de Venta - Op. Exoneradas
                     </td>
                     <td class="text-right">
-                      <span t-field="o.op_exoneradas_total" />
+                      <span t-field="o.op_exoneradas_total"/>
                     </td>
                   </tr>
                   <tr t-if="o.op_inafectas_total">
@@ -293,7 +293,7 @@
                       Total Valor de Venta - Op. Inafectas
                     </td>
                     <td class="text-right">
-                      <span t-field="o.op_inafectas_total" />
+                      <span t-field="o.op_inafectas_total"/>
                     </td>
                   </tr>
                   <tr t-if="o.op_gratuitas_total">
@@ -301,7 +301,7 @@
                       Total Valor de Venta - Op. Gratuitas
                     </td>
                     <td class="text-right">
-                      <span t-field="o.op_gratuitas_total" />
+                      <span t-field="o.op_gratuitas_total"/>
                     </td>
                   </tr>
                   <tr t-if="o.op_exportacion_total">
@@ -309,7 +309,7 @@
                       Total Valor de Venta - Exportación
                     </td>
                     <td class="text-right">
-                      <span t-field="o.op_exportacion_total" />
+                      <span t-field="o.op_exportacion_total"/>
                     </td>
                   </tr>
                   <tr class="total-info" name="totals">
@@ -328,16 +328,12 @@
                   <div class="invoice-center-align">
                     <p t-if="o.show_barcode()">
                       <span t-if="o.barcode">
-                        <img width="65%"
-                             t-attf-src="data:image/*;base64, {{o.barcode}}"
-                             />
+                        <img width="65%" t-attf-src="data:image/*;base64, {{o.barcode}}"/>
                       </span>
                     </p>
                     <p t-if="o.show_qr()">
                       <span t-if="o.qr">
-                        <img width="40%"
-                             t-attf-src="data:image/*;base64, {{o.qr}}"
-                             />
+                        <img width="40%" t-attf-src="data:image/*;base64, {{o.qr}}"/>
                       </span>
                     </p>
                   </div>
