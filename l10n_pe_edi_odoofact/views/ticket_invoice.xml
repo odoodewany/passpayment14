@@ -177,7 +177,14 @@
                       <t t-esc="o.company_id.vat"/>
                       </div>
                     </t>
-                    <span class="company_address" t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                    <!-- <span class="company_address" t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/> -->
+                    
+                    <t t-esc="o.company_id.partner_id.street"/><br/>
+                    <t t-esc="o.company_id.partner_id.country_id"/> 
+                    <t t-if="company.partner_id.state_id" - t-esc="company.partner_id.state_id.name"/>
+                    <t t-if="company.partner_id.city_id" - t-esc="company.partner_id.city_id.name"/>
+                    <t t-if="company.partner_id.l10n_pe_district" - t-esc="company.partner_id.l10n_pe_district.name"/>
+
                     <!-- <t t-if="o.user_id">
                       <div class="cashier">
                         <div>-</div>
@@ -201,10 +208,11 @@
                               <t t-if="o.document_type == 'boleta'">
                       Boleta Electrónica</t>
                     </t -->
+                    <div class="invoice-center-align">
                     <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/>
                     <br/>
                     <span class="font-weight-bold text-uppercase" t-esc="o.name"/>
-                    <br/>
+                    </div>
                     <!-- t t-if="o.refund_invoice_id">
                         <t t-if="o.refund_type == 'credit'"><strong>Tipo de Nota de Credito: </strong><t t-esc="o.credit_note_type.name"/></t>
                         <t t-if="o.refund_type == 'debit'"><strong>Tipo de Nota de Débito: </strong><t t-esc="o.debit_note_type.name"/></t>
