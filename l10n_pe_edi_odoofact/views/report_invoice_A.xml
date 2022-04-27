@@ -111,10 +111,10 @@
                                         <span class="font-weight-bold">RUC <t t-esc="o.company_id.vat"/></span>
                                     </h6>
                                     <h6>
-                                        <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or 'NO VALID'"/>
+                                        <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/>
                                     </h6>
                                     <h6>
-                                        <span class="font-weight-bold" t-esc="o.name or 'NO VALID'"/>
+                                        <span class="font-weight-bold" t-esc="o.name or ''"/>
                                     </h6>
                                 </div>
                             </div>
@@ -422,10 +422,10 @@
                                 <div class="card-body">
                                     <div id="invoice_footer" class="row">
                                         <div t-attf-class="#{'col-9' if report_type != 'html' else 'col-12 col-sm-9'} col-auto mb-2">
-                                            <!-- p>Printed representation of the <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or 'NO VALID'"/> <span class="font-weight-bold" t-esc="o.name or 'NO VALID'"/>, visit <span class="font-weight-bold" t-esc="o.company_id.l10n_pe_edi_ose_id and o.company_id.l10n_pe_edi_ose_id.control_url or 'NO VALID'"/>
+                                            <!-- p>Printed representation of the <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/> <span class="font-weight-bold" t-esc="o.name or ''"/>, visit <span class="font-weight-bold" t-esc="o.company_id.l10n_pe_edi_ose_id and o.company_id.l10n_pe_edi_ose_id.control_url or ''"/>
                                             </p>
                                             <p><span t-esc="o.company_id.l10n_pe_edi_ose_id and o.company_id.l10n_pe_edi_ose_id.authorization_message or ' '"/></p -->
-                                            <p>Representación impresa de la <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or 'NO VALID'"/> <span class="font-weight-bold" t-esc="o.name or 'NO VALID'"/>, visita <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span>
+                                            <p>Representación impresa de la <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/> <span class="font-weight-bold" t-esc="o.name or ''"/>, visita <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span>
                                             </p>
                                             <p>Emitido mediante el sistema facturador SUNAT. Autorizado mediante resolución N° 072-005-0000006/SUNAT</p>
                                         </div>

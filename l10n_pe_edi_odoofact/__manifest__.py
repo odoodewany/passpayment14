@@ -53,6 +53,7 @@
         'data/ticket_paperformat.xml',
         'views/ticket_invoice.xml',
         'views/report_invoice_A.xml',
+        'views/report_template.xml',
     ],
     'installable': True,
     'images': ['static/description/banner.png'],

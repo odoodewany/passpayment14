@@ -178,52 +178,52 @@
                       </div>
                     </t>
                     <span class="company_address" t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
-                    <t t-if="o.user_id">
+                    <!-- <t t-if="o.user_id">
                       <div class="cashier">
-                        <div>--------------------------------</div>
-                        <!-- <div>Atentido por
+                        <div>-</div>
+                        <div>Atentido por
                         <t t-esc="o.user_id.name"/>
-                        </div> -->
+                        </div>
                       </div>
-                    </t>
+                    </t> -->
                   </div>
                   <br/>
                 </div>
                 <div class="receipt-phone client-info">
                   <t t-if="o.name">
-
-                  <t t-if="o.refund_invoice_id">
-                      <t t-if="o.refund_type == 'credit'">Nota de Crédito</t>
-                      <t t-if="o.refund_type == 'debit'">Nota de Débito</t>
-                  </t>
-                  <t t-else="">
-                            <t t-if="o.document_type == 'factura'">
-                    Factura Electrónica</t>
-                            <t t-if="o.document_type == 'boleta'">
-                    Boleta Electrónica</t>
-                  </t>
-		    
-                    <t t-esc="o.name"/>
+                    <!-- t t-if="o.refund_invoice_id">
+                        <t t-if="o.refund_type == 'credit'">Nota de Crédito</t>
+                        <t t-if="o.refund_type == 'debit'">Nota de Débito</t>
+                    </t>
+                    <t t-else="">
+                              <t t-if="o.document_type == 'factura'">
+                      Factura Electrónica</t>
+                              <t t-if="o.document_type == 'boleta'">
+                      Boleta Electrónica</t>
+                    </t -->
+                    <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/>
                     <br/>
-                    <t t-if="o.refund_invoice_id">
+                    <span class="font-weight-bold text-uppercase" t t-esc="o.name"/>
+                    <br/>
+                    <!-- t t-if="o.refund_invoice_id">
                         <t t-if="o.refund_type == 'credit'"><strong>Tipo de Nota de Credito: </strong><t t-esc="o.credit_note_type.name"/></t>
                         <t t-if="o.refund_type == 'debit'"><strong>Tipo de Nota de Débito: </strong><t t-esc="o.debit_note_type.name"/></t>
-                    </t>
+                    </t -->
                     <br/>
                     <t t-if="o.partner_id">
-                      <t t-if="o.partner_id.catalog_06_id.code == 6">
+                      <!-- t t-if="o.partner_id.catalog_06_id.code == 6">
                         Razón Social:
                       </t>
                       <t t-else="">
                         Nombre:
-                      </t>
+                      </t -->
+                      <span class="text-nowrap" t-esc="o.partner_id.commercial_partner_id.l10n_latam_identification_type_id and o.partner_id.commercial_partner_id.l10n_latam_identification_type_id.name or 'DOCUMENTO'"/>:
                       <t t-esc="o.partner_id.name"/>
                       <br/>
-                      <t t-esc="o.partner_id.catalog_06_id.name"/>:
+                      <!--<t t-esc="o.partner_id.catalog_06_id.name"/>:-->
                       <t t-esc="o.partner_id.vat"/>
                       <div name="extra-customer-info">
                       </div>
-		      
                       <br/>
                     </t>
                   </t>
@@ -255,7 +255,7 @@
                   </tbody>
                 </table>
                 <br/>
-                <table class="invoice-lines">
+                <!-- table class="invoice-lines">
                   <tr>
                     <td>Subtotal:</td>
                     <td class="text-right">
@@ -318,35 +318,118 @@
                       <span t-field="o.amount_total"/>
                     </td>
                   </tr>
+                </table -->
+                
+                <table class="table table-sm" style="page-break-inside: avoid;">
+                    <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_base">
+                        <td>
+                            <span><strong>MONTO BASE </strong></span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_base"/>
+                        </td>
+                    </tr>
+                    <tr class="border-black o_subtotal" style="" t-if="o.l10n_pe_edi_amount_discount">
+                        <td>
+                            <span><strong>DESCUENTO (-)</strong></span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_discount"/>
+                        </td>
+                    </tr>
+                    <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_global_discount">
+                        <td>
+                            <span><strong>G. DISCOUNT (-)</strong></span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-field="o.l10n_pe_edi_global_discount"/>
+                        </td>
+                    </tr>
+                    <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_exonerated">
+                        <td>
+                            <span><strong>EXONERADO</strong></span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_exonerated"/>
+                        </td>
+                    </tr>
+                    <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_unaffected">
+                        <td>
+                            <span><strong>INAFECTO</strong></span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_unaffected"/>
+                        </td>
+                    </tr>
+                    <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_free">
+                        <td>
+                            <span><strong>AMOUNT FREE</strong></span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_free"/>
+                        </td>
+                    </tr>
+                    <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                        <tr class="o_subtotal" style="">
+                            <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
+                                <td><span class="text-nowrap" t-esc="amount_by_group[0]"/></td>
+                                <td class="text-right o_price_total">
+                                    <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                </td>
+                            </t>
+                            <t t-else="">
+                                <td>
+                                    <span t-esc="amount_by_group[0]"/>
+                                    <span class="text-nowrap"> on
+                                        <t t-esc="amount_by_group[4]"/>
+                                    </span>
+                                </td>
+                                <td class="text-right o_price_total">
+                                    <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                </td>
+                            </t>
+                        </tr>
+                    </t>
+                    <tr class="border-black o_total">
+                        <td><strong>TOTAL</strong></td>
+                        <td class="text-right">
+                            <span class="text-nowrap" t-field="o.amount_total"/>
+                        </td>
+                    </tr>
                 </table>
+                
                 <br/>
                 <div class="invoice-info" name="invoice-info">
-                  <p>SON: <t t-esc="o.get_total_in_words()"/></p>
-                  <t t-if="o.digest">
+                  <p>SON: <t t-esc="o.l10n_pe_edi_amount_in_words"/></p>
+                  <!-- t t-if="o.digest">
                     <span t-field="o.digest"/>
-                  </t>
+                  </t -->
                   <div class="invoice-center-align">
-                    <p t-if="o.show_barcode()">
+                    <!-- p t-if="o.show_barcode()">
                       <span t-if="o.barcode">
-                        <img width="65%" t-attf-src="data:image/*;base64, {{o.barcode}}"/>
+                        <img width="65%" t-attf-src="'data:image/*;base64, {{o.barcode}}'"/>
                       </span>
                     </p>
                     <p t-if="o.show_qr()">
                       <span t-if="o.qr">
                         <img width="40%" t-attf-src="data:image/*;base64, {{o.qr}}"/>
                       </span>
-                    </p>
+                    </p -->
+                    
+                    <div t-attf-class="#{'col-12' if report_type != 'html' else 'col-12 col-sm-12'} col-auto mb-12">
+                            <img t-att-src="'/report/barcode/QR/%s|%s|%s|%s|%s|%s|%s|%s|%s|'%(o.company_id.vat,o.l10n_latam_document_type_id.code,o.l10n_pe_edi_serie,o.l10n_pe_edi_number,o.l10n_pe_edi_amount_igv,o.amount_total,o.invoice_date,o.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code,o.partner_id.vat)" class="img-fluid img-thumbnail rounded mx-auto d-block" style="width:100px;height:100px;"/>
+                    </div>
                   </div>
-                  <t t-if="o.refund_invoice_id">
-                    <p t-if="o.refund_type == 'credit'">Representación impresa de la nota de crédito electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
-                    <p t-if="o.refund_type == 'debit'">Representación impresa de la nota de débito electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
+                  <t>
+                    <p t-if="o.l10n_latam_document_type_id.code == '07'">Representación impresa de la nota de crédito electrónica: <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span></p>
+                    <p t-if="o.l10n_latam_document_type_id.code == '08'">Representación impresa de la nota de débito electrónica: <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span></p>
                   </t>
-                  <t t-else="">
-                    <p t-if="o.document_type == 'factura'">Representación impresa de la factura electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
-                    <p t-if="o.document_type == 'boleta'">Representación impresa de la boleta de venta electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
+                  <t>
+                    <p t-if="o.l10n_latam_document_type_id.code == '01'">Representación impresa de la factura electrónica: <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span></p>
+                    <p t-if="o.l10n_latam_document_type_id.code == '03'">Representación impresa de la boleta de venta electrónica: <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span></p>
                   </t>
                   <div class="invoice-center-align">
-                    <span t-field="o.date_invoice"/>
+                    <span t-field="o.invoice_date"/>
                   </div>
                 </div>
               </div>
@@ -355,6 +438,7 @@
         </t>
       </t>
     </template>
+
     <template id="report_invoice_ticket_50">
       <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">

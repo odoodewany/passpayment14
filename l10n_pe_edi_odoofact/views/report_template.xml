@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+		<template id="external_layout_boxed_inherit" inherit_id="web.external_layout_boxed">
+			<xpath expr="//div[@class='o_boxed_header']" position="replace">
+				<div class="o_boxed_header">
+					<div class="row mb8">
+							<div class="col-6">
+									<img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+							</div>
+							<div class="col-6 text-right mb4">
+									<!-- <h4 class="mt0" t-field="company.report_header"/> -->
+									<div name="company_address" class="float-right mb4">
+											<div class="float-right" t-if="company.report_header">
+													<h6 class="mt0 text-right" t-field="company.report_header"/>
+											</div>
+											<!-- <span class="company_address" t-field="company.partner_id"
+													t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/> -->
+											<div t-if="not company.report_header">
+													<strong t-field="company.partner_id.name"/><br/>
+													<strong t-field="company.partner_id.street"/><br/>
+													<strong t-field="company.partner_id.country_id"/> 
+													<t t-if="company.partner_id.state_id"> - <strong t-field="company.partner_id.state_id.name"/></t>
+													<t t-if="company.partner_id.city_id"> - <strong t-field="company.partner_id.city_id.name"/></t>
+													<t t-if="company.partner_id.l10n_pe_district"> - <strong t-field="company.partner_id.l10n_pe_district.name"/></t>
+											</div>
+									</div>
+							</div>
+					</div>
+				</div>
+			</xpath>
+		</template>
+  </data>
+</odoo>
