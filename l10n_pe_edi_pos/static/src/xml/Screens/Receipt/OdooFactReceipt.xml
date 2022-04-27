@@ -41,7 +41,7 @@
                 <t t-if="receipt.cashier">
                     <div class="cashier">
                         <div>--------------------------------</div>
-                        <div>Served by <t t-esc="receipt.cashier" /></div>
+                        <!-- <div>Served by <t t-esc="receipt.cashier" /></div> -->
                     </div>
                 </t>
             </div>
