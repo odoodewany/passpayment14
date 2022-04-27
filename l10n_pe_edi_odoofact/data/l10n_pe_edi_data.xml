@@ -63,4 +63,56 @@
       <field name='internal_type'>debit_note</field>
   </record>
 
+  <!-- Tipos de detraccion -->
+  <record id="detract_type_1" model="account.detraction.type">
+      <field name="code">1</field>
+      <field name="name">Intermediación laboral y tercerización</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_2" model="account.detraction.type">
+      <field name="code">2</field>
+      <field name="name">Arrendamiento de bienes</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_3" model="account.detraction.type">
+      <field name="code">3</field>
+      <field name="name">Mantenimiento y reparación de bienes muebles</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_4" model="account.detraction.type">
+      <field name="code">4</field>
+      <field name="name">Movimiento de carga</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_5" model="account.detraction.type">
+      <field name="code">5</field>
+      <field name="name">Otros servicios empresariales</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_6" model="account.detraction.type">
+      <field name="code">6</field>
+      <field name="name">Comisión mercantil</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_7" model="account.detraction.type">
+      <field name="code">7</field>
+      <field name="name">Fabricación de bienes por encargo</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_8" model="account.detraction.type">
+      <field name="code">8</field>
+      <field name="name">Servicio de transporte de personas</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_9" model="account.detraction.type">
+      <field name="code">9</field>
+      <field name="name">Contratos de construcción</field>
+      <field name="amount">12</field>
+  </record>
+  <record id="detract_type_10" model="account.detraction.type">
+      <field name="code">10</field>
+      <field name="name">Demás servicios gravados con el IGV</field>
+      <field name="amount">12</field>
+  </record>
+
 </odoo>

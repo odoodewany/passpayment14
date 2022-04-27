@@ -17,3 +17,5 @@ access_l10n_pe_edi_request_log_account,l10n_pe_edi.request.log.account,model_l10
 access_l10n_pe_edi_request_log_manager,l10n_pe_edi.request.log.manager,model_l10n_pe_edi_request_log,base.group_erp_manager,1,1,1,1
 access_l10n_pe_edi_request_log_account_manager,l10n_pe_edi.request.log.manager,model_l10n_pe_edi_request_log,account.group_account_manager,1,1,1,1
 access_l10n_pe_edi_move_cancel,access_l10n_pe_edi_move_cancel,model_l10n_pe_edi_move_cancel,base.group_user,1,1,1,1
+user_access_detraction_type,account.detraction.typepermission,model_account_detraction_type,account.group_account_invoice,1,0,0,0
+user_access_detraction_typemanager,account.detraction.typepermissionmanager,model_account_detraction_type,account.group_account_manager,1,1,1,1

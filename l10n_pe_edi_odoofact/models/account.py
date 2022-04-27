@@ -112,3 +112,20 @@ class AccountInvoiceReport(models.Model):
 				   0.0) * currency_table.rate                               AS price_average,
 				COALESCE(partner.country_id, commercial_partner.country_id) AS country_id
 		'''
+		
+class DetractionTypes(models.Model):
+	_name = 'account.detraction.type'
+	_description = 'Tipos de Detracción'
+
+	code = fields.Char('Código', required=True)
+	name = fields.Char('Nombre', required=True)
+	amount = fields.Float(string='Porcentaje', digits=(16, 4), required=True, default=1)
+
+	@api.depends('code', 'name')
+	def name_get(self):
+		result = []
+		for table in self:
+			l_name = table.code and table.code + ' - ' or ''
+			l_name +=  table.name
+			result.append((table.id, l_name ))
+		return result

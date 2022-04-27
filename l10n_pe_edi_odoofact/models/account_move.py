@@ -19,6 +19,7 @@ from num2words import num2words
 import zipfile
 import base64
 import paramiko
+from decimal import Decimal, ROUND_HALF_UP
 
 from odoo import api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
@@ -111,6 +112,36 @@ class AccountMove(models.Model):
 		compute='_compute_amount', currency_field='currency_id')
 	amount_residual_signed = fields.Monetary(string='Amount Due Signed', store=True,
 		compute='_compute_amount', currency_field='currency_id')	
+
+	# detraction_type = fields.Many2one('account.detraction.type', string='Tipo de Det.', copy=False, compute='_get_detraction_amount', store=True)
+	invoice_detraction_type = fields.Many2one('account.detraction.type', string='Tipo de Detracción', copy=False)
+	invoice_detraction_amount = fields.Float(string='Monto de Det.', compute='_get_invoice_detraction_amount', store=True)
+	# detraction_amount = fields.Float(string='Monto de Det.', compute='_get_detraction_amount', store=True)
+	# detraction_code = fields.Char(string='Num. Det.', compute='_get_detraction_amount', store=True)
+	# detraction_date = fields.Date(string='Fecha de Det.', compute='_get_detraction_amount', store=True)
+
+	# @api.multi
+	# @api.depends('payment_ids')
+	# def _get_detraction_amount(self):
+	# 	for invoice in self:
+	# 		detraction_line = invoice.payment_ids.filtered(
+	# 			lambda l: l.is_detraction and l.state not in ('cancelled','draft'))
+	# 		if detraction_line:
+	# 			invoice.detraction_amount = detraction_line.amount
+	# 			invoice.detraction_type = detraction_line.detraction_type
+	# 			invoice.detraction_code = detraction_line.communication
+	# 			invoice.detraction_date = detraction_line.payment_date
+	# 		else:
+	# 			invoice.detraction_amount = False
+	# 			invoice.detraction_type = False
+	# 			invoice.detraction_code = False
+	# 			invoice.detraction_date = False
+
+	@api.depends('invoice_detraction_type')
+	def _get_invoice_detraction_amount(self):
+		for invoice in self:
+			if invoice.invoice_detraction_type:
+				invoice.invoice_detraction_amount = Decimal(invoice.invoice_detraction_type.amount * invoice.amount_total / 100.0).quantize(0, ROUND_HALF_UP)		
 	
 	@api.onchange('partner_id')
 	def _onchange_partner_id(self):
