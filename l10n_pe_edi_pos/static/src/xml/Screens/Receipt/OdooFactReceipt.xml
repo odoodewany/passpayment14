@@ -49,7 +49,7 @@
                 <t t-set="client" t-value="receipt.client"/>
                 <t t-if="client">
                     <span  style="font-size: 12px;font-weight: bold;" >CLIENT</span>
-                    <tr t-if="receipt.client.vat">
+                    <tr t-if="receipt.client.vat and receipt.client.vat != '00000000' and receipt.client.vat != '11111111'">
                         <t t-if="receipt.client.vat.length == 8">
                             <th class="text-left" style="font-weight: normal; ">
                                 DNI : <t t-esc="receipt.client.vat"/>
@@ -61,7 +61,7 @@
                             </th>
                         </t>
                     </tr> 
-                    <tr t-if="receipt.client.name">
+                    <tr t-if="receipt.client.name and receipt.client.vat != '00000000' and receipt.client.vat != '11111111'">
                         <th style="font-weight: normal;" colspan="2" class="text-left">
                             <t t-esc="receipt.client.name"/>
                         </th>
@@ -80,7 +80,8 @@
                             <span style="font-size: 12px;font-weight: bold;">DATE INVOICE:</span> <t t-esc="invoice.date_invoice"/>
                         </th>
                     </t>
-                </tr>          
+                </tr>
+                <t t-if="invoice.type_of_invoice_document != 'NOTA DE PEDIDO'">
                 <tr> 
                     <t t-if='invoice.invoice_date_due'>
                         <th style="font-weight: normal;" class="text-left" width="50%">
@@ -89,7 +90,7 @@
                     </t>
                 </tr>
                 <tr> 
-                    <t t-if='invoice.currency_name'>
+                    <t t-if='invoice.currency_name and invoice.is_electronic'>
                         <th style="font-weight: normal;" class="text-left" width="50%">
                             <span style="font-size: 12px;font-weight: bold;">CURRENCY:</span> <t t-esc="invoice.currency_name"/>
                         </th>
@@ -102,6 +103,7 @@
                         </th>
                     </t>
                 </tr>
+                </t>
             </table>   
             <br/>
             <table id="products_header" style="width:100%; font-size:x-small" class="soticket-table">                   
