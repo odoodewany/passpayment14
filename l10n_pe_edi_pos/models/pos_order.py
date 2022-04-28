@@ -49,7 +49,7 @@ class pos_order(models.Model):
 			data['amount_in_words'] = pos_order.account_move.l10n_pe_edi_amount_in_words
 			data['currency_name'] = pos_order.account_move.currency_id.currency_unit_label or pos_order.account_move.currency_id.name
 			data['authorization_message'] = pos_order.company_id.l10n_pe_edi_ose_id and pos_order.company_id.l10n_pe_edi_ose_id.authorization_message or ''
-			data['control_url'] = pos_order.company_id.l10n_pe_edi_ose_id and pos_order.company_id.l10n_pe_edi_ose_id.control_url or 'NO VALID' 
+			data['control_url'] = pos_order.company_id.l10n_pe_edi_ose_id and pos_order.company_id.l10n_pe_edi_ose_id.control_url or '' 
 			data['date_invoice']= pos_order.account_move.invoice_date
 			data['invoice_date_due']= pos_order.account_move.invoice_date_due
 			if pos_order.company_id.vat:
