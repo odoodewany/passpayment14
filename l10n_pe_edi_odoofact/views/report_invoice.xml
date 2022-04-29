@@ -108,7 +108,7 @@
                                         <span class="font-weight-bold">RUC <t t-esc="o.company_id.vat"/></span>
                                     </h5>
                                     <h5>
-                                        <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/>
+                                        <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or o.journal_id.l10n_latam_document_type_id.name or 'NO VALID'"/>
                                     </h5>
                                     <h5>
                                         <span class="font-weight-bold" t-esc="o.name or ''"/>
