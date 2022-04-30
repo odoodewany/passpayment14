@@ -61,7 +61,7 @@
                             </th>
                         </t>
                     </tr> 
-                    <tr t-if="receipt.client.name and receipt.client.vat != '00000000' and receipt.client.vat != '11111111'">
+                    <tr t-if="receipt.client.name">
                         <th style="font-weight: normal;" colspan="2" class="text-left">
                             <t t-esc="receipt.client.name"/>
                         </th>
