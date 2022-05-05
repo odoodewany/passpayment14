@@ -20,3 +20,5 @@ class ProductTemplate(models.Model):
 
 	l10n_pe_edi_product_code_id = fields.Many2one("l10n_pe_edi.catalog.25", string='Product code SUNAT')
 	company_id = fields.Many2one('res.company', 'Company', default=_default_company_id, index=1)
+	available_in_pos = fields.Boolean(string='Available in POS', help='Check if you want this product to appear in the Point of Sale.', default=True)
+	type = fields.Selection(default='product')
