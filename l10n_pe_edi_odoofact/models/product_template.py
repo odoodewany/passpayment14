@@ -12,6 +12,11 @@
 from odoo import api, fields, models
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+	_inherit = 'product.template'
 
-    l10n_pe_edi_product_code_id = fields.Many2one("l10n_pe_edi.catalog.25", string='Product code SUNAT')
+	def _default_company_id(self):
+		current_company = self.env.company.id
+		return current_company if current_company else False
+
+	l10n_pe_edi_product_code_id = fields.Many2one("l10n_pe_edi.catalog.25", string='Product code SUNAT')
+	company_id = fields.Many2one('res.company', 'Company', default=_default_company_id, index=1)
