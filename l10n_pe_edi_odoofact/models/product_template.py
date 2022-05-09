@@ -22,3 +22,12 @@ class ProductTemplate(models.Model):
 	company_id = fields.Many2one('res.company', 'Company', default=_default_company_id, index=1)
 	available_in_pos = fields.Boolean(string='Available in POS', help='Check if you want this product to appear in the Point of Sale.', default=True)
 	type = fields.Selection(default='product')
+
+class ProductCategory(models.Model):
+	_inherit = "product.category"
+
+	def _default_company_id(self):
+		current_company = self.env.company.id
+		return current_company if current_company else False
+
+	company_id = fields.Many2one('res.company', 'Compañía', default=_default_company_id, index=1)

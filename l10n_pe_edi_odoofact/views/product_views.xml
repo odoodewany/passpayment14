@@ -21,4 +21,26 @@
             </field>               
         </field>
     </record>
+
+    <record id="view_category_property_form_comp" model="ir.ui.view">
+        <field name="name">product.category.property.form.comp</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="product_category_list_view_comp" model="ir.ui.view">
+        <field name="name">product.category.list.comp</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_list_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="company_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
