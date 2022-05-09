@@ -182,7 +182,7 @@
                     <p  style="font-size:small">Printed representation of <span  style="font-size:small" t-esc="invoice.invoice_number"/>. Visit <strong><span  style="font-size:small" t-if="invoice.control_url" t-esc="invoice.control_url" />.</strong></p>       
                 </div>
             </t>
-            <t  t-if="invoice.barcode">    
+            <t  t-if="invoice.barcode and invoice.type_of_invoice_document != 'NOTA DE PEDIDO'">
                 <div style="text-align:center;">
                     <img  t-att-src="invoice.barcode" style="width:120px;height:120px;"/>
                 </div> 
