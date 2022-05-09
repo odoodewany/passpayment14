@@ -35,5 +35,12 @@ class pos_config(models.Model):
 		self.auto_check_invoice = self.l10n_pe_edi_send_invoice  
 	
 	
-	
+class ProductTemplate(models.Model):
+	_inherit = 'pos.category'
+
+	def _default_company_id(self):
+		current_company = self.env.company.id
+		return current_company if current_company else False
+
+	company_id = fields.Many2one('res.company', 'Compañía', default=_default_company_id, index=1)
 	

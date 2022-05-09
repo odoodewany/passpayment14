@@ -63,5 +63,27 @@
                 
             </field>
         </record>
+
+        <record id="product_pos_category_tree_view_inh" model="ir.ui.view">
+            <field name="name">pos.category.tree.view</field>
+            <field name="model">pos.category</field>
+            <field name="inherit_id" ref="point_of_sale.product_pos_category_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="company_id" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_pos_category_form_view_inh" model="ir.ui.view">
+            <field name="name">pos.category.form.view</field>
+            <field name="model">pos.category</field>
+            <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="before">
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
