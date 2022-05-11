@@ -53,5 +53,5 @@ class ProductTemplate(models.Model):
 			_logger.info(self.ids)
 			# if self.env['pos.session'].sudo().search_count([('state', '!=', 'closed')]):
 			# 	raise UserError(_('You cannot delete a point of sale category while a session is still opened.'))
-		return super(PosCategory, self).unlink()
+		return super(ProductTemplate, self).unlink()
 	
