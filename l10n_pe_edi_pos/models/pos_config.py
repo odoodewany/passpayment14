@@ -46,6 +46,7 @@ class ProductTemplate(models.Model):
 		return current_company if current_company else False
 
 	company_id = fields.Many2one('res.company', 'Compañía', default=_default_company_id, index=1)
+	active = fields.Boolean('Active', default=True)
 
 	def unlink(self):
 		if self.search_count([('id', 'in', self.ids)]):
