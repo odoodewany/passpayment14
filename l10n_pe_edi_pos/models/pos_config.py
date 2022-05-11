@@ -9,7 +9,10 @@
 #
 ###############################################################################
 
+import logging
 from odoo import api, fields, models, _
+
+_logger = logging.getLogger(__name__)
 
 class pos_config(models.Model):
 	_inherit = "pos.config"
@@ -43,4 +46,12 @@ class ProductTemplate(models.Model):
 		return current_company if current_company else False
 
 	company_id = fields.Many2one('res.company', 'Compañía', default=_default_company_id, index=1)
+
+	def unlink(self):
+		if self.search_count([('id', 'in', self.ids)]):
+			_logger.info('Send pos_category for delete')
+			_logger.info(self.ids)
+			# if self.env['pos.session'].sudo().search_count([('state', '!=', 'closed')]):
+			# 	raise UserError(_('You cannot delete a point of sale category while a session is still opened.'))
+		return super(PosCategory, self).unlink()
 	
