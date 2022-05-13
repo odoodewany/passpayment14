@@ -1,0 +1,204 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* invoice_summary
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-27 08:52+0000\n"
+"PO-Revision-Date: 2021-10-27 08:52+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<span>Customer</span>"
+msgstr "<span>Client</span>"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<span>Date</span>"
+msgstr "<span>Date</span>"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<span>Debit</span>"
+msgstr "<span>Débit</span>"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<span>Invoice Number</span>"
+msgstr "<span>Numéro de facture</span>"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<span>credit</span>"
+msgstr "<span>Crédit</span>"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<strong>From:</strong>"
+msgstr "<strong>De:</strong>"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<strong>Partner name:</strong>"
+msgstr "<strong>Nom de client:</strong>"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<strong>à:</strong>"
+msgstr ""
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "<strong>Total</strong>"
+msgstr "<strong>Total</strong>"
+
+#. module: invoice_summary
+#: model:ir.model.fields.selection,name:invoice_summary.selection__print_invoice_summary__invoice_status__all
+msgid "All"
+msgstr "Tous"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "All Invoice"
+msgstr "Toutes les factures"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__amount_total_credit
+msgid "Amount credit"
+msgstr "Total crédit"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__amount_total_debit
+msgid "Amount debit"
+msgstr "Tolatl débit"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.view_print_invoice_summary_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__create_uid
+msgid "Created by"
+msgstr "Créée par"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__create_date
+msgid "Created on"
+msgstr "Créée le"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__partner_id
+msgid "Customer"
+msgstr "Client"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__display_name
+msgid "Display Name"
+msgstr "Nom"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__file_name
+msgid "File Name"
+msgstr "Nom du fichier"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__from_date
+msgid "From Date"
+msgstr "A partir de"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__id
+msgid "ID"
+msgstr ""
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__invoice_report_printed
+msgid "Invoice Report Printed"
+msgstr "Rapport de facture imprimé"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__invoice_status
+msgid "Invoice Status"
+msgstr "Statut de la facture"
+
+#. module: invoice_summary
+#: model:ir.actions.report,name:invoice_summary.action_report_invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__invoice_summary_file
+msgid "Invoice Summary Report"
+msgstr "Rapport de relevé des factures"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__invoice_objs
+msgid "Invoices"
+msgstr "Factures"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: invoice_summary
+#: model:ir.model.fields,field_description:invoice_summary.field_print_invoice_summary__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: invoice_summary
+#: model:ir.model.fields.selection,name:invoice_summary.selection__print_invoice_summary__invoice_status__paid
+msgid "Paid"
+msgstr "Payé"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.invoice_summary_report_pdf
+msgid "Paid Invoice"
+msgstr "Facture payée"
+
+#. module: invoice_summary
+#: model_terms:ir.ui.view,arch_db:invoice_summary.view_print_invoice_summary_form
+msgid "Print CSV"
+msgstr "Imprimer CSV"
+
+#. module: invoice_summary
+#: model:ir.actions.act_window,name:invoice_summary.action_print_invoice_summary
+#: model:ir.ui.menu,name:Invoice_summary.menu_print_invoice_summary_report
+#: model_terms:ir.ui.view,arch_db:Invoice_summary.view_print_invoice_summary_form
+msgid "Print Invoice Summary Report"
+msgstr "Imprimer relevé des factures"
+
+#. module: Invoice_summary
+#: model_terms:ir.ui.view,arch_db:Invoice_summary.view_print_invoice_summary_form
+msgid "Print PDF"
+msgstr "Imprimer PDF"
+
+#. module: Invoice_summary
+#: model:ir.model.fields,field_description:Invoice_summary.field_print_invoice_summary__to_date
+msgid "To Date"
+msgstr "À ce jour"
+
+#. module: Invoice_summary
+#: model:ir.model.fields.selection,name:Invoice_summary.selection__print_invoice_summary__invoice_status__un_paid
+msgid "Unpaid"
+msgstr "Non payé"
+
+#. module: Invoice_summary
+#: model_terms:ir.ui.view,arch_db:Invoice_summary.invoice_summary_report_pdf
+msgid "Unpaid invoice"
+msgstr "Facture impayée"
+
+#. module: Invoice_summary
+#: model:ir.model,name:Invoice_summary.model_print_invoice_summary
+msgid "print.invoice.summary"
+msgstr "imprimer.facture.résumé"
