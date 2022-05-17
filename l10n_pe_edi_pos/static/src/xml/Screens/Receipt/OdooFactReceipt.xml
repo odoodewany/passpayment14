@@ -15,17 +15,24 @@
             </t>
             <div class="pos-receipt-contact">
                 <t t-set="invoice" t-value="env.pos.get_order()"/>
-                <t t-if='receipt.company.contact_address'>
+                <t t-if='receipt.company.contact_address and !receipt.header'>
                     <div style="text-transform: uppercase;"><t t-esc='receipt.company.contact_address' /></div>
                 </t>
                 
-                <t t-esc="env.pos.company.country.state_id"/>
-                <div class="pos-receipt-center-align" style="text-transform: uppercase;">
+                <t t-if="!receipt.header" t-esc="env.pos.company.country.state_id"/>
+                <div t-if="!receipt.header" class="pos-receipt-center-align" style="text-transform: uppercase;">
                     <span t-if='env.pos.company.street'><t  t-esc='env.pos.company.street' />, </span>
                     <span t-if='env.pos.company.district_id'><t t-esc="env.pos.company.district_id[1]" />- </span>
                     <span t-if='env.pos.company.province_id'><t t-esc="env.pos.company.province_id[1]" />- </span>
                     <span t-if='env.pos.company.state_id'><t t-esc="env.pos.company.state_id[1]"/></span>   
                 </div>
+            
+                <t t-if="receipt.header">
+                    <div class="pos-receipt-center-align">
+                        <t t-esc="receipt.header" />
+                    </div>
+                    <br/>
+                </t>
                 
                 <t t-if='receipt.company.vat'>
                     <div style="font-size: 12px;font-weight: bold;" >RUC:<t t-esc='receipt.company.vat' /></div>
