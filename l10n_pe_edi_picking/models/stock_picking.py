@@ -213,8 +213,8 @@ class StockPicking(models.Model):
         return result
 
     def convert_to_epicking(self):
-        if self.state != 'done':
-            raise UserError(_("This document cannot be converted to electronic picking. The picking should be done"))
+        # if self.state != 'done':
+        #     raise UserError(_("This document cannot be converted to electronic picking. The picking should be done"))
         if self.picking_type_id.l10n_pe_edi_is_epicking:
             if self.l10n_pe_edi_picking_partner_id.l10n_latam_identification_type_id and self.l10n_pe_edi_picking_partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code in ['6','1','-','4','7','A','0'] and self.l10n_pe_edi_picking_partner_id.vat:
                 self.l10n_pe_edi_is_epicking = True
