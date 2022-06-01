@@ -17,9 +17,9 @@ class AccountMove(models.Model):
 		company_id = self._context.get('default_company_id', self.env.company.id)
 		domain = [('company_id', '=', company_id), ('type', 'in', journal_types)]
 
-		journals_uid = self.env.user.sale_journal_ids
-		if 'sale' in journal_types and journals_uid:
-			domain = [('id', 'in', journals_uid.ids)]
+		# journals_uid = self.env.user.sale_journal_ids
+		# if 'sale' in journal_types and journals_uid:
+		# 	domain = [('id', 'in', journals_uid.ids)]
 
 		journal = None
 		if self._context.get('default_currency_id'):
@@ -71,13 +71,13 @@ class AccountMove(models.Model):
 
 	@api.depends('company_id', 'invoice_filter_type_domain', 'move_type')
 	def _compute_suitable_journal_ids(self):
-		journals_uid = self.env.user.sale_journal_ids
+		# journals_uid = self.env.user.sale_journal_ids
 		for m in self:
 			journal_type = m.invoice_filter_type_domain or 'general'
 			company_id = m.company_id.id or self.env.company.id
 			domain = [('company_id', '=', company_id), ('type', '=', journal_type)]
-			if m.move_type == 'out_invoice' and journals_uid:
-				domain.append(('id', 'in', journals_uid.ids))
+			# if m.move_type == 'out_invoice' and journals_uid:
+			# 	domain.append(('id', 'in', journals_uid.ids))
 			m.suitable_journal_ids = self.env['account.journal'].search(domain)
 
 	journal_id = fields.Many2one('account.journal', string='Journal', required=True, readonly=True,
