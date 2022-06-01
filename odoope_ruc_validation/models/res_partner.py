@@ -23,8 +23,8 @@ class ResPartner(models.Model):
 	def _default_country(self):
 		return self.env.company.country_id.id
 
-	# company_id = fields.Many2one('res.company', 'Company', index=True, default=lambda self: self.env.company)
-	company_id = fields.Many2one('res.company', 'Company', index=True, default=False)
+	company_id = fields.Many2one('res.company', 'Company', index=True, default=lambda self: self.env.company)
+	# company_id = fields.Many2one('res.company', 'Company', index=True, default=False)
 	country_id = fields.Many2one(default=_default_country)
 	commercial_name = fields.Char(string="Commercial Name")
 	state = fields.Selection([('habido','Habido'),('nhabido','No Habido')], string="State")
