@@ -50,7 +50,9 @@ class InvoiceStockMove(models.Model):
 				else:
 					self.shipment_status = 'received'                    
 			   
-
+	stock_picking = fields.Boolean("Stock Picking From Invoice", related="company_id.stock_picking")
+	stock_picking_bill = fields.Boolean("Stock Picking From Bills", related="company_id.stock_picking_bill")
+	
 	picking_count = fields.Integer(string="Count",compute='_compute_picking_count')
 	picking_shipment_count = fields.Integer(string="Count",compute='_compute_shipment_count')
 	invoice_picking_id = fields.Many2one('stock.picking', string="Picking Id")
