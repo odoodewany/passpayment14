@@ -9,6 +9,7 @@
 #
 ###############################################################################
 
+from email.policy import default
 import json, requests, pytz
 
 from odoo import fields, models, api, _
@@ -26,6 +27,21 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     #---------SEND OSE-------------------
+    def picking_driver_doc_type(self):
+        partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+        if partner:
+            return partner.l10n_latam_identification_type_id.id
+        return False
+    # def picking_driver_doc_number(self):
+    #     partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+    #     if partner:
+    #         return partner.vat
+    #     return False
+    # def picking_driver_name(self):
+    #     partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+    #     if partner:
+    #         return partner.name
+    #     return False
 
     l10n_pe_edi_picking_company_partner_id = fields.Many2one('res.partner', string="Company Partner", related='company_id.partner_id')
     l10n_pe_edi_picking_partner_id = fields.Many2one('res.partner', string="Partner", compute='_compute_l10n_pe_edi_picking_partner', store=True)
@@ -46,7 +62,7 @@ class StockPicking(models.Model):
     l10n_pe_edi_picking_carrier_name = fields.Char(string="Carrier Name")
     l10n_pe_edi_picking_carrier_license_plate = fields.Char(string="License Plate")
     l10n_pe_edi_picking_driver_id = fields.Many2one('res.partner', string="Driver")
-    l10n_pe_edi_picking_driver_doc_type = fields.Many2one('l10n_latam.identification.type', string="Driver Document Type")
+    l10n_pe_edi_picking_driver_doc_type = fields.Many2one('l10n_latam.identification.type', string="Driver Document Type", default=picking_driver_doc_type)
     l10n_pe_edi_picking_driver_doc_number = fields.Char(string="Driver Document Number")
     l10n_pe_edi_picking_driver_name = fields.Char(string="Driver Name")
     l10n_pe_edi_multishop = fields.Boolean('Multi-Shop', related='company_id.l10n_pe_edi_multishop')
