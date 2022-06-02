@@ -50,7 +50,9 @@ class InvoiceStockMove(models.Model):
 				else:
 					self.shipment_status = 'received'                    
 			   
-
+	stock_picking = fields.Boolean("Stock Picking From Invoice", related="company_id.stock_picking")
+	stock_picking_bill = fields.Boolean("Stock Picking From Bills", related="company_id.stock_picking_bill")
+	
 	picking_count = fields.Integer(string="Count",compute='_compute_picking_count')
 	picking_shipment_count = fields.Integer(string="Count",compute='_compute_shipment_count')
 	invoice_picking_id = fields.Many2one('stock.picking', string="Picking Id")
@@ -248,13 +250,18 @@ class InvoiceStockMove(models.Model):
 
 	def action_view_picking_shipment(self):
 		
-		action = self.env.ref('stock.action_picking_tree_all').read()[0]
+		action = self.env["ir.actions.actions"]._for_xml_id("stock.action_picking_tree_all") #self.env.ref('stock.action_picking_tree_all').read()[0]
 
 		pickings = self.env['stock.picking'].search([('origin', '=', self.name)])
 		if len(pickings) > 1:
 			action['domain'] = [('id', 'in', pickings.ids)]
 		elif pickings:
-			action['views'] = [(self.env.ref('stock.view_picking_form').id, 'form')]
+			# action['views'] = [(self.env.ref('stock.view_picking_form').id, 'form')]
+			form_view = [(self.env.ref('stock.view_picking_form').id, 'form')]
+			if 'views' in action:
+				action['views'] = form_view + [(state,view) for state,view in action['views'] if view != 'form']
+			else:
+				action['views'] = form_view
 			action['res_id'] = pickings.id
 		return action
 		pickings.state = "assigned"
