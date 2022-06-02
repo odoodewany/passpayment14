@@ -9,12 +9,13 @@
 #
 ###############################################################################
 
+from email.policy import default
 import json, requests, pytz
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
 from bs4 import BeautifulSoup
-
+from datetime import datetime
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 
@@ -38,7 +39,7 @@ class StockPicking(models.Model):
     l10n_pe_edi_picking_number_packages = fields.Integer(string="Number Of Packages", default=0)
     l10n_pe_edi_picking_catalog_18_id = fields.Many2one('l10n_pe_edi.catalog.18', string="Transport Type")
     l10n_pe_edi_picking_catalog_18_code = fields.Char(related='l10n_pe_edi_picking_catalog_18_id.code')
-    l10n_pe_edi_picking_start_transport_date = fields.Date(string="Start Transport Date", copy=False)
+    l10n_pe_edi_picking_start_transport_date = fields.Date(string="Start Transport Date", copy=False, default=datetime.today().strftime('%Y-%m-%d'))
     l10n_pe_edi_picking_partner_for_carrier_driver = fields.Boolean(related='company_id.l10n_pe_edi_picking_partner_for_carrier_driver')
     l10n_pe_edi_picking_carrier_id = fields.Many2one('res.partner', string="Carrier")
     l10n_pe_edi_picking_carrier_doc_type = fields.Many2one('l10n_latam.identification.type', string="Carrier Document Type")
@@ -192,6 +193,27 @@ class StockPicking(models.Model):
                 result = self.env['res.partner'].l10n_pe_ruc_connection(self.l10n_pe_edi_picking_driver_doc_number)
                 if result:
                     self.l10n_pe_edi_picking_driver_name = str(result['business_name']).strip()
+
+    @api.onchange('picking_type_id')
+    def _onchange_partner(self):
+        if self.partner_id:
+          
+            self.l10n_pe_edi_picking_starting_point_state_id = self.picking_type_id.company_id.state_id.id
+            #self.l10n_pe_edi_picking_starting_point_province_id = self.picking_type_id.company_id.city
+            self.l10n_pe_edi_picking_starting_point_district_id = self.picking_type_id.company_id.street2
+            self.l10n_pe_edi_picking_starting_point_ubigeo = self.picking_type_id.company_id.zip
+            self.l10n_pe_edi_picking_starting_point_street = self.picking_type_id.company_id.street_name
+
+    @api.onchange('partner_id')
+    def _onchange_picking_type_id(self):
+        if self.picking_type_id:
+          
+            self.l10n_pe_edi_picking_arrival_point_state_id = self.partner_id.state_id.id
+            self.l10n_pe_edi_picking_arrival_point_province_id = self.partner_id.city_id.id
+            self.l10n_pe_edi_picking_arrival_point_district_id = self.partner_id.l10n_pe_district.id
+            self.l10n_pe_edi_picking_arrival_point_ubigeo = self.partner_id.zip
+            self.l10n_pe_edi_picking_arrival_point_street = self.partner_id.street
+            
 
     #-----------METHODS---------------------------
 

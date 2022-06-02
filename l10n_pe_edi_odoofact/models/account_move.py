@@ -174,8 +174,8 @@ class AccountMove(models.Model):
 		'line_ids.amount_currency',
 		'line_ids.amount_residual',
 		'line_ids.amount_residual_currency',
-		'line_ids.payment_id.state',
-		'amount_by_group')
+		'line_ids.payment_id.state'
+		)
 	def _compute_edi_amount(self):
 		for move in self:
 			total_untaxed = 0.0
