@@ -11,6 +11,9 @@
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="is_driver"/>
             </xpath>
+            <xpath expr="//field[@name='is_driver']" position="after">
+                <field name="placa" attrs="{'readonly':[('is_driver','=',False)]}"/>
+            </xpath>
         </field>
     </record>
 </odoo>

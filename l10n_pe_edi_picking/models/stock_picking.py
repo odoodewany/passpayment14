@@ -15,7 +15,7 @@ import json, requests, pytz
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
 from bs4 import BeautifulSoup
-
+from datetime import datetime
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 
@@ -32,16 +32,24 @@ class StockPicking(models.Model):
         if partner:
             return partner.l10n_latam_identification_type_id.id
         return False
-    # def picking_driver_doc_number(self):
-    #     partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
-    #     if partner:
-    #         return partner.vat
-    #     return False
-    # def picking_driver_name(self):
-    #     partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
-    #     if partner:
-    #         return partner.name
-    #     return False
+
+    def picking_driver_doc_number(self):
+        partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+        if partner:
+            return partner.vat
+        return False
+
+    def picking_driver_name(self):
+        partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+        if partner:
+            return partner.name
+        return False
+    
+    def picking_catalog_18_id(self):
+        selection = self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')])
+        if selection:
+            return selection.id
+        return False
 
     l10n_pe_edi_picking_company_partner_id = fields.Many2one('res.partner', string="Company Partner", related='company_id.partner_id')
     l10n_pe_edi_picking_partner_id = fields.Many2one('res.partner', string="Partner", compute='_compute_l10n_pe_edi_picking_partner', store=True)
@@ -52,9 +60,9 @@ class StockPicking(models.Model):
     l10n_pe_edi_picking_catalog_20_id = fields.Many2one('l10n_pe_edi.catalog.20', string="Reason for transfer")
     l10n_pe_edi_picking_total_gross_weight = fields.Float(string="Total Gross Weight", default=0.0, help='Weight in Kg.')
     l10n_pe_edi_picking_number_packages = fields.Integer(string="Number Of Packages", default=0)
-    l10n_pe_edi_picking_catalog_18_id = fields.Many2one('l10n_pe_edi.catalog.18', string="Transport Type")
+    l10n_pe_edi_picking_catalog_18_id = fields.Many2one('l10n_pe_edi.catalog.18', string="Transport Type", default=picking_catalog_18_id)
     l10n_pe_edi_picking_catalog_18_code = fields.Char(related='l10n_pe_edi_picking_catalog_18_id.code')
-    l10n_pe_edi_picking_start_transport_date = fields.Date(string="Start Transport Date", copy=False)
+    l10n_pe_edi_picking_start_transport_date = fields.Date(string="Start Transport Date", copy=False, default=datetime.today().strftime('%Y-%m-%d'))
     l10n_pe_edi_picking_partner_for_carrier_driver = fields.Boolean(related='company_id.l10n_pe_edi_picking_partner_for_carrier_driver')
     l10n_pe_edi_picking_carrier_id = fields.Many2one('res.partner', string="Carrier")
     l10n_pe_edi_picking_carrier_doc_type = fields.Many2one('l10n_latam.identification.type', string="Carrier Document Type")
@@ -63,8 +71,8 @@ class StockPicking(models.Model):
     l10n_pe_edi_picking_carrier_license_plate = fields.Char(string="License Plate")
     l10n_pe_edi_picking_driver_id = fields.Many2one('res.partner', string="Driver")
     l10n_pe_edi_picking_driver_doc_type = fields.Many2one('l10n_latam.identification.type', string="Driver Document Type", default=picking_driver_doc_type)
-    l10n_pe_edi_picking_driver_doc_number = fields.Char(string="Driver Document Number")
-    l10n_pe_edi_picking_driver_name = fields.Char(string="Driver Name")
+    l10n_pe_edi_picking_driver_doc_number = fields.Char(string="Driver Document Number", default=picking_driver_doc_number)
+    l10n_pe_edi_picking_driver_name = fields.Char(string="Driver Name", default=picking_driver_name)
     l10n_pe_edi_multishop = fields.Boolean('Multi-Shop', related='company_id.l10n_pe_edi_multishop')
     l10n_pe_edi_shop_id = fields.Many2one('l10n_pe_edi.shop', string='Shop', related='picking_type_id.l10n_pe_edi_shop_id', store=True)
     l10n_pe_edi_picking_partner_for_starting_arrival_point = fields.Boolean(related='company_id.l10n_pe_edi_picking_partner_for_starting_arrival_point')
@@ -211,7 +219,7 @@ class StockPicking(models.Model):
     
     @api.onchange('picking_type_id')
     def _onchange_partner(self):
-        if self.partner_id:
+        if self.picking_type_id:
           
             self.l10n_pe_edi_picking_starting_point_state_id = self.picking_type_id.company_id.state_id.id
             #self.l10n_pe_edi_picking_starting_point_province_id = self.picking_type_id.company_id.city
@@ -221,13 +229,52 @@ class StockPicking(models.Model):
 
     @api.onchange('partner_id')
     def _onchange_picking_type_id(self):
-        if self.picking_type_id:
-          
+        if self.partner_id: 
             self.l10n_pe_edi_picking_arrival_point_state_id = self.partner_id.state_id.id
             self.l10n_pe_edi_picking_arrival_point_province_id = self.partner_id.city_id.id
             self.l10n_pe_edi_picking_arrival_point_district_id = self.partner_id.l10n_pe_district.id
             self.l10n_pe_edi_picking_arrival_point_ubigeo = self.partner_id.zip
             self.l10n_pe_edi_picking_arrival_point_street = self.partner_id.street
+
+            # partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+            # if partner:
+            #     if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')]).id:
+            #         self.l10n_pe_edi_picking_driver_doc_type = partner.l10n_latam_identification_type_id.id
+            #         self.l10n_pe_edi_picking_driver_doc_number = partner.vat
+            #         self.l10n_pe_edi_picking_driver_name = partner.name
+            #         self.l10n_pe_edi_picking_carrier_doc_type = ""
+            #         self.l10n_pe_edi_picking_carrier_doc_number = ""
+            #         self.l10n_pe_edi_picking_carrier_name = ""
+            #         self.l10n_pe_edi_picking_carrier_license_plate = ""
+            #     else:
+            #         self.l10n_pe_edi_picking_carrier_doc_type = partner.l10n_latam_identification_type_id.id
+            #         self.l10n_pe_edi_picking_carrier_doc_number = partner.vat
+            #         self.l10n_pe_edi_picking_carrier_name = partner.name
+            #         self.l10n_pe_edi_picking_carrier_license_plate = partner.placa
+            #         self.l10n_pe_edi_picking_driver_doc_type = ""
+            #         self.l10n_pe_edi_picking_driver_doc_number = ""
+            #         self.l10n_pe_edi_picking_driver_name = ""
+
+    @api.onchange('l10n_pe_edi_picking_catalog_18_id')
+    def _onchange_picking_catalog_18_id(self):
+        partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+        
+        if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')]).id:
+            self.l10n_pe_edi_picking_driver_doc_type = partner.l10n_latam_identification_type_id.id
+            self.l10n_pe_edi_picking_driver_doc_number = partner.vat
+            self.l10n_pe_edi_picking_driver_name = partner.name
+            self.l10n_pe_edi_picking_carrier_doc_type = ""
+            self.l10n_pe_edi_picking_carrier_doc_number = ""
+            self.l10n_pe_edi_picking_carrier_name = ""
+            self.l10n_pe_edi_picking_carrier_license_plate = ""
+        else:
+            self.l10n_pe_edi_picking_carrier_doc_type = partner.l10n_latam_identification_type_id.id
+            self.l10n_pe_edi_picking_carrier_doc_number = partner.vat
+            self.l10n_pe_edi_picking_carrier_name = partner.name
+            self.l10n_pe_edi_picking_carrier_license_plate = partner.placa
+            self.l10n_pe_edi_picking_driver_doc_type = ""
+            self.l10n_pe_edi_picking_driver_doc_number = ""
+            self.l10n_pe_edi_picking_driver_name = ""
 
     #-----------METHODS---------------------------
 
