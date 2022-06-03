@@ -195,27 +195,51 @@ class StockPicking(models.Model):
             self.l10n_pe_edi_picking_driver_doc_number = self.l10n_pe_edi_picking_driver_id.vat
             self.l10n_pe_edi_picking_driver_name = self.l10n_pe_edi_picking_driver_id.name
     
+    # @api.onchange('l10n_pe_edi_picking_carrier_doc_type', 'l10n_pe_edi_picking_carrier_doc_number')
+    # def _onchange_carrier_doc_type(self):
+    #     if not self.l10n_pe_edi_picking_partner_for_carrier_driver and self.l10n_pe_edi_picking_carrier_doc_type and self.l10n_pe_edi_picking_carrier_doc_number:
+    #         if self.l10n_pe_edi_picking_carrier_doc_type.l10n_pe_vat_code == '1':
+    #             result = self.env['res.partner'].l10n_pe_dni_connection(self.l10n_pe_edi_picking_carrier_doc_number)
+    #             self.l10n_pe_edi_picking_carrier_name = str(result['nombre'] if result else '').strip()
+    #         if self.l10n_pe_edi_picking_carrier_doc_type.l10n_pe_vat_code == '6':
+    #             result = self.env['res.partner'].l10n_pe_ruc_connection(self.l10n_pe_edi_picking_carrier_doc_number)
+    #             if result:
+    #                 self.l10n_pe_edi_picking_carrier_name = str(result['business_name']).strip()
+
     @api.onchange('l10n_pe_edi_picking_carrier_doc_type', 'l10n_pe_edi_picking_carrier_doc_number')
     def _onchange_carrier_doc_type(self):
         if not self.l10n_pe_edi_picking_partner_for_carrier_driver and self.l10n_pe_edi_picking_carrier_doc_type and self.l10n_pe_edi_picking_carrier_doc_number:
             if self.l10n_pe_edi_picking_carrier_doc_type.l10n_pe_vat_code == '1':
                 result = self.env['res.partner'].l10n_pe_dni_connection(self.l10n_pe_edi_picking_carrier_doc_number)
-                self.l10n_pe_edi_picking_carrier_name = str(result['nombre'] if result else '').strip()
+                if result:
+                    self.l10n_pe_edi_picking_carrier_name = str(result['nombre']).strip()
             if self.l10n_pe_edi_picking_carrier_doc_type.l10n_pe_vat_code == '6':
                 result = self.env['res.partner'].l10n_pe_ruc_connection(self.l10n_pe_edi_picking_carrier_doc_number)
                 if result:
                     self.l10n_pe_edi_picking_carrier_name = str(result['business_name']).strip()
     
+    # @api.onchange('l10n_pe_edi_picking_driver_doc_type', 'l10n_pe_edi_picking_driver_doc_number')
+    # def _onchange_driver_doc_type(self):
+    #     if not self.l10n_pe_edi_picking_partner_for_carrier_driver and self.l10n_pe_edi_picking_driver_doc_type and self.l10n_pe_edi_picking_driver_doc_number:
+    #          if self.l10n_pe_edi_picking_driver_doc_type.l10n_pe_vat_code == '1':
+    #              result = self.env['res.partner'].l10n_pe_dni_connection(self.l10n_pe_edi_picking_driver_doc_number)
+    #              self.l10n_pe_edi_picking_driver_name = str(result['nombre'] if result else '').strip()
+    #          if self.l10n_pe_edi_picking_driver_doc_type.l10n_pe_vat_code == '6':
+    #              result = self.env['res.partner'].l10n_pe_ruc_connection(self.l10n_pe_edi_picking_driver_doc_number)
+    #              if result:
+    #                  self.l10n_pe_edi_picking_driver_name = str(result['business_name']).strip()
+
     @api.onchange('l10n_pe_edi_picking_driver_doc_type', 'l10n_pe_edi_picking_driver_doc_number')
     def _onchange_driver_doc_type(self):
         if not self.l10n_pe_edi_picking_partner_for_carrier_driver and self.l10n_pe_edi_picking_driver_doc_type and self.l10n_pe_edi_picking_driver_doc_number:
-            if self.l10n_pe_edi_picking_driver_doc_type.l10n_pe_vat_code == '1':
-                result = self.env['res.partner'].l10n_pe_dni_connection(self.l10n_pe_edi_picking_driver_doc_number)
-                self.l10n_pe_edi_picking_driver_name = str(result['nombre'] if result else '').strip()
-            if self.l10n_pe_edi_picking_driver_doc_type.l10n_pe_vat_code == '6':
-                result = self.env['res.partner'].l10n_pe_ruc_connection(self.l10n_pe_edi_picking_driver_doc_number)
-                if result:
-                    self.l10n_pe_edi_picking_driver_name = str(result['business_name']).strip()
+             if self.l10n_pe_edi_picking_driver_doc_type.l10n_pe_vat_code == '1':
+                 result = self.env['res.partner'].l10n_pe_dni_connection(self.l10n_pe_edi_picking_driver_doc_number)
+                 if result:
+                     self.l10n_pe_edi_picking_driver_name = str(result['nombre']).strip()
+             if self.l10n_pe_edi_picking_driver_doc_type.l10n_pe_vat_code == '6':
+                 result = self.env['res.partner'].l10n_pe_ruc_connection(self.l10n_pe_edi_picking_driver_doc_number)
+                 if result:
+                     self.l10n_pe_edi_picking_driver_name = str(result['business_name']).strip()
     
     @api.onchange('picking_type_id')
     def _onchange_partner(self):
