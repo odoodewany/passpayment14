@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="summary_account_move_line_view_form" model="ir.ui.view">
+        <field name="name">summary.account.move.line.view.form</field>
+        <field name="model">summary.account.move.line</field>
+        <field name="arch" type="xml">
+            <form string="Reporte">
+                <sheet>
+                    <group col="6">
+                        <field name="initial_date" />
+                        <field name="end_date" />
+                        <field name="partner_id" />
+                    </group>
+                    <group >
+                        <field name="move_line_ids" />
+                    </group>
+                    <button string="Imprimir reporte" name="print_report" type="object" class="btn-primary" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="summary_account_move_line_action" model="ir.actions.act_window">
+        <field name="name">Reporte de lineas de factura</field>
+        <field name="res_model">summary.account.move.line</field>            
+        <field name="view_mode">form</field>
+        <!-- <field name="target">new</field> -->
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_report_summary_account_move_line" model="ir.actions.report">
+        <field name="name">Reporte de lineas de factura</field>
+        <field name="model">summary.account.move.line</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">summary_invoice_report.report_summary_account_move_line</field>
+        <field name="report_file">summary_invoice_report.report_summary_account_move_line</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="binding_model_id" ref="model_summary_account_move_line" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <menuitem
+        id="summary_account_move_line_menu"
+        name="Informe de lineas de facturas"
+        action="summary_account_move_line_action"
+        parent="account.menu_finance_reports"
+        sequence="10"/>
+
+</odoo>
