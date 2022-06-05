@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="pos_payment_template" inherit_id="point_of_sale.template" xml:space="preserve">
+	<t t-name="SeeAllProductsButtonWidget"  owl="1">
+		<div class="control-button">
+			<i class="fa fa-money"></i>
+			<span> </span>
+			<span>Productos</span>
+		</div>
+	</t>
+
+	<t t-name="POSProductScreen" owl="1">
+		<div class="clientlist-screen screen">
+			<div class="screen-content orders-screen">
+				<div class="top-content">
+					<div class="button back odoo-theme-color" t-on-click="cancel">
+						<t t-if="!env.isMobile">Descartar</t>
+						<t t-else="">
+							<i class="fa fa-undo"></i>
+						</t>
+					</div>
+					<div class="button refresh-order odoo-theme-color" t-on-click="refresh_orders">
+						<i class='fa fa-refresh'></i>
+					</div>
+					<t t-if= "env.pos.config.allow_edit_product">
+						<div class="button confirm odoo-theme-color" id="create_customer_payment" t-on-click="create_order">
+							Crear Producto
+						</div>
+					</t>
+					<div class="searchbox-client top-content-center">
+						<input placeholder="Search Products" size="1"  t-on-keyup="updateProductList" class="input-search-orders"/>
+					</div>
+				</div>
+				<section class="full-content">
+					<div class="client-window">
+						<section class="subwindow collapsed">
+							<div class="subwindow-container collapsed">
+							</div>
+						</section>
+						<section class="subwindow list">
+							<div class="subwindow-container">
+								<div  class="subwindow-container-fix scrollable-y">
+									<table class="client-list">
+										<thead>
+											<tr class="odoo-theme-color">
+												<th class="order_ref">Producto</th>
+												<th class="receipt_ref">Und. Med.</th>
+												<th class="receipt_ref">Categoría de Producto</th>
+												<th class="order_cstmr">Lista de Precios</th>
+												<th class="order_date">Precio de Costo</th>
+												<th class="order_state">Código de Barras</th>
+											</tr>
+										</thead>
+										<tbody class="posorders-list-contents">
+											<t t-if="!pos_orders">
+												<tr>
+													<td>Cargando....</td>
+												</tr>
+											</t>
+											<t t-foreach="pos_orders" t-as="order" t-key="order.id">
+												<POSProduct order = "order" selectedPosOrder="state.selectedPosOrder" t-on-click-order="clickPosOrder"/>
+											</t>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</section>
+					</div>
+				</section>
+			</div>
+		</div>
+	</t>
+
+
+	<t t-name="POSProduct" owl="1">
+		<tr t-attf-class="client-line {{highlight}}" t-att-data-id="props.order.id" t-on-click="trigger('click-order', {order: props.order})">
+			<td class='order-name' t-att-data-id='props.order.id' t-on-click.stop="trigger('click-showDetails',props.order)">
+				<t t-esc='props.order.display_name' />
+			</td>
+			<td class='order-name' t-att-data-id='props.order.id'  t-on-click.stop="trigger('click-showDetails',props.order)">
+				<t t-esc='props.order.uom_id[1] or ""' />
+			</td>
+			<td class='order-name' t-att-data-id='props.order.id'  t-on-click.stop="trigger('click-showDetails',props.order)">
+				<t t-esc='props.order.categ_id[1] or ""' />
+			</td>
+			<td class='order-name' t-att-data-id='props.order.id' t-on-click.stop="trigger('click-showDetails',props.order)">
+				<t t-esc='(props.order.lst_price or 0.0).toFixed(2)' />
+			</td>
+			<td class='order-name' t-att-data-id='props.order.id'  t-on-click.stop="trigger('click-showDetails',props.order)">
+				<t t-esc='(props.order.standard_price or 0.0).toFixed(2)' />
+			</td>
+			<td class='order-name' t-att-data-id='props.order.id' t-on-click.stop="trigger('click-showDetails',props.order)">
+				<t t-esc='props.order.barcode or ""' />
+			</td>
+		</tr>
+	</t>
+
+	<t t-name="POSProductDetail" owl="1">
+		<div role="dialog" class="modal-dialog">
+			<Draggable>
+				<div class="popup bi-popup-width">
+					<header class="title drag-handle">
+						detalles del Producto
+					</header>
+					<main class="body traceback" style="font-family: 'Lato-Reg';">
+						<div>
+							<div class='client-name' style='float: left;margin-left: 50px;'>
+								<h2><t t-esc='order["display_name"]'/></h2>
+							</div>
+				            <div class="client-picture" style='float: right;margin-right: 40px;'>
+				                <t t-if="productImageUrl">
+				                    <img t-att-src="productImageUrl" alt="Product"
+				                         style="width: 64px; height: 64px; object-fit: cover;" />
+				                </t>
+				                <t t-else="">
+				                    <i class="fa fa-camera" role="img" aria-label="Picture" title="Picture"></i>
+				                </t>
+				                <!-- <input type="file" class="image-uploader" t-on-change="uploadImage" /> -->
+				            </div>
+				        </div>
+						<t t-set="order" t-value="props.order || []"/>
+						<table style='width:100%'>
+							<tr class="popup-tr">
+								<td style='width:20%; '><strong>Categoria de Producto:</strong>
+								</td>
+								<td style='width:30%; '  t-if="order['categ_id']">
+									<span t-esc="order['categ_id'][1] or ''"/>
+								</td>
+								<td style='width:20%; '><strong>Unidad de Medida:</strong>
+								</td>
+								<td style='width:30%; '  t-if="order['uom_id']">
+									<span t-esc="order['uom_id'][1] or ''"/>
+								</td>
+							</tr>
+							<tr class="popup-tr">
+								<td style='width:20%; '><strong>Impuestos de Cliente:</strong>
+								</td>
+								<td style='width:30%; '>    
+									<div t-foreach="order['taxes_id']" t-as="tax" t-key='tax'>
+										<t t-esc="env.pos.taxes_by_id[tax].name" />
+									</div>
+								</td>
+								<td style='width:20%; '><strong>Código de Barras:</strong>
+								</td>
+								<td style='width:30%; '>    
+									<span t-esc="order['barcode'] or ''"/>
+								</td>
+							</tr>
+							<!-- <tr class="popup-tr" t-if="order['taxes_id']">
+								<td style='width:20%; '><strong>Customer Taxes:</strong>
+								</td>
+								<td style='width:30%; '>    
+									<div t-foreach="order['taxes_id']" t-as="tax" t-key='tax'>
+										<t t-esc="env.pos.taxes_by_id[tax].name" />
+									</div>
+								</td>
+							</tr> -->
+							<tr class="popup-tr">
+								<td style='width:20%; '><strong>Precio de Venta:</strong>
+								</td>
+								<td style='width:30%; '>
+									<t t-esc="(order['lst_price']).toFixed(2)" />  
+								</td>
+								<td style='width:20%; '><strong>Precio de Costo:</strong>
+								</td>
+								<td style='width:30%; '>
+									<t t-esc="(order['standard_price']).toFixed(2)" />
+								</td>
+							</tr>
+						</table>
+						<br/>
+					</main>
+					<footer class="footer">
+						<t t-if= "env.pos.config.allow_edit_product">
+							<div class="button confirm" id="create_customer_payment" style="background-color: rgb(110,200,155) !important; color: #fff;" t-on-click="edit_product">
+								Editar
+							</div>
+						</t>
+						<div class="button cancel odoo-theme-color" t-on-click="cancel">
+							Cerrar
+						</div>
+					</footer>
+				</div>
+			</Draggable>
+		</div>
+	</t>
+
+	<t t-name="ProductDetailsCreate" owl="1">
+		<div role="dialog" class="modal-dialog">
+			<div class="popup popup-confirm">
+				<p class="title"  style='background-color:rgb(110,200,155) !important; color:white'>
+					<t t-esc="props.title" />
+				</p>
+				<div class="body" style="color: rgb(110,200,155) !important;">
+					<div class='client-details-box clearfix'>
+<!-- 						<div class='client-picture'>
+							<input type='file' class='image-uploader' name="image"></input>
+						</div> -->
+			            <div class="client-picture">
+			                <t t-if="partnerImageUrl">
+			                    <img t-att-src="partnerImageUrl" alt="Partner"
+			                         style="width: 64px; height: 64px; object-fit: cover;" />
+			                </t>
+			                <t t-else="">
+			                    <i class="fa fa-camera" role="img" aria-label="Picture" title="Picture"></i>
+			                </t>
+			                <input type="file" class="image-uploader" t-on-change="uploadImage" />
+			            </div>
+						<div class='client-detail'>
+							<input class='detail client-name' name='display_name' placeholder='Name'></input>
+						</div>
+	                    <div class="client-detail">
+	                        <select class="detail client-address-country needsclick" name="pos_categ_id" style="text-align: left;display: inline-block;overflow: hidden;background: white;min-height: 44px;font-family: 'Lato';font-size: 20px;color: #444;padding: 10px;border-radius: 3px;border: none;box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;box-sizing: border-box;width: 80%;">
+	                            <option value="">Seleccionar Categoría de POS</option>
+	                            <t t-foreach="env.pos.pos_category" t-as="category" t-key="category.id">
+	                                <option t-att-value="category.id">
+	                                    <t t-esc="category.name" />
+	                                </option>
+	                            </t>
+	                        </select>
+	                    </div>
+	                    <div class="client-detail">
+	                        <select class="detail client-address-country needsclick" name="uom_id" style="text-align: left;display: inline-block;overflow: hidden;background: white;min-height: 44px;font-family: 'Lato';font-size: 20px;color: #444;padding: 10px;border-radius: 3px;border: none;box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;box-sizing: border-box;width: 80%;">
+	                            <option value="">Seleccionar Unidad de Medida</option>
+	                            <t t-foreach="env.pos.units" t-as="uom" t-key="uom.id">
+	                                <option t-att-value="uom.id">
+	                                    <t t-esc="uom.name" />
+	                                </option>
+	                            </t>
+	                        </select>
+	                    </div>
+						<div class='client-detail'>
+							<input class='detail barcode' name='barcode' placeholder='Barcode'></input>
+						</div>
+						<div class='client-detail'>
+							<input class='detail client-address-city' name='list_price' placeholder='Sale Price'></input>
+						</div>
+						<div class='client-detail'>
+							<input class='detail client-price' name='cost_price' placeholder='Cost Price'></input>
+						</div>
+					</div>
+				</div>
+				<footer class="footer">
+					<div class="button confirm" style="background-color: rgb(110,200,155) !important; color: #fff;" t-on-click="create_product">
+						Crear
+					</div>
+					<div class="button cancel odoo-theme-color" t-on-click="cancel">
+						Cerrar
+					</div>
+				</footer>
+			</div>
+		</div>
+	</t>
+
+
+	<t t-name="ProductDetailsEdit" owl="1">
+		<div role="dialog" class="modal-dialog">
+			<div class="popup popup-confirm">
+				<p class="title"  style='background-color:rgb(110,200,155) !important; color:white'>
+					<t t-esc="props.title" />
+				</p>
+				<div class="body" style="color: rgb(110,200,155) !important;">
+					<div class='client-details-box clearfix'>
+			            <div class="client-picture">
+			                <t t-if="partnerImageUrl">
+			                    <img t-att-src="partnerImageUrl" alt="Partner"
+			                         style="width: 64px; height: 64px; object-fit: cover;" />
+			                </t>
+			                <t t-else="">
+			                    <i class="fa fa-camera" role="img" aria-label="Picture" title="Picture"></i>
+			                </t>
+			                <input type="file" class="image-uploader" t-on-change="uploadImage" />
+			            </div>
+
+						<div class='client-detail'>
+							<input class='detail client-name' name='display_name' t-att-value='product.display_name' placeholder='Name'></input>
+						</div>
+	                    <div class="client-detail">
+	                        <select class="detail client-address-country needsclick" name="pos_categ_id" style="text-align: left;display: inline-block;overflow: hidden;background: white;min-height: 44px;font-family: 'Lato';font-size: 20px;color: #444;padding: 10px;border-radius: 3px;border: none;box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;box-sizing: border-box;width: 80%;">
+	                            <option value="">Seleccionar Categoría de POS</option>
+	                            <t t-foreach="env.pos.pos_category" t-as="category" t-key="category.id">
+	                                <option t-att-value="category.id"
+	                                	 t-att-selected="category.id ? ((category.id === product.pos_categ_id[0]) ? true : undefined) : undefined">
+	                                    <t t-esc="category.name" />
+	                                </option>
+	                            </t>
+	                        </select>
+	                    </div>
+	                    <div class="client-detail">
+	                        <select class="detail client-address-country needsclick" name="uom_id" style="text-align: left;display: inline-block;overflow: hidden;background: white;min-height: 44px;font-family: 'Lato';font-size: 20px;color: #444;padding: 10px;border-radius: 3px;border: none;box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;box-sizing: border-box;width: 80%;">
+	                            <option value="">Seleccionar Unidad de Medida</option>
+	                            <t t-foreach="env.pos.units" t-as="uom" t-key="uom.id">
+	                                <option t-att-value="uom.id"
+	                                	 t-att-selected="uom.id ? ((uom.id === product.uom_id[0]) ? true : undefined) : undefined">
+	                                    <t t-esc="uom.name" />
+	                                </option>
+	                            </t>
+	                        </select>
+	                    </div>
+						<div class='client-detail'>
+							<input class='detail barcode' name='barcode'    t-att-value='product.barcode || ""'></input>
+						</div>
+
+						<div class='client-detail'>
+							<input class='detail client-address-city'  name='list_price' t-att-value='(product.lst_price).toFixed(2)' placeholder='Sale Price'></input>
+						</div>
+
+						<div class='client-detail'>
+							<input class='detail client-price'  name='cost_price' t-att-value='(product.standard_price).toFixed(2) || ""' placeholder='Cost Price'></input>
+						</div>
+					</div>
+				</div>
+				<footer class="footer">
+					<t t-if= "env.pos.config.allow_edit_product">
+						<div class="button confirm" id="create_customer_payment" style="background-color: rgb(110,200,155) !important; color: #fff;" t-on-click="save_product">
+							Guardar
+						</div>
+					</t>
+					<div class="button cancel odoo-theme-color" t-on-click="cancel">
+						Cerrar
+					</div>
+				</footer>
+			</div>
+		</div>
+	</t>
+</templates>

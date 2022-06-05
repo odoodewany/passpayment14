@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : <https://store.webkul.com/license.html/> -->
+
+<templates id="template" xml:space="preserve">
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('payment-buttons')]" position="inside">
+            <t t-if="env.pos.config.partial_payment">
+                <textarea id="partial_payment_description" t-on-focus="focus_in_description" t-on-blur="focus_out_description" t-on-keyup="keyup_description" placeholder="Invoice Remark" cols="" rows="" class="partial-payment-remark"></textarea>
+            </t>
+        </xpath>
+    </t>
+    <t t-name="WkPPAlertPopUp" owl="1">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 203px !important;width: 580px !important;margin-top: 188px;">
+                <p class="title"><t t-esc=" props.title || 'Confirm ?' " /></p>
+                <p class="body"><t t-esc="  props.body || '' "/></p>
+                <div class="footer">
+                    <div class="button cancel" t-on-click="confirm">
+                        OK
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
