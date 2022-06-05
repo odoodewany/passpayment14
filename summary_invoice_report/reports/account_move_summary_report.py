@@ -108,7 +108,7 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
                     '%Y') if line.move_id.invoice_date else ''
                 state = 'SÍ' if line.move_id.state == 'cancel' else 'NO'
                 invoice_user = line.move_id.invoice_user_id.name if line.move_id.invoice_user_id.name else ''
-                document_type = line.partner_id.catalog_06_id.name if line.partner_id.catalog_06_id else ''
+                document_type = line.partner_id.l10n_latam_identification_type_id.name if line.partner_id.l10n_latam_identification_type_id else ''
                 vat = line.partner_id.vat if line.partner_id.vat else ''
                 partner = line.partner_id.name if line.partner_id.name else ''
                 print (line.move_id.line_ids.filtered(lambda line: line.tax_line_id))
