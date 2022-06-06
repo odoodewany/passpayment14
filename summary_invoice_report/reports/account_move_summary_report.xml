@@ -31,7 +31,7 @@
     </record>
 
     <record id="action_report_summary_account_move_line" model="ir.actions.report">
-        <field name="name">Reporte de lineas de factura</field>
+        <field name="name">Reporte de ventas</field>
         <field name="model">summary.account.move.line</field>
         <field name="report_type">xlsx</field>
         <field name="report_name">summary_invoice_report.report_summary_account_move_line</field>
@@ -43,7 +43,7 @@
 
     <menuitem
         id="summary_account_move_line_menu"
-        name="Informe de lineas de facturas"
+        name="Reporte de ventas"
         action="summary_account_move_line_action"
         parent="account.menu_finance_reports"
         sequence="10"/>
