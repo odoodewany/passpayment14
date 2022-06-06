@@ -31,7 +31,7 @@
     </record>
 
     <record id="action_report_summary_account_move_line" model="ir.actions.report">
-        <field name="name">Reporte de lineas de factura</field>
+        <field name="name">Reporte de ventas</field>
         <field name="model">summary.account.move.line</field>
         <field name="report_type">xlsx</field>
         <field name="report_name">summary_invoice_report.report_summary_account_move_line</field>

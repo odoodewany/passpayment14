@@ -79,7 +79,7 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
         sheet.merge_range(
             'A1:B3', self.env.user.company_id.name or "", format21_c_bold)
         sheet.merge_range(
-            'C1:R3', 'LINEAS', format21_c_bold)
+            'C1:R3', 'REPORTE DE VENTAS', format21_c_bold)
 
         sheet.write('A4', 'Anulado', format21_left_bold)
         sheet.write('B4', 'Mes', format21_left_bold)
