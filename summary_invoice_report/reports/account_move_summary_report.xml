@@ -43,7 +43,7 @@
 
     <menuitem
         id="summary_account_move_line_menu"
-        name="Informe de lineas de facturas"
+        name="Reporte de ventas"
         action="summary_account_move_line_action"
         parent="account.menu_finance_reports"
         sequence="10"/>
