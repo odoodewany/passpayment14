@@ -86,7 +86,7 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
         sheet.write('C4', 'Año', format21_left_bold)
         sheet.write('D4', 'Vendedor', format21_left_bold)
         sheet.write('E4', 'Tipo de documento', format21_left_bold)
-        sheet.write('F4', 'Nro de documento del cliente',
+        sheet.write('F4', 'Nro de documento',
                     format21_left_bold)
         sheet.write('G4', 'Fecha de documento',
                     format21_left_bold)
@@ -131,22 +131,20 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
                             format21_left)
                 sheet.write(row, 6, invoice_date,
                             format21_left)
-                sheet.write(row, 7, document_type,
+                sheet.write(row, 7, vat,
                             format21_left)
-                sheet.write(row, 8, vat,
+                sheet.write(row, 8, partner,
                             format21_left)
-                sheet.write(row, 9, partner,
+                sheet.write(row, 9, line.move_id.payment_reference,
                             format21_left)
-                sheet.write(row, 10, line.move_id.payment_reference,
+                sheet.write(row, 10, line.move_id.currency_id.name,
                             format21_left)
-                sheet.write(row, 11, line.move_id.currency_id.name,
+                sheet.write(row, 11, line.product_id.default_code,
                             format21_left)
-                sheet.write(row, 12, line.product_id.default_code,
-                            format21_left)
-                sheet.write(row, 13, line.product_id.name, format21_left)
-                sheet.write(row, 14, line.quantity, format21_left)
-                sheet.write(row, 15, line.price_unit, format21_left)
-                sheet.write(row, 16, line.price_subtotal, format21_left)
-                sheet.write(row, 17, line.price_total -
+                sheet.write(row, 12, line.product_id.name, format21_left)
+                sheet.write(row, 13, line.quantity, format21_left)
+                sheet.write(row, 14, line.price_unit, format21_left)
+                sheet.write(row, 15, line.price_subtotal, format21_left)
+                sheet.write(row, 16, line.price_total -
                             line.price_subtotal, format21_left)
-                sheet.write(row, 18, line.price_total, format21_left)
+                sheet.write(row, 17, line.price_total, format21_left)
