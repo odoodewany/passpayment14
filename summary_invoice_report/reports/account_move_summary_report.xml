@@ -25,7 +25,6 @@
         <field name="name">Reporte de lineas de factura</field>
         <field name="res_model">summary.account.move.line</field>            
         <field name="view_mode">form</field>
-        <!-- <field name="target">new</field> -->
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>
