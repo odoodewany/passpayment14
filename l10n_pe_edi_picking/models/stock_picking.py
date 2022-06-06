@@ -76,7 +76,13 @@ class StockPicking(models.Model):
 		selection = self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')])
 		if selection:
 			return selection.id
-		return False		
+		return False
+
+	def picking_carrier_license_plate(self):
+		partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+		if partner:
+			return partner.placa
+		return False
 
 	l10n_pe_edi_picking_company_partner_id = fields.Many2one('res.partner', string="Company Partner", related='company_id.partner_id')
 	l10n_pe_edi_picking_partner_id = fields.Many2one('res.partner', string="Partner", compute='_compute_l10n_pe_edi_picking_partner', store=True)
@@ -95,7 +101,7 @@ class StockPicking(models.Model):
 	l10n_pe_edi_picking_carrier_doc_type = fields.Many2one('l10n_latam.identification.type', string="Carrier Document Type")
 	l10n_pe_edi_picking_carrier_doc_number = fields.Char(string="Carrier Document Number")
 	l10n_pe_edi_picking_carrier_name = fields.Char(string="Carrier Name")
-	l10n_pe_edi_picking_carrier_license_plate = fields.Char(string="License Plate")
+	l10n_pe_edi_picking_carrier_license_plate = fields.Char(string="License Plate", deafult=picking_carrier_license_plate)
 	l10n_pe_edi_picking_driver_id = fields.Many2one('res.partner', string="Driver")
 	l10n_pe_edi_picking_driver_doc_type = fields.Many2one('l10n_latam.identification.type', string="Driver Document Type", default=picking_driver_doc_type)
 	l10n_pe_edi_picking_driver_doc_number = fields.Char(string="Driver Document Number", default=picking_driver_doc_number)
@@ -274,6 +280,27 @@ class StockPicking(models.Model):
 			self.l10n_pe_edi_picking_arrival_point_district_id = self.partner_id.l10n_pe_district.id
 			self.l10n_pe_edi_picking_arrival_point_ubigeo = self.partner_id.zip
 			self.l10n_pe_edi_picking_arrival_point_street = self.partner_id.street
+
+	@api.onchange('l10n_pe_edi_picking_catalog_18_id')
+	def _onchange_picking_catalog_18_id(self):
+		partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
+		if partner:
+			if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')]).id:
+				self.l10n_pe_edi_picking_driver_doc_type = partner.l10n_latam_identification_type_id.id if partner.l10n_latam_identification_type_id else False
+				self.l10n_pe_edi_picking_driver_doc_number = partner.vat
+				self.l10n_pe_edi_picking_driver_name = partner.name
+				self.l10n_pe_edi_picking_carrier_doc_type = False
+				self.l10n_pe_edi_picking_carrier_doc_number = False
+				self.l10n_pe_edi_picking_carrier_name = False
+				self.l10n_pe_edi_picking_carrier_license_plate = partner.placa
+			else:
+				self.l10n_pe_edi_picking_carrier_doc_type = partner.l10n_latam_identification_type_id.id if partner.l10n_latam_identification_type_id else False
+				self.l10n_pe_edi_picking_carrier_doc_number = partner.vat
+				self.l10n_pe_edi_picking_carrier_name = partner.name
+				self.l10n_pe_edi_picking_carrier_license_plate = partner.placa
+				self.l10n_pe_edi_picking_driver_doc_type = False
+				self.l10n_pe_edi_picking_driver_doc_number = False
+				self.l10n_pe_edi_picking_driver_name = False
 
 	def convert_date_to_timezone(self, date_time):
 		if self.env.user.tz:
