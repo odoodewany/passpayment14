@@ -120,6 +120,8 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
                 invoice_document_number = line.move_id.name
                 invoice_date = line.move_id.invoice_date.strftime(
                     '%d/%m/%Y') if line.move_id.invoice_date else ''
+                invoice_document_type = dict(
+                    line.move_id._fields['payment_state'].selection).get(line.move_id.payment_state)
                 sheet.write(row, 0, state, format21_left)
                 sheet.write(row, 1, invoice_date_month,
                             format21_left)
@@ -136,7 +138,7 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
                             format21_left)
                 sheet.write(row, 8, partner,
                             format21_left)
-                sheet.write(row, 9, line.move_id.payment_reference,
+                sheet.write(row, 9, payment_state,
                             format21_left)
                 sheet.write(row, 10, line.move_id.currency_id.name,
                             format21_left)
