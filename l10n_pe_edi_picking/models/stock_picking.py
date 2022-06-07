@@ -302,8 +302,8 @@ class StockPicking(models.Model):
 
 	@api.onchange('l10n_pe_edi_picking_catalog_18_id')
 	def _onchange_picking_catalog_18_id(self):
-		partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
-		company = self.env['res.company'].search([('name','=',self.env.company.name)], limit=1)
+		company = self.env.company
+		partner = self.env['res.partner'].search([('company_id','=',company.id), ('is_driver','=',True)], limit=1)
 		company_doc_type = self.env['l10n_latam.identification.type'].search([('name','=','RUC')])
 		if partner:
 			if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')], limit=1).id:
