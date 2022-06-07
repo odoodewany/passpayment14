@@ -306,7 +306,7 @@ class StockPicking(models.Model):
 		company = self.env['res.company'].search([('name','=',self.env.company.name)], limit=1)
 		company_doc_type = self.env['l10n_latam.identification.type'].search([('name','=','RUC')])
 		if partner:
-			if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')]).id:
+			if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')], limit=1).id:
 				self.l10n_pe_edi_picking_driver_doc_type = partner.l10n_latam_identification_type_id.id if partner.l10n_latam_identification_type_id else False
 				self.l10n_pe_edi_picking_driver_doc_number = partner.vat
 				self.l10n_pe_edi_picking_driver_name = partner.name
