@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<!-- Add custom js for pos_product_operations -->	    
+		<template id="assets_for_pos_product_operations" inherit_id="point_of_sale.assets">
+			<xpath expr="." position="inside">
+				<link rel="stylesheet" href="/pos_product_operations/static/src/css/pos.css" />
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/pos.js"/>
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/Popup/POSProductDetail.js"/>
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/Popup/ProductDetailsCreate.js"/>
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/Popup/ProductDetailsEdit.js"/>
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/Screens/POSProduct.js"/>
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/Screens/POSProductScreen.js"/>
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/Screens/ProductsWidget.js"/>
+				<script type="text/javascript" src="/pos_product_operations/static/src/js/Widget/SeeAllProductsButtonWidget.js"/>
+			</xpath>
+		</template>
+
+
+		<!-- pos_product_operations field -->
+		<record id="inherit_view_pos_product_operations_form" model="ir.ui.view">
+			<field name="name">inherit_view_pos_product_operations</field>
+			<field name="model">pos.config</field>
+			<field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@id='category_reference']" position="after">
+					<div class="col-xs-12 col-md-6 o_setting_box">
+						<div class="o_setting_left_pane">
+							<field name="allow_pos_product_operations"/>
+						</div>
+						<div class="o_setting_right_pane">
+							<label for="allow_pos_product_operations"/>
+							<div class="text-muted">
+								Allow Product Operations
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6 o_setting_box">
+						<div class="o_setting_left_pane">
+							<field name="allow_edit_product"/>
+						</div>
+						<div class="o_setting_right_pane">
+							<label for="allow_edit_product"/>
+							<div class="text-muted">
+								Allow User to edit product from pos
+							</div>
+						</div>
+					</div>
+					
+				</xpath>
+			</field>
+		</record>
+		
+		
+	</data>
+</odoo>

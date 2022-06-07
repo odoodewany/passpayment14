@@ -32,6 +32,7 @@
         'data/cron_stock_picking.xml',
         'wizards/masive_picking_sending_view.xml',
         'views/res_config_settings_views.xml',
+        'views/res_partner.xml',
         'views/stock_picking_view.xml',
         'views/l10n_pe_edi_picking_number_view.xml',
         'report/epicking_report_template.xml',

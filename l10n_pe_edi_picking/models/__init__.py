@@ -15,3 +15,4 @@ from . import stock_move
 from . import stock_picking
 from . import edi_request
 from . import l10n_pe_edi_picking_number
+from . import res_partner

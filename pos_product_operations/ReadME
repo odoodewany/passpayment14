@@ -1,0 +1,42 @@
+date 9th dec 2020
+version 14.0.0.1
+issue solve:-
+	- Search not working in custom product page.
+	- category not show in create/edit details.
+
+date 11th dec 2020
+version 14.0.0.2
+issue solve:-
+	1. Product button -> Create Product & Edit -> Attaching product image from Choose file field not storing image. It shows no image in POS screen as well in backend product. 
+	2. Product Button -> Search by Barcode not searching product by entering barcode in search box.
+	3. Product Button -> Edit -> On editing details and after refresh with Refresh button of custom Product page it’s not updating and showing edited details of product until refresh of pos screen.
+	4. product image code removed in migraton
+
+
+Date 20th April 2021
+version 14.0.0.3
+Issue Solve:-
+	1. While Update Product name will be not update Solved it.
+	2. While updating product in some product error occur cost_field is not define solved it.
+
+Date 04th April 2022
+version 14.0.0.4
+	-- While changing product name from pos it is repeat refrence code solved that issue. 
+
+Date 11th April 2022
+version 14.0.0.5
+	-- When we edit other field of product from the pos that time name print as a display name solved that issue.
+	--  If I change the price to 99.99 the app will change the price to 99.9900000000001. Solved issue.
+	-- When we change cost price of the product that time get error (char - float) Solved that.
+
+Date 13th April 2022
+version 14.0.0.6:
+	-- When we create product without cost price or sales price that time get an error solved that.
+
+
+Date 18th April 2022
+version 14.0.0.7:
+Improvement:-
+		-- Sync product details when we edit/create product from the pos.
+    
+	
