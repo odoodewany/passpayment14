@@ -85,16 +85,16 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
         sheet.write('B4', 'Mes', format21_left_bold)
         sheet.write('C4', 'Año', format21_left_bold)
         sheet.write('D4', 'Vendedor', format21_left_bold)
-        sheet.write('E4', 'Tipo de documento', format21_left_bold)
-        sheet.write('F4', 'Nro de documento',
+        sheet.write('E4', 'Tipo de comprobante', format21_left_bold)
+        sheet.write('F4', 'Nro de comprobante',
                     format21_left_bold)
-        sheet.write('G4', 'Fecha de documento',
+        sheet.write('G4', 'Fecha de comprobante',
                     format21_left_bold)
         sheet.write('H4', 'Nro de documento del cliente',
                     format21_left_bold)
         sheet.write('I4', 'Razón social del cliente',
                     format21_left_bold)
-        sheet.write('J4', 'Condición pago', format21_left_bold)
+        sheet.write('J4', 'Estado de pago', format21_left_bold)
         sheet.write('K4', 'Moneda', format21_left_bold)
         sheet.write('L4', 'Código referencia', format21_left_bold)
         sheet.write('M4', 'Producto/Servicio', format21_left_bold)
@@ -115,10 +115,13 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
                 document_type = line.partner_id.l10n_latam_identification_type_id.name if line.partner_id.l10n_latam_identification_type_id else ''
                 vat = line.partner_id.vat if line.partner_id.vat else ''
                 partner = line.partner_id.name if line.partner_id.name else ''
-                invoice_document_type = line.move_id.move_type
+                invoice_document_type = dict(
+                    line.move_id._fields['move_type'].selection).get(line.move_id.move_type)
                 invoice_document_number = line.move_id.name
                 invoice_date = line.move_id.invoice_date.strftime(
                     '%d/%m/%Y') if line.move_id.invoice_date else ''
+                invoice_document_type = dict(
+                    line.move_id._fields['payment_state'].selection).get(line.move_id.payment_state)
                 sheet.write(row, 0, state, format21_left)
                 sheet.write(row, 1, invoice_date_month,
                             format21_left)
@@ -135,7 +138,7 @@ class SummaryAccountMoveLineReport(models.AbstractModel):
                             format21_left)
                 sheet.write(row, 8, partner,
                             format21_left)
-                sheet.write(row, 9, line.move_id.payment_reference,
+                sheet.write(row, 9, payment_state,
                             format21_left)
                 sheet.write(row, 10, line.move_id.currency_id.name,
                             format21_left)
