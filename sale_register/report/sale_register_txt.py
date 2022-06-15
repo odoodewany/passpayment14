@@ -17,25 +17,20 @@ class InvoiceReportXls(models.AbstractModel):
     def get_queries(self, month, year):
         # ('date.month','=',month)
         lines = []
-        invoices = self.env['account.move'].search([], order='date asc')
+        
         for invoice in invoices:
-            date_m = datetime.strptime(invoice.date,'%Y-%m-%d').strftime('%m')
-            date_y = datetime.strptime(invoice.date,'%Y-%m-%d').strftime('%Y')
-            print("Month ----->",int(date_m), month, date_y, year.name)
-            if int(date_m) == int(month) and date_y == year.name:
+            date_m = invoice.invoice_date.strftime('%m')
+            date_y = invoice.invoice_date.strftime('%Y')
+            if int(date_m) ==  int(month) and date_y == year.name:
                 lines.append(invoice)
         lines = sorted(lines, key=lambda x: str(x['number']))
         return lines
  
     def generate_xlsx_report(self, workbook, data, lines):
-        print("--->", data, "---->", lines)
-        month = lines.month
-        year = lines.year 
-
-        # call a function that get incoming and outgoing registers
-        queries_result = self.get_queries(month, year)
-        print(queries_result)
         
+        # call a function that get incoming and outgoing registers
+        invoices = self.env['account.move'].search([('invoice_date','>=',lines.init_date), (('invoice_date','<=',lines.end_date))], order='invoice_date asc')
+        month = ''
         # WRITE THE XLS REPORT 
 
         # INCOMING REPORT
@@ -100,7 +95,7 @@ class InvoiceReportXls(models.AbstractModel):
                 'RL','','','','','','','','','']
         index = 1
 
-        for each in queries_result:
+        for each in invoices:
             sheet.write(prod_row, prod_col, each.date, format_10_l)
             sheet.write(prod_row, prod_col + 1, T10[int(each.type_document_id.code)], format_10_l) 
             sheet.write(prod_row, prod_col + 2, each.type_document_id.code, format_10_l) 
