@@ -81,7 +81,7 @@ class SaleRegisterWizard(models.TransientModel):
                 datas['form'][field] = datas['form'][field][0]
 
         if context.get('xls_export'):
-            return self.env.ref('sale_report.sale_register_xls').report_action(self, data=datas)
+            return self.env.ref('sale_register.sale_register_xls').report_action(self, data=datas)
 
     
     def generate_txt_report(self):
