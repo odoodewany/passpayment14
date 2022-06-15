@@ -115,9 +115,9 @@ class InvoiceReportXls(models.AbstractModel):
 
 
         invoices = self.env['account.move'].search([
-            # ('move_type', 'not in', ('out_invoice', 'out_refund')),
-            ('date', '>=', init_date),
-            ('date', '<=', end_date),
+            ('move_type', 'not in', ('out_invoice', 'out_refund')),
+            ('invoice_date', '>=', init_date),
+            ('invoice_date', '<=', end_date),
             ('state', 'not in', ['draft', 'cancel']),
             ('company_id', '=', lines.company_id.id),
         ], order="date asc")
