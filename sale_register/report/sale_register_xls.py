@@ -24,8 +24,10 @@ class InvoiceReportXls(models.AbstractModel):
         for invoice in invoices:
             date_m = datetime.strptime(
                 invoice.date, DEFAULT_SERVER_DATE_FORMAT).strftime('%m')
+            date_m = invoice.invoice_date.strftime('%m')
             date_y = datetime.strptime(
                 invoice.date, DEFAULT_SERVER_DATE_FORMAT).strftime('%Y')
+            date_y = invoice.invoice_date.strftime('%Y')
             if int(date_m) == int(month) and date_y == year.name:
                 lines.append(invoice)
         lines = sorted(lines, key=lambda x: str(x['number']))
