@@ -104,12 +104,9 @@ class StockPicking(models.Model):
 	# 	if partner:
 	# 		return partner.invoice_partner_display_name
 	def default_number_packages(self):
-		
-
 		suma = 0
-		for y in self:
-			for product in y.move_ids_without_package:
-				suma = suma + product.product_uom_qty
+		for product in y.move_ids_without_package:
+			suma = suma + product.product_uom_qty
 		return suma
 	# partner_id = fields.Many2one(
     #     'res.partner', 'Contact',
@@ -250,9 +247,15 @@ class StockPicking(models.Model):
 	@api.onchange('l10n_pe_edi_picking_carrier_id')
 	def _onchange_carrier(self):
 		if self.l10n_pe_edi_picking_carrier_id:
+<<<<<<< HEAD
 			#self.l10n_pe_edi_picking_carrier_doc_type = self.l10n_pe_edi_picking_carrier_id.l10n_latam_identification_type_id.id
 			self.l10n_pe_edi_picking_carrier_doc_number = self.l10n_pe_edi_picking_carrier_id.vat
 			#self.l10n_pe_edi_picking_carrier_name = self.l10n_pe_edi_picking_carrier_id.name
+=======
+			# self.l10n_pe_edi_picking_carrier_doc_type = self.l10n_pe_edi_picking_carrier_id.l10n_latam_identification_type_id.id
+			self.l10n_pe_edi_picking_carrier_doc_number = self.l10n_pe_edi_picking_carrier_id.vat
+			# self.l10n_pe_edi_picking_carrier_name = self.l10n_pe_edi_picking_carrier_id.name
+>>>>>>> d614b07c7ed3e34a8c60a37e6b96c374a7ade06e
 	
 	@api.onchange('l10n_pe_edi_picking_driver_id')
 	def _onchange_driver(self):
@@ -266,12 +269,12 @@ class StockPicking(models.Model):
 		if not self.l10n_pe_edi_picking_partner_for_carrier_driver and self.l10n_pe_edi_picking_carrier_doc_type and self.l10n_pe_edi_picking_carrier_doc_number:
 			if self.l10n_pe_edi_picking_carrier_doc_type.l10n_pe_vat_code == '1':
 				result = self.env['res.partner'].l10n_pe_dni_connection(self.l10n_pe_edi_picking_carrier_doc_number)
-				#if result:
-					#self.l10n_pe_edi_picking_carrier_name = str(result['nombre']).strip()
+				# if result:
+				# 	self.l10n_pe_edi_picking_carrier_name = str(result['nombre']).strip()
 			if self.l10n_pe_edi_picking_carrier_doc_type.l10n_pe_vat_code == '6':
 				result = self.env['res.partner'].l10n_pe_ruc_connection(self.l10n_pe_edi_picking_carrier_doc_number)
-				#if result:
-					#self.l10n_pe_edi_picking_carrier_name = str(result['business_name']).strip()
+				# if result:
+				# 	self.l10n_pe_edi_picking_carrier_name = str(result['business_name']).strip()
 	
 	@api.onchange('l10n_pe_edi_picking_driver_doc_type', 'l10n_pe_edi_picking_driver_doc_number')
 	def _onchange_driver_doc_type(self):
@@ -317,11 +320,11 @@ class StockPicking(models.Model):
 
 	@api.onchange('l10n_pe_edi_picking_catalog_18_id')
 	def _onchange_picking_catalog_18_id(self):
-		partner = self.env['res.partner'].search([('company_id','=',self.env.company.id), ('is_driver','=',True)], limit=1)
-		company = self.env['res.company'].search([('name','=',self.env.company.name)], limit=1)
+		company = self.env.company
+		partner = self.env['res.partner'].search([('company_id','=',company.id), ('is_driver','=',True)], limit=1)
 		company_doc_type = self.env['l10n_latam.identification.type'].search([('name','=','RUC')])
 		if partner:
-			if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')]).id:
+			if self.l10n_pe_edi_picking_catalog_18_id.id == self.env['l10n_pe_edi.catalog.18'].search([('name','=','Transporte privado')], limit=1).id:
 				self.l10n_pe_edi_picking_driver_doc_type = partner.l10n_latam_identification_type_id.id if partner.l10n_latam_identification_type_id else False
 				self.l10n_pe_edi_picking_driver_doc_number = partner.vat
 				self.l10n_pe_edi_picking_driver_name = partner.name
