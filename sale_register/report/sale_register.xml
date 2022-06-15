@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_sale_register">
+        <field name="name">paperformat.invoice.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="sale_register"
+        model="wizard.sale.register"
+        string="Registro de Ventas"
+        report_type="qweb-pdf"
+        name="sale_register.sale_register_view"
+        paperformat="paperformat_sale_register"
+        menu="False"/>
+
+    <template id="sale_register_view">
+        <div class="header" style="border-bottom: 2px solid black">
+            <h3 class="text-center">Registro de Ventas</h3>
+            <h4 class="text-center">
+                <t t-esc="month"/>
+                <strong>de</strong>:
+                <t t-esc="year"/>
+            </h4>
+        </div>
+        <div class="article">
+            <table class="table table-condensed table-bordered" style="width: 100%; font-size:11px;">
+                <thead>
+                    <th class="text-center" style="width: 8%">Fecha</th>
+                    <th class="text-center" style="width: 11%">Documento</th>
+                    <th class="text-center" style="width: 32%">Cliente</th>
+                    <th class="text-center" style="width: 22%">Vendedor</th>
+                    <th class="text-center" style="width: 9%">Efectivo</th>
+                    <th class="text-center" style="width: 9%">Total</th>
+                    <th class="text-center" style="width: 9%">Saldo</th>
+                </thead>
+                <tbody>
+                    <t t-set="sum_amount_total1" t-value="0"/>
+                    <t t-set="sum_amount_total" t-value="0"/>
+                    <t t-set="sum_amount_residual" t-value="0"/>
+                    <t t-foreach="docs" t-as="doc">
+                        <tr>
+                            <td class="text-center">
+                                <span t-esc="doc['date']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc['number']"/>
+                            </td>
+                            <td>
+                                <span t-esc="doc['partner']"/>
+                            </td>
+                            <td>
+                                <span t-esc="doc['user']"/>
+                            </td>
+                            <td class="text-right">
+                                <span>S/.&#160;</span><span t-esc="str('%.2f'%doc['total1']).replace('.', ',')"/>
+                                <t t-set="sum_amount_total1" t-value="sum_amount_total1 + doc['total1']"/>
+                            </td>
+                            <td class="text-right">
+                                <span>S/.&#160;</span><span t-esc="str('%.2f'%doc['total']).replace('.', ',')"/>
+                                <t t-set="sum_amount_total" t-value="sum_amount_total + doc['total']"/>
+                            </td>
+                            <td class="text-right">
+                                <span>S/.&#160;</span><span t-esc="str('%.2f'%doc['residual']).replace('.', ',')"/>
+                                <t t-set="sum_amount_residual" t-value="sum_amount_residual + doc['residual']"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td colspan="4" style="border-left: 1px solid white; border-bottom: 1px solid white;"/>
+                        <td class="text-right">
+                            <t>
+                                <strong><span>S/.&#160;</span><span t-esc="str('%.2f'%sum_amount_total1).replace('.', ',')"/></strong>
+                            </t>
+                        </td>
+                        <td class="text-right">
+                            <t>
+                                <strong><span>S/.&#160;</span><span t-esc="str('%.2f'%sum_amount_total).replace('.', ',')"/></strong>
+                            </t>
+                        </td>
+                        <td class="text-right">
+                            <t>
+                                <strong><span>S/.&#160;</span><span t-esc="str('%.2f'%sum_amount_residual).replace('.', ',')"/></strong>
+                            </t>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="row text-center" style="border-top: 1px solid black;">
+                <div class="col-xs-3 col-xs-offset-9 text-right">
+                    <ul class="list-inline" style="margin-top:10px;">
+                        <li>Página:</li>
+                        <li>
+                            <span class="page"/>
+                        </li>
+                        <li>/</li>
+                        <li>
+                            <span class="topage"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

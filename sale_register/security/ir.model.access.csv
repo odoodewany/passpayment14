@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_sale_register_sale_register_xls_xlsx_all,Todos los permisos,model_report_report_sale_sale_register_xls_xlsx,account.group_account_manager,1,1,1,1
+access_date_year_all,Todos los permisos,model_date_year,account.group_account_manager,1,1,1,1
+access_wizard_sale_register_all,Todos los permisos,model_wizard_sale_register,account.group_account_manager,1,1,1,1
+access_report_sale_report_view_all,Todos los permisos,model_report_sale_report_view,account.group_account_manager,1,1,1,1
+
