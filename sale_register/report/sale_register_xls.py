@@ -164,11 +164,11 @@ class InvoiceReportXls(models.AbstractModel):
             sheet.write(entrie_row, 0, invoice.id, font_size_8_c)
             sheet.write(entrie_row, 1, invoice.date, font_size_8_c)
             sheet.write(entrie_row, 2, invoice.invoice_date_due, font_size_8_c)
-            sheet.write(entrie_row, 3, invoice.l10n_latam_identification_type_id.name, font_size_8_c)
+            sheet.write(entrie_row, 3, invoice.l10n_latam_document_type_id.name, font_size_8_c)
             sheet.write(entrie_row, 4, serie, font_size_8_c)
             sheet.write(entrie_row, 5, numero, font_size_8_c)
             sheet.write(entrie_row, 6,
-                        invoice.partner_id.l10n_latam_document_type_id.name, font_size_8_c)
+                        invoice.partner_id.l10n_latam_identification_type_id.name, font_size_8_c)
             sheet.write(entrie_row, 7, invoice.partner_id.vat, font_size_8_c)
             sheet.write(entrie_row, 8, invoice.partner_id.name, font_size_8_c)
             sheet.write(entrie_row, 9, '', font_size_8_c)
