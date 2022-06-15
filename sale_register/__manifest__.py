@@ -6,7 +6,7 @@
     'sequence': 0,
     'summary': 'Formato de sunat para reporte de ventas',
     'depends': [
-        'account','report_xlsx'
+        'account','report_xlsx','l10n_pe_edi_odoofact',
     ],
     'data': [ 'security/ir.model.access.csv',
             'views/wizard_view.xml',
