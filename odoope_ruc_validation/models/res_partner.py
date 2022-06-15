@@ -34,7 +34,7 @@ class ResPartner(models.Model):
 	commercial_name = fields.Char(string="Commercial Name")
 	state = fields.Selection([('habido','Habido'),('nhabido','No Habido')], string="State")
 	alert_warning_vat= fields.Boolean(string="Alert warning vat", default=False)
-	company_partner = fields.Boolean(string="Compañía por defecto", default=True)
+	company_partner = fields.Boolean(string="Compañía por defecto", default=False)
 
 	@api.onchange('vat','l10n_latam_identification_type_id')
 	def onchange_vat(self):
