@@ -105,7 +105,7 @@ class StockPicking(models.Model):
 	# 		return partner.invoice_partner_display_name
 	def default_number_packages(self):
 		suma = 0
-		for product in y.move_ids_without_package:
+		for product in self.move_ids_without_package:
 			suma = suma + product.product_uom_qty
 		return suma
 	# partner_id = fields.Many2one(
@@ -247,15 +247,9 @@ class StockPicking(models.Model):
 	@api.onchange('l10n_pe_edi_picking_carrier_id')
 	def _onchange_carrier(self):
 		if self.l10n_pe_edi_picking_carrier_id:
-<<<<<<< HEAD
-			#self.l10n_pe_edi_picking_carrier_doc_type = self.l10n_pe_edi_picking_carrier_id.l10n_latam_identification_type_id.id
-			self.l10n_pe_edi_picking_carrier_doc_number = self.l10n_pe_edi_picking_carrier_id.vat
-			#self.l10n_pe_edi_picking_carrier_name = self.l10n_pe_edi_picking_carrier_id.name
-=======
 			# self.l10n_pe_edi_picking_carrier_doc_type = self.l10n_pe_edi_picking_carrier_id.l10n_latam_identification_type_id.id
 			self.l10n_pe_edi_picking_carrier_doc_number = self.l10n_pe_edi_picking_carrier_id.vat
 			# self.l10n_pe_edi_picking_carrier_name = self.l10n_pe_edi_picking_carrier_id.name
->>>>>>> d614b07c7ed3e34a8c60a37e6b96c374a7ade06e
 	
 	@api.onchange('l10n_pe_edi_picking_driver_id')
 	def _onchange_driver(self):
