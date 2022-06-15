@@ -15,23 +15,6 @@ class InvoiceReportXls(models.AbstractModel):
     _name = 'report.report_sale.sale_register_xls.xlsx'
     _inherit = 'report.report_xlsx.abstract'
 
-    # perform query from account_invoice
-    def get_queries(self, month, year):
-        # ('date.month','=',month)
-        lines = []
-        invoices = self.env['account.move'].search(
-            [('type', '=', 'out_invoice'), ('state', 'in', ('open', 'paid'))], order='date asc')
-        for invoice in invoices:
-            date_m = datetime.strptime(
-                invoice.date, DEFAULT_SERVER_DATE_FORMAT).strftime('%m')
-            date_m = invoice.invoice_date.strftime('%m')
-            date_y = datetime.strptime(
-                invoice.date, DEFAULT_SERVER_DATE_FORMAT).strftime('%Y')
-            date_y = invoice.invoice_date.strftime('%Y')
-            if int(date_m) == int(month) and date_y == year.name:
-                lines.append(invoice)
-        lines = sorted(lines, key=lambda x: str(x['number']))
-        return lines
 
     def generate_xlsx_report(self, workbook, data, lines):
         comp = lines.company_id.name
@@ -130,8 +113,9 @@ class InvoiceReportXls(models.AbstractModel):
         init_date = datetime(year, month, 1)
         end_date = datetime(year, month, days[1])
 
+
         invoices = self.env['account.move'].search([
-            ('move_type', 'not in', ('out_invoice', 'out_refund')),
+            # ('move_type', 'not in', ('out_invoice', 'out_refund')),
             ('date', '>=', init_date),
             ('date', '<=', end_date),
             ('state', 'not in', ['draft', 'cancel']),
