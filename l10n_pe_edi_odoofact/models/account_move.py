@@ -192,15 +192,15 @@ class AccountMove(models.Model):
 					'message': 'No se puede emitir boletas con tipo de documento RUC'}
 				}
 
-	@api.onchange('invoice_line_ids')
-	def _onchange_price_unit(self):
-		if self.amount_total > 0:
-			if self.price_unit > self.amount_total:
-				return {
-					'warning': {
-					'title': 'Advertencia!!',
-					'message': 'El precio no debe superar el monto total original.'}
-				}
+	# @api.onchange('invoice_line_ids')
+	# def _onchange_price_unit(self):
+	# 	if self.amount_total > 0:
+	# 		if self.price_unit > self.amount_total:
+	# 			return {
+	# 				'warning': {
+	# 				'title': 'Advertencia!!',
+	# 				'message': 'El precio no debe superar el monto total original.'}
+	# 			}
 
 	@api.depends('move_type','journal_id')
 	def _get_l10n_latam_document_type_id(self):
