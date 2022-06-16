@@ -31,15 +31,14 @@
             <field name="target">new</field>
         </record>
 
-        <record id="sale_register_xls" model="ir.actions.report">
-            <field name="name">Reporte de ventas Formato SUNAT</field>
-            <field name="model">wizard.sale.register</field>
-            <field name="report_type">xlsx</field>
-            <field name="report_name">report_sale.sale_register_xls.xlsx</field>
-            <field name="report_file">report_sale.sale_register_xls.xlsx</field>
-            <field name="binding_model_id" ref="model_wizard_sale_register"/>
-            <field name="binding_type">report</field>
-        </record>
+        <report id="sale_register_xls" 
+                model="wizard.sale.register" 
+                string="Sale Regiser Info" 
+                report_type="xlsx" 
+                name="report_sale.sale_register_xls.xlsx" 
+                file="sale_register" 
+                menu="False" 
+                attachment_use="False"/>
 
         <menuitem name="Registro de ventas Formato SUNAT" 
                   parent="account.menu_finance_reports" 
