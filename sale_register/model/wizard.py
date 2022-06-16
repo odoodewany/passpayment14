@@ -73,7 +73,6 @@ class SaleRegisterWizard(models.TransientModel):
     def export_xls(self):
         context = self._context
         datas = {'ids': context.get('active_ids', [])}
-        datas['model'] = 'wizard.stock.history'
         datas['form'] = self.read()[0]
 
         for field in datas['form'].keys():
