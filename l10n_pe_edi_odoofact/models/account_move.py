@@ -9,6 +9,7 @@
 #
 ###############################################################################
 
+from email.policy import default
 import os
 import json
 import re
@@ -32,6 +33,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime
+
 # import chromedriver_binary
 
 _logger = logging.getLogger(__name__)
@@ -45,7 +48,8 @@ CURRENCY = {
 class AccountMove(models.Model): 
 	
 	_inherit = 'account.move'  
-  
+	invoice_date = fields.Date(string='Invoice/Bill Date', readonly=True, index=True, copy=False,default=datetime.now(),
+			states={'draft': [('readonly', False)]})
 	l10n_pe_edi_operation_type = fields.Selection([
 			('1','INTERNAL SALE'),
 			('2','EXPORTATION'),
@@ -103,7 +107,7 @@ class AccountMove(models.Model):
 	l10n_pe_edi_amount_isc = fields.Monetary(string='ISC Amount', store=True, compute='_compute_edi_amount',tracking=True)
 	l10n_pe_edi_amount_others = fields.Monetary(string='Other charges', compute='_compute_edi_amount',tracking=True)  
 	l10n_pe_edi_is_einvoice = fields.Boolean('Is E-invoice', related='journal_id.l10n_pe_edi_is_einvoice', store=True)
-
+	
 	amount_untaxed_signed = fields.Monetary(string='Untaxed Amount Signed', store=True, readonly=True,
 		compute='_compute_amount', currency_field='currency_id')
 	amount_tax_signed = fields.Monetary(string='Tax Signed', store=True, readonly=True,
@@ -150,7 +154,54 @@ class AccountMove(models.Model):
 		else:
 			self.l10n_pe_edi_operation_type = '1'
 		return super(AccountMove, self)._onchange_partner_id()
-	
+
+	@api.onchange('partner_id')
+	def _onchange_partner_id_validation_ruc_dni(self):
+		if self.journal_id.id == 22:
+			if self.partner_id.l10n_latam_identification_type_id and self.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code == '1':
+				self.partner_id = False
+				return {
+					'warning': {
+					'title': 'Advertencia!!',
+					'message': 'No se puede emitir facturas con tipo de documento DNI'}
+				}
+		if self.journal_id.id == 18:
+			if self.partner_id.l10n_latam_identification_type_id and self.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code == '6':
+				self.partner_id = False
+				return {
+					'warning': {
+					'title': 'Advertencia!!',
+					'message': 'No se puede emitir boletas con tipo de documento RUC'}
+				}
+	@api.onchange('journal_id')
+	def _onchange_journal_id_validation_ruc_dni(self):
+		if self.journal_id.id == 22:
+			if self.partner_id and self.partner_id.l10n_latam_identification_type_id and self.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code == '1':
+				self.partner_id = False
+				return {
+					'warning': {
+					'title': 'Advertencia!!',
+					'message': 'No se puede emitir facturas con tipo de documento DNI'}
+				}
+		if self.journal_id.id == 18:
+			if self.partner_id and self.partner_id.l10n_latam_identification_type_id and self.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code == '6':
+				self.partner_id = False
+				return {
+					'warning': {
+					'title': 'Advertencia!!',
+					'message': 'No se puede emitir boletas con tipo de documento RUC'}
+				}
+
+	@api.onchange('invoice_line_ids')
+	def _onchange_price_unit(self):
+		if self.amount_total > 0:
+			if self.price_unit > self.amount_total:
+				return {
+					'warning': {
+					'title': 'Advertencia!!',
+					'message': 'El precio no debe superar el monto total original.'}
+				}
+
 	@api.depends('move_type','journal_id')
 	def _get_l10n_latam_document_type_id(self):
 		for move in self:

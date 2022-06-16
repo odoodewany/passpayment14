@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_saleorder_document" name="report_siderperu_sale" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//table[@class='table table-sm o_main_table']//th[@name='th_taxes']" position="replace">
+            
+        </xpath>
+        <xpath expr="//table[@class='table table-sm o_main_table']//td[@name='td_taxes']" position="replace">
+            
+        </xpath>
+    </template>
+
+</odoo>
