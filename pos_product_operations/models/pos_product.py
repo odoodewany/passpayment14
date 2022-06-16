@@ -18,7 +18,7 @@ class ProductProduct(models.Model):
 	def sync_product(self, product):
 		# pos_configs = self.env['pos.config'].sudo().search([('allow_pos_sync_data', '=', True)])
 		notifications = []
-		if product[0]['taxes_id'] == []:
+		if product and product[0]['taxes_id'] == []:
 			product[0]['taxes_id'] = [self.env.company.account_sale_tax_id.id]
 		# for config in pos_configs:
 		notifications.append(
