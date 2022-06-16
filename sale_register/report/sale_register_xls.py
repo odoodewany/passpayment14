@@ -19,7 +19,7 @@ class InvoiceReportXls(models.AbstractModel):
     def generate_xlsx_report(self, workbook, data, lines):
         comp = lines.company_id.name
 
-        sheet = workbook.add_worksheet('Registro de Compras')
+        sheet = workbook.add_worksheet('Registro de ventas')
 
         sheet.set_column(0, 2, 9)  # corr y fechas
         sheet.set_column(3, 3, 10)  # tipo
@@ -115,12 +115,11 @@ class InvoiceReportXls(models.AbstractModel):
 
 
         invoices = self.env['account.move'].search([
-            ('move_type', '!=', 'out_refund'),
-            ('invoice_date', '>=', init_date),
-            ('invoice_date', '<=', end_date),
-            ('state', 'not in', ['draft', 'cancel']),
+            ('move_type', '=', 'out_invoice'),
+            
+            ('state', '=', 'posted'),
             ('company_id', '=', lines.company_id.id),
-        ], order="date asc")
+        ], order="invoice_date asc")
 
         print(invoices)
 
