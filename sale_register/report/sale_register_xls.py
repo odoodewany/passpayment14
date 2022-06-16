@@ -152,7 +152,7 @@ class InvoiceReportXls(models.AbstractModel):
 
             refund = invoice.reversed_entry_id
             if refund:
-                refund_date = refund.date
+                refund_date = refund.invoice_date.strftime('%d/%m/%Y') if refund.invoice_date else ''
                 refund_document_type_code = refund.l10n_pe_edi_reversal_type_id.name  # 'refund.type_document_id.code'
                 try:
                     refund_serie, refund_number = refund.name.split('-')
@@ -163,9 +163,11 @@ class InvoiceReportXls(models.AbstractModel):
             # for tax_line in invoice.tax_line_ids:
             #     igv += tax_line.amount if 'IGV' in tax_line.name else 0.0
             #     isc += tax_line.amount if 'ISC' in tax_line.name else 0.0
+            invoice_date = invoice.invoice_date.strftime('%d/%m/%Y') if invoice.invoice_date else ''
+            invoice_date_due = invoice.invoice_date_due.strftime('%d/%m/%Y') if invoice.invoice_date_due else ''
             sheet.write(entrie_row, 0, invoice.id, font_size_8_c)
-            sheet.write(entrie_row, 1, invoice.date, font_size_8_c)
-            sheet.write(entrie_row, 2, invoice.invoice_date_due, font_size_8_c)
+            sheet.write(entrie_row, 1, invoice_date, font_size_8_c)
+            sheet.write(entrie_row, 2, invoice_date_due, font_size_8_c)
             sheet.write(entrie_row, 3, invoice.l10n_latam_document_type_id.name, font_size_8_c)
             sheet.write(entrie_row, 4, serie, font_size_8_c)
             sheet.write(entrie_row, 5, numero, font_size_8_c)

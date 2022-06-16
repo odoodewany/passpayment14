@@ -24,9 +24,8 @@
         </record>
 
         <record model='ir.actions.act_window' id='wizard_act'>
-            <field name="name">Reporte de ventas</field>
+            <field name="name">Reporte de ventas Formato SUNAT</field>
             <field name="res_model">wizard.sale.register</field>
-            
             <field name="view_mode">form</field>
             <field name="view_id" ref="wizard_form"/>
             <field name="target">new</field>
@@ -37,9 +36,12 @@
                 string="Sale Regiser Info" 
                 report_type="xlsx" 
                 name="report_sale.sale_register_xls.xlsx" 
-                file="sale_register" menu="False" attachment_use="False"/>
+                print_report_name="Reporte de ventas Formato SUNAT"
+                file="sale_register" 
+                menu="False" 
+                attachment_use="False"/>
 
-        <menuitem name="Registro de Ventas" 
+        <menuitem name="Registro de ventas Formato SUNAT" 
                   parent="account.menu_finance_reports" 
                   id="sale_registerl_xls_menu" 
                   action="wizard_act" 
