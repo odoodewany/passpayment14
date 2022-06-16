@@ -16,6 +16,8 @@ from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
 from bs4 import BeautifulSoup
 from datetime import datetime
+import logging
+_logger = logging.getLogger(__name__)
 
 class StockPickingType(models.Model):
 	_inherit = 'stock.picking.type'
@@ -103,11 +105,11 @@ class StockPicking(models.Model):
 	# 	partner = self.env['account.move'].search([('partner_id','=',self.env.user.partner_id.id)], limit=1)
 	# 	if partner:
 	# 		return partner.invoice_partner_display_name
-	def default_number_packages(self):
-		suma = 0
-		for product in self.move_ids_without_package:
-			suma = suma + product.product_uom_qty
-		return suma
+	# def default_number_packages(self):
+	# 	suma = 0
+	# 	for product in self.move_ids_without_package:
+	# 		suma = suma + product.product_uom_qty
+	# 	return suma
 	# partner_id = fields.Many2one(
     #     'res.partner', 'Contact',
     #     check_company=True, default= deafult_partner_id,
@@ -122,7 +124,7 @@ class StockPicking(models.Model):
 	l10n_pe_edi_picking_observations = fields.Char(string='Observations', size=1000, help="If you want line breaks for the printed or PDF representation use <br>", copy=False)
 	l10n_pe_edi_picking_catalog_20_id = fields.Many2one('l10n_pe_edi.catalog.20', string="Reason for transfer")
 	l10n_pe_edi_picking_total_gross_weight = fields.Float(string="Total Gross Weight", default=0.0, help='Weight in Kg.')
-	l10n_pe_edi_picking_number_packages = fields.Integer(string="Number Of Packages", default=default_number_packages)
+	l10n_pe_edi_picking_number_packages = fields.Integer(string="Number Of Packages")
 	l10n_pe_edi_picking_catalog_18_id = fields.Many2one('l10n_pe_edi.catalog.18', string="Transport Type", default=picking_catalog_18_id)
 	l10n_pe_edi_picking_catalog_18_code = fields.Char(related='l10n_pe_edi_picking_catalog_18_id.code')
 	l10n_pe_edi_picking_start_transport_date = fields.Date(string="Start Transport Date", copy=False, default=datetime.today().strftime('%Y-%m-%d'))
@@ -334,14 +336,15 @@ class StockPicking(models.Model):
 				self.l10n_pe_edi_picking_driver_doc_type = False
 				self.l10n_pe_edi_picking_driver_doc_number = False
 				self.l10n_pe_edi_picking_driver_name = False
-	# @api.onchange('move_ids_without_package.product_uom_qty')
-	# def _onchange_move_ids_without_package(self):
-	# 	suma = 0
-	# 	for y in self:
-	# 		for product in y.move_ids_without_package:
-	# 			suma = suma + product.product_uom_qty
-	# 		return suma
-	# 	self.l10n_pe_edi_picking_number_packages = suma
+				
+	@api.onchange('move_ids_without_package')
+	def _onchange_move_ids_without_package(self):
+		_logger.info("cambio en = - =")
+		suma = 0
+		for product in self.move_ids_without_package:
+			suma = suma + product.product_uom_qty
+		
+		self.l10n_pe_edi_picking_number_packages = suma
 
 	def convert_date_to_timezone(self, date_time):
 		if self.env.user.tz:
