@@ -37,7 +37,6 @@
             <field name="report_type">xlsx</field>
             <field name="report_name">report_sale.sale_register_xls.xlsx</field>
             <field name="report_file">report_sale.sale_register_xls.xlsx</field>
-            <field name="print_report_name">'Reporte de ventas Formato SUNAT'</field>
             <field name="binding_model_id" ref="model_wizard_sale_register"/>
             <field name="binding_type">report</field>
         </record>
