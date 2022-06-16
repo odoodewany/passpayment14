@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record model='ir.ui.view' id='wizard_form'>
+            <field name="name">wizard.sale.register.form</field>
+            <field name="model">wizard.sale.register</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Wizard">
+                    <group>
+                        <field name="company_id"/>
+                    </group>
+                    <group string="Fechas" col="4">
+                        <field name="month" />
+                        <field name="year" />
+                    </group>
+                    <footer>
+                        <button name="export_xls" type="object" default_focus="1" string="Registro Excel" class="oe_highlight" context="{'xls_export':1}" icon="fa-download"/>
+                        <button string="Cancelar" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='wizard_act'>
+            <field name="name">Reporte de ventas Formato SUNAT</field>
+            <field name="res_model">wizard.sale.register</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <report id="sale_register_xls1" 
+                model="wizard.sale.register" 
+                string="Sale Regiser Info" 
+                report_type="xlsx" 
+                name="report_sale.sale_register_xls.xlsx" 
+                file="sale_register" 
+                menu="False" 
+                attachment_use="False"/>
+
+        <menuitem name="Registro de ventas Formato SUNAT" 
+                  parent="account.menu_finance_reports" 
+                  id="sale_registerl_xls_menu" 
+                  action="wizard_act" 
+                  sequence="10"/>
+
+        <record id="save_file_wizard_view_done" model="ir.ui.view">
+            <field name="name">wizard.sale.register.download.form</field>
+            <field name="model">wizard.sale.register</field>
+            <field name="arch" type="xml">
+                <form string="Descarga de archivos">
+                    <group col="2">
+                        <div>
+                            <field name="ventas_reg_fname" invisible="1" />
+                            <p>El reporte PLE ha sido generado exitosamente.</p>
+                            <field name="ventas_reg" filename="ventas_reg_fname" nolabel="1" />
+                        </div>
+                    </group>
+                    <footer>
+                        <button special="cancel" string="Cerrar" type="object" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+</odoo>

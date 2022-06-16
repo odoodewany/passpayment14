@@ -62,7 +62,7 @@ odoo.define('l10n_pe_edi_pos.PaymentScreen', function (require) {
                     }
                     var type_identification_model = this.env.pos.db.l10n_latam_identification_by_id[type_identification]
                     if (type_document_model.code == "03"){
-                        if(type_identification_model.l10n_pe_vat_code == '1'){
+                        if(type_identification_model && type_identification_model.l10n_pe_vat_code == '1'){
                             if (client['vat'].length != 8){
                                 this.showPopup('ErrorPopup', {
                                     title: this.env._t('ALERT'),
@@ -71,7 +71,7 @@ odoo.define('l10n_pe_edi_pos.PaymentScreen', function (require) {
                                 return false;
                             } 
                         }
-                        if(type_identification_model.l10n_pe_vat_code == '6'){
+                        if(type_identification_model && type_identification_model.l10n_pe_vat_code == '6'){
                             if (client['vat'].length != 11){
                                 this.showPopup('ErrorPopup', {
                                     title: this.env._t('ALERT'),
@@ -84,7 +84,7 @@ odoo.define('l10n_pe_edi_pos.PaymentScreen', function (require) {
                         
                     }
                     if (type_document_model.code == "01"){
-                        if(type_identification_model.l10n_pe_vat_code != '6'){
+                        if(type_identification_model && type_identification_model.l10n_pe_vat_code != '6'){
                             this.showPopup('ErrorPopup', {
                                 title: this.env._t('ALERT'),
                                 body: this.env._t('The document type \'Factura\' is valid only for clients with valid RUC.'),

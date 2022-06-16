@@ -23,12 +23,18 @@ class ResPartner(models.Model):
 	def _default_country(self):
 		return self.env.company.country_id.id
 
-	company_id = fields.Many2one('res.company', 'Company', index=True, default=lambda self: self.env.company)
-	# company_id = fields.Many2one('res.company', 'Company', index=True, default=False)
+	def _default_company(self):
+		company_partner = self.env.user.partner_id.company_partner
+		if company_partner:
+			return self.env.company 
+		return False
+
+	company_id = fields.Many2one('res.company', 'Company', required=False, index=True, default=_default_company)
 	country_id = fields.Many2one(default=_default_country)
 	commercial_name = fields.Char(string="Commercial Name")
 	state = fields.Selection([('habido','Habido'),('nhabido','No Habido')], string="State")
 	alert_warning_vat= fields.Boolean(string="Alert warning vat", default=False)
+	company_partner = fields.Boolean(string="Compañía por defecto", default=False)
 
 	@api.onchange('vat','l10n_latam_identification_type_id')
 	def onchange_vat(self):

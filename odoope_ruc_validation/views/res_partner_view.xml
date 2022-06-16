@@ -20,7 +20,10 @@
                     <field name="commercial_name" placeholder="Commercial Name" attrs="{'invisible': [('is_company','=',False)]}" /> 
                 </div>
             </div>
-            <xpath expr="//group/group/div[@class='o_address_format']" position="replace">      
+            <xpath expr="//field[@name='company_type']" position="before">      
+                <field name="company_partner" groups="base.group_system"/>
+            </xpath>
+            <!-- <xpath expr="//group/group/div[@class='o_address_format']" position="replace">      
                 <div class="o_address_format" position="replace">
                     <field name="parent_id" invisible="1"/>
                     <field name="type" invisible="1"/>
@@ -41,7 +44,7 @@
                     <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
                     <field name="zip" placeholder="ZIP" class="o_address_zip"/>
                 </div>
-            </xpath>
+            </xpath> -->
         </field>
     </record>
 </odoo>

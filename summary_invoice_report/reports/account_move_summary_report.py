@@ -26,7 +26,7 @@ class SummaryAccountMoveLine(models.TransientModel):
     def calculate_and_view(self):
         self.move_line_ids = [(5, 0, 0)]
 
-        query = [('product_id', '!=', False)]
+        query = [('product_id', '!=', False), ('company_id', '=', self.env.company.id)]
         if self.initial_date:
             query.append(('date', '>=', self.initial_date))
         if self.end_date:
