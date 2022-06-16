@@ -36,7 +36,7 @@
                 string="Sale Regiser Info" 
                 report_type="xlsx" 
                 name="report_sale.sale_register_xls.xlsx" 
-                print_report_name="Reporte de ventas Formato SUNAT"
+                print_report_name_id="'Reporte de ventas Formato SUNAT'"
                 file="sale_register" 
                 menu="False" 
                 attachment_use="False"/>
