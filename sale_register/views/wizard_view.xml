@@ -31,7 +31,7 @@
             <field name="target">new</field>
         </record>
 
-        <report id="sale_register_xls" 
+        <report id="sale_register_xls1" 
                 model="wizard.sale.register" 
                 string="Sale Regiser Info" 
                 report_type="xlsx" 
