@@ -115,7 +115,7 @@ class InvoiceReportXls(models.AbstractModel):
 
 
         invoices = self.env['account.move'].search([
-            ('move_type', '=', 'out_invoice'),
+            ('move_type', 'in', ['out_invoice', 'out_refund']),
             ('invoice_date', '>=', init_date),
             ('invoice_date', '<=', end_date),
             ('state', '=', 'posted'),
@@ -177,8 +177,8 @@ class InvoiceReportXls(models.AbstractModel):
             sheet.write(entrie_row, 10, invoice.amount_untaxed, font_size_8_c)
             sheet.write(entrie_row, 11, '0.0', font_size_8_c)
             sheet.write(entrie_row, 12, '0.0', font_size_8_c)
-            # sheet.write(entrie_row, 13, isc, font_size_8_c)
-            # sheet.write(entrie_row, 14, igv, font_size_8_c)
+            sheet.write(entrie_row, 13, invoice.l10n_pe_edi_amount_isc, font_size_8_c)
+            sheet.write(entrie_row, 14, invoice.l10n_pe_edi_amount_igv, font_size_8_c)
             sheet.write(entrie_row, 15, '0.0', font_size_8_c)
             sheet.write(entrie_row, 16, invoice.amount_total, font_size_8_c)
             sheet.write(entrie_row, 17, res, font_size_8_c)
