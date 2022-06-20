@@ -51,6 +51,11 @@ class StockPicking(models.Model):
 			return self.env.company.partner_id.l10n_pe_district.code
 		return False
 
+	def _arrival_point_ubigeo(self):
+		if self.partner_id:
+			return self.partner_id.zip
+		return False
+
 	def _starting_point_street(self):
 		if self.env.company.partner_id.street:
 			return self.env.company.partner_id.street
@@ -153,7 +158,7 @@ class StockPicking(models.Model):
 	l10n_pe_edi_picking_arrival_point_state_id = fields.Many2one('res.country.state', string="Arrival Point State")
 	l10n_pe_edi_picking_arrival_point_province_id = fields.Many2one('res.city', string="Arrival Point Province")
 	l10n_pe_edi_picking_arrival_point_district_id = fields.Many2one('l10n_pe.res.city.district', string="Arrival Point District")
-	l10n_pe_edi_picking_arrival_point_ubigeo = fields.Char(string="Arrival Point Ubigeo")
+	l10n_pe_edi_picking_arrival_point_ubigeo = fields.Char(string="Arrival Point Ubigeo", default=_arrival_point_ubigeo)
 	l10n_pe_edi_picking_arrival_point_street = fields.Char(string="Arrival Point Street")
 	l10n_pe_edi_is_epicking = fields.Boolean(string="Is E-picking", readonly=True, copy=False)
 	l10n_pe_edi_ose_accepted = fields.Boolean('Sent to PSE/OSE', related='l10n_pe_edi_request_id.ose_accepted', store=True)
