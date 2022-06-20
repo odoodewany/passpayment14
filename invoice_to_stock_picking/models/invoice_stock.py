@@ -172,7 +172,8 @@ class InvoiceStockMove(models.Model):
 	
 	# @api.multi
 	def action_stock_transfer(self):
-		
+		print(self.company_id.stock_picking,"---------------------------------------------------------------+*****+")
+		print("---------------------------------------------------------------+*****+")
 		if self.company_id.stock_picking == True:
 			for order in self:
 				if not order.invoice_line_ids:
