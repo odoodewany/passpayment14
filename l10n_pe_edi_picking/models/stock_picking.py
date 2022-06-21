@@ -51,6 +51,11 @@ class StockPicking(models.Model):
 			return self.env.company.partner_id.l10n_pe_district.code
 		return False
 
+	def _arrival_point_ubigeo(self):
+		if self.partner_id:
+			return self.partner_id.zip
+		return False
+
 	def _starting_point_street(self):
 		if self.env.company.partner_id.street:
 			return self.env.company.partner_id.street
@@ -105,11 +110,17 @@ class StockPicking(models.Model):
 	# 	partner = self.env['account.move'].search([('partner_id','=',self.env.user.partner_id.id)], limit=1)
 	# 	if partner:
 	# 		return partner.invoice_partner_display_name
-	# def default_number_packages(self):
-	# 	suma = 0
-	# 	for product in self.move_ids_without_package:
-	# 		suma = suma + product.product_uom_qty
-	# 	return suma
+	def default_number_packages(self):
+		suma = 0
+		for product in self.move_ids_without_package:
+			suma = suma + product.product_uom_qty
+		return suma
+		# number_packages= self.env['account.move']
+		# suma = 0
+		# for product in number_packages.invoice_line_ids:
+		# 	suma = suma + product
+		# return suma
+
 	# partner_id = fields.Many2one(
     #     'res.partner', 'Contact',
     #     check_company=True, default= deafult_partner_id,
@@ -124,7 +135,7 @@ class StockPicking(models.Model):
 	l10n_pe_edi_picking_observations = fields.Char(string='Observations', size=1000, help="If you want line breaks for the printed or PDF representation use <br>", copy=False)
 	l10n_pe_edi_picking_catalog_20_id = fields.Many2one('l10n_pe_edi.catalog.20', string="Reason for transfer")
 	l10n_pe_edi_picking_total_gross_weight = fields.Float(string="Total Gross Weight", default=0.0, help='Weight in Kg.')
-	l10n_pe_edi_picking_number_packages = fields.Integer(string="Number Of Packages")
+	l10n_pe_edi_picking_number_packages = fields.Float(string="Number Of Packages", default=default_number_packages)
 	l10n_pe_edi_picking_catalog_18_id = fields.Many2one('l10n_pe_edi.catalog.18', string="Transport Type", default=picking_catalog_18_id)
 	l10n_pe_edi_picking_catalog_18_code = fields.Char(related='l10n_pe_edi_picking_catalog_18_id.code')
 	l10n_pe_edi_picking_start_transport_date = fields.Date(string="Start Transport Date", copy=False, default=datetime.today().strftime('%Y-%m-%d'))
@@ -153,7 +164,7 @@ class StockPicking(models.Model):
 	l10n_pe_edi_picking_arrival_point_state_id = fields.Many2one('res.country.state', string="Arrival Point State")
 	l10n_pe_edi_picking_arrival_point_province_id = fields.Many2one('res.city', string="Arrival Point Province")
 	l10n_pe_edi_picking_arrival_point_district_id = fields.Many2one('l10n_pe.res.city.district', string="Arrival Point District")
-	l10n_pe_edi_picking_arrival_point_ubigeo = fields.Char(string="Arrival Point Ubigeo")
+	l10n_pe_edi_picking_arrival_point_ubigeo = fields.Char(string="Arrival Point Ubigeo", default=_arrival_point_ubigeo)
 	l10n_pe_edi_picking_arrival_point_street = fields.Char(string="Arrival Point Street")
 	l10n_pe_edi_is_epicking = fields.Boolean(string="Is E-picking", readonly=True, copy=False)
 	l10n_pe_edi_ose_accepted = fields.Boolean('Sent to PSE/OSE', related='l10n_pe_edi_request_id.ose_accepted', store=True)
@@ -340,12 +351,14 @@ class StockPicking(models.Model):
 	@api.onchange('move_ids_without_package')
 	def _onchange_move_ids_without_package(self):
 		_logger.info("cambio en = - =")
-		suma = 0
+		suma1 = 0
+		suma2 = 0
 		for product in self.move_ids_without_package:
-			suma = suma + product.product_uom_qty
-		
-		self.l10n_pe_edi_picking_number_packages = suma
+			suma1 = suma1 + product.product_uom_qty
+			suma2 = suma2 + product.quantity_done
+		self.l10n_pe_edi_picking_number_packages = suma1
 
+	
 	def convert_date_to_timezone(self, date_time):
 		if self.env.user.tz:
 			tz = pytz.timezone(self.env.user.tz)
