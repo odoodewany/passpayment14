@@ -77,7 +77,7 @@
                                                     REF DE PAGO:
                                                 </dt>
                                                 <dd class="col-auto col-5 col-sm-5 mb-0">
-                                                    <span class="text-nowrap" t-field="o.payment_reference"/>
+                                                    <span class="text-nowrap" t-field="o.payment_reference_selection"/>
                                                 </dd>
                                             </dl>
                                         </div>

@@ -50,7 +50,7 @@ class AccountMove(models.Model):
 	_inherit = 'account.move'  
 	invoice_date = fields.Date(string='Invoice/Bill Date', readonly=True, index=True, copy=False,default=datetime.now(),
 			states={'draft': [('readonly', False)]})
-	payment_reference = fields.Selection([('efectivo', 'Efectivo'), ('banco', 'Banco')],default='efectivo')
+	payment_reference_selection = fields.Selection([('efectivo', 'Efectivo'), ('banco', 'Banco')],default='efectivo')
 	l10n_pe_edi_operation_type = fields.Selection([
 			('1','INTERNAL SALE'),
 			('2','EXPORTATION'),
