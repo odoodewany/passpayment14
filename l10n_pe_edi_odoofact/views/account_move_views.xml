@@ -16,7 +16,7 @@
             </button>
             <field name="payment_reference" position="after">
                 <field name="payment_reference_selection" />
-            </field>
+            </field> 
 		</field>
 	</record>
 

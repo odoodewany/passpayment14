@@ -53,7 +53,7 @@ class AccountMove(models.Model):
 	payment_reference_selection = fields.Selection([
 		('efectivo', 'Efectivo'),
 		('banco', 'Banco'),
-	], string='Referencia de pago', default='efectivo')
+	], string='Tipo de pago', default='efectivo')
 	l10n_pe_edi_operation_type = fields.Selection([
 			('1','INTERNAL SALE'),
 			('2','EXPORTATION'),
