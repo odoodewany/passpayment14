@@ -226,6 +226,14 @@
                                             <dd class="col-6 col-sm-7 mb-0" t-esc="pick_number.name"/>
                                         </dl>
                                     </t>
+                                    <t t-foreach="o.l10n_pe_edi_transportist_picking_number_ids" t-as="pick_number">
+                                        <dl class="row mb-0">
+                                            <dt class="col-6 col-sm-5 mb-0">
+                                                <span t-field="pick_number.type"/>:
+                                            </dt>
+                                            <dd class="col-6 col-sm-7 mb-0" t-esc="pick_number.name"/>
+                                        </dl>
+                                    </t>
                                     <dl class="row mb-0" t-if="o.invoice_date_due and o.invoice_date != o.invoice_date_due">
                                         <!-- dt class="col-auto col-6 col-sm-5 mb-0">
                                             PAYMENT TERMS:
