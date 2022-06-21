@@ -152,7 +152,10 @@
                     <field name="l10n_pe_edi_amount_free"/>
                     <field name="l10n_pe_edi_amount_discount"/>
                     <field name="l10n_pe_edi_global_discount"/>  
-            </xpath>          
+            </xpath>
+            <field name="payment_reference" position="after">
+                <field name="payment_reference_selection" />
+            </field>         
 		</field>
 	</record>
 
