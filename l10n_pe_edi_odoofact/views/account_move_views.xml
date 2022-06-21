@@ -14,6 +14,9 @@
                 <button name="action_document_send" type="object" string="Send to SUNAT" groups="account.group_account_user"/>
                 <button name="action_document_check" type="object" string="Check status" groups="account.group_account_user"/>
             </button>
+            <field name="payment_reference" position="after">
+                <field name="payment_reference_selection" />
+            </field>
 		</field>
 	</record>
 
