@@ -72,6 +72,14 @@
                                                     <span class="text-nowrap" t-field="o.invoice_date_due"/>
                                                 </dd>
                                             </dl>
+                                            <dl class="row mb-0">
+                                                <dt class="col-auto col-7 col-sm-7 mb-0">
+                                                    REF DE PAGO:
+                                                </dt>
+                                                <dd class="col-auto col-5 col-sm-5 mb-0">
+                                                    <span class="text-nowrap" t-field="o.payment_reference"/>
+                                                </dd>
+                                            </dl>
                                         </div>
                                         <div class="col-auto col-6 col-sm-5 mb-0">
                                             <dl class="row mb-0">
@@ -88,10 +96,10 @@
                                                 </dt>
                                                 <dd class="col-auto col-4 col-sm-4 mb-0">
                                                     <t t-if="o.invoice_date_due and o.invoice_date == o.invoice_date_due">
-                                                        CONTADO
+                                                        Contado
                                                     </t>
                                                     <t t-else="">
-                                                        CREDITO
+                                                        Credito
                                                     </t>
                                                 </dd>
                                             </dl>

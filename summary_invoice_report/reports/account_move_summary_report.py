@@ -4,7 +4,7 @@
 import base64
 import io
 from os import access
-from termios import OFDEL
+#from termios import OFDEL
 
 from odoo import api, fields, models, tools
 from PIL import Image

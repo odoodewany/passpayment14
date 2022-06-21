@@ -69,7 +69,7 @@
             <field name="model">pos.category</field>
             <field name="inherit_id" ref="point_of_sale.product_pos_category_tree_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='parent_id']" position="after">
+                <xpath expr="//field[@name='display_name']" position="after">
                     <field name="company_id" optional="hide"/>
                 </xpath>
             </field>
