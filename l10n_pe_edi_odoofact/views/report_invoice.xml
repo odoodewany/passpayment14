@@ -74,10 +74,10 @@
                                             </dl>
                                             <dl class="row mb-0">
                                                 <dt class="col-auto col-7 col-sm-7 mb-0">
-                                                    REF DE PAGO:
+                                                    TIPO DE PAGO:
                                                 </dt>
                                                 <dd class="col-auto col-5 col-sm-5 mb-0">
-                                                    <span class="text-nowrap" t-field="o.payment_reference"/>
+                                                    <span class="text-nowrap" t-field="o.payment_reference_selection"/>
                                                 </dd>
                                             </dl>
                                         </div>
@@ -219,6 +219,14 @@
                                         </dd>
                                     </dl>
                                     <t t-foreach="o.l10n_pe_edi_picking_number_ids" t-as="pick_number">
+                                        <dl class="row mb-0">
+                                            <dt class="col-6 col-sm-5 mb-0">
+                                                <span t-field="pick_number.type"/>:
+                                            </dt>
+                                            <dd class="col-6 col-sm-7 mb-0" t-esc="pick_number.name"/>
+                                        </dl>
+                                    </t>
+                                    <t t-foreach="o.l10n_pe_edi_transportist_picking_number_ids" t-as="pick_number">
                                         <dl class="row mb-0">
                                             <dt class="col-6 col-sm-5 mb-0">
                                                 <span t-field="pick_number.type"/>:

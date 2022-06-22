@@ -50,7 +50,10 @@ class AccountMove(models.Model):
 	_inherit = 'account.move'  
 	invoice_date = fields.Date(string='Invoice/Bill Date', readonly=True, index=True, copy=False,default=datetime.now(),
 			states={'draft': [('readonly', False)]})
-	payment_reference = fields.Selection([('efectivo', 'Efectivo'), ('banco', 'Banco')],default='efectivo')
+	payment_reference_selection = fields.Selection([
+		('efectivo', 'Efectivo'),
+		('banco', 'Banco'),
+	], string='Tipo de pago', default='efectivo')
 	l10n_pe_edi_operation_type = fields.Selection([
 			('1','INTERNAL SALE'),
 			('2','EXPORTATION'),
@@ -87,6 +90,7 @@ class AccountMove(models.Model):
 	l10n_pe_edi_number = fields.Integer(string='E-invoice Number', compute='_get_einvoice_number', store=True)
 	l10n_pe_edi_service_order = fields.Char(string='Purchase/Service order', help='This Purchase/service order will be shown on the electronic invoice')
 	l10n_pe_edi_picking_number_ids = fields.One2many('l10n_pe_edi.picking.number', 'invoice_id', string='Picking numbers')
+	l10n_pe_edi_transportist_picking_number_ids = fields.One2many('l10n_pe_edi.picking.number', 'invoice_trans_id', string='Picking numbers')
 	l10n_pe_edi_reversal_serie = fields.Char(string='Document serie', help='Used for Credit and debit note', readonly=False)
 	l10n_pe_edi_reversal_number = fields.Char(string='Document number', help='Used for Credit and debit note', readonly=False)
 	l10n_pe_edi_reversal_date = fields.Date(string='Document date', help='Date of the Credit or debit note', readonly=False)

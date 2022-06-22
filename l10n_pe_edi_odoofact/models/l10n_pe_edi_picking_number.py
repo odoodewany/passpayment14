@@ -16,6 +16,7 @@ class EdiPickingNumber(models.Model):
     _description = 'Picking numbers'
 
     invoice_id = fields.Many2one('account.move', string="Invoice")
+    invoice_trans_id = fields.Many2one('account.move', string="Invoice")
     name = fields.Char(string="Picking Serial and Number", help="Sintaxt serial TXXX-XXXX or 0XXX-XXXX")
     partner_id = fields.Many2one('res.partner', string="Client")
     type = fields.Selection([
