@@ -176,13 +176,22 @@ class InvoiceReportXls(models.AbstractModel):
             sheet.write(entrie_row, 7, invoice.partner_id.vat, font_size_8_c)
             sheet.write(entrie_row, 8, invoice.partner_id.name, font_size_8_c)
             sheet.write(entrie_row, 9, '', font_size_8_c)
-            sheet.write(entrie_row, 10, invoice.amount_untaxed, font_size_8_c)
+            if invoice.move_type == 'out_refund':
+                multiplier = -1
+            else:
+                multiplier = 1
+            
+            amount_untaxed = invoice.amount_untaxed * multiplier
+            l10n_pe_edi_amount_isc = invoice.l10n_pe_edi_amount_isc * multiplier
+            l10n_pe_edi_amount_igv = invoice.l10n_pe_edi_amount_igv * multiplier
+            amount_total = invoice.amount_total * multiplier
+            sheet.write(entrie_row, 10, amount_untaxed, font_size_8_c)
             sheet.write(entrie_row, 11, '0.0', font_size_8_c)
             sheet.write(entrie_row, 12, '0.0', font_size_8_c)
-            sheet.write(entrie_row, 13, invoice.l10n_pe_edi_amount_isc, font_size_8_c)
-            sheet.write(entrie_row, 14, invoice.l10n_pe_edi_amount_igv, font_size_8_c)
+            sheet.write(entrie_row, 13, l10n_pe_edi_amount_isc, font_size_8_c)
+            sheet.write(entrie_row, 14, l10n_pe_edi_amount_igv, font_size_8_c)
             sheet.write(entrie_row, 15, '0.0', font_size_8_c)
-            sheet.write(entrie_row, 16, invoice.amount_total, font_size_8_c)
+            sheet.write(entrie_row, 16, amount_total, font_size_8_c)
             sheet.write(entrie_row, 17, res, font_size_8_c)
             sheet.write(entrie_row, 18, refund_date, font_size_8_c)
             sheet.write(entrie_row, 19,
