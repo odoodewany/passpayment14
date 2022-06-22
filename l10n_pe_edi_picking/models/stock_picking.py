@@ -115,6 +115,7 @@ class StockPicking(models.Model):
 		for product in self.move_ids_without_package:
 			suma = suma + product.product_uom_qty
 		return suma
+
 		# number_packages= self.env['account.move']
 		# suma = 0
 		# for product in number_packages.invoice_line_ids:
@@ -135,7 +136,8 @@ class StockPicking(models.Model):
 	l10n_pe_edi_picking_observations = fields.Char(string='Observations', size=1000, help="If you want line breaks for the printed or PDF representation use <br>", copy=False)
 	l10n_pe_edi_picking_catalog_20_id = fields.Many2one('l10n_pe_edi.catalog.20', string="Reason for transfer")
 	l10n_pe_edi_picking_total_gross_weight = fields.Float(string="Total Gross Weight", default=0.0, help='Weight in Kg.')
-	l10n_pe_edi_picking_number_packages = fields.Float(string="Number Of Packages", default=default_number_packages)
+	''' l10n_pe_edi_picking_number_packages = fields.Float(string="Number Of Packages", default=default_number_packages) '''
+	l10n_pe_edi_picking_number_packages = fields.Float(string="Number Of Packages", compute="_compute_number_packages")
 	l10n_pe_edi_picking_catalog_18_id = fields.Many2one('l10n_pe_edi.catalog.18', string="Transport Type", default=picking_catalog_18_id)
 	l10n_pe_edi_picking_catalog_18_code = fields.Char(related='l10n_pe_edi_picking_catalog_18_id.code')
 	l10n_pe_edi_picking_start_transport_date = fields.Date(string="Start Transport Date", copy=False, default=datetime.today().strftime('%Y-%m-%d'))
@@ -173,6 +175,11 @@ class StockPicking(models.Model):
 	l10n_pe_edi_sunat_accepted = fields.Boolean('Accepted by SUNAT', related='l10n_pe_edi_request_id.sunat_accepted', store=True)
 	
 	#-----------COMPUTE & ONCHANGE----------------
+
+	@api.depends('move_ids_without_package')
+	def _compute_number_packages(self):
+		for record in self:
+			record.l10n_pe_edi_picking_number_packages = sum(record.move_ids_without_package.mapped("product_uom_qty"))
 	
 	def _compute_serie_number(self):
 		for rec in self:
