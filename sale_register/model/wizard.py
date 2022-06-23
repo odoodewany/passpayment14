@@ -44,7 +44,7 @@ class SaleRegisterWizard(models.TransientModel):
     company_id = fields.Many2one(
         string=u'Compañia',
         comodel_name='res.company', required=True,
-        domain=lambda self: [('id','in', self.env.user.company_ids.ids)],
+        domain=lambda self: [('id', 'in', self.env.user.company_ids.ids)],
         default=lambda self: self.env.user.company_id.id,
     )
 
@@ -52,7 +52,8 @@ class SaleRegisterWizard(models.TransientModel):
     ventas_reg = fields.Binary('File', readonly=True)
     ventas_reg_fname = fields.Char('Filename', readonly=True)
 
-    
+    journal_ids = fields.Many2many('account.journal', string='Diarios')
+
     def get_report(self):
         """Call when button 'Get Report' clicked.
         """
@@ -64,12 +65,11 @@ class SaleRegisterWizard(models.TransientModel):
                 'year': self.year,
             },
         }
-        
+
         # use `module_name.report_id` as reference.
         # `report_action()` will call `get_report_values()` and pass `data` automatically.
         return self.env.ref('sale_register.sale_register').report_action(self, data=data)
 
-    
     def export_xls(self):
         context = self._context
         datas = {'ids': context.get('active_ids', [])}
@@ -82,7 +82,6 @@ class SaleRegisterWizard(models.TransientModel):
         if context.get('xls_export'):
             return self.env.ref('sale_register.sale_register_xls1').report_action(self, data=datas)
 
-    
     def generate_txt_report(self):
         data = self.read()[0]
         month = data['month']

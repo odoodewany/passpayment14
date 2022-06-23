@@ -198,7 +198,7 @@
                 </div>
                 <div class="receipt-phone client-info">
                   <t t-if="o.name">
-                    <!-- t t-if="o.refund_invoice_id">
+                    <!-- t t-if="o.reversed_entry_id">
                         <t t-if="o.refund_type == 'credit'">Nota de Crédito</t>
                         <t t-if="o.refund_type == 'debit'">Nota de Débito</t>
                     </t>
@@ -213,7 +213,7 @@
                     <br/>
                     <span class="font-weight-bold text-uppercase" t-esc="o.name"/>
                     </div>
-                    <!-- t t-if="o.refund_invoice_id">
+                    <!-- t t-if="o.reversed_entry_id">
                         <t t-if="o.refund_type == 'credit'"><strong>Tipo de Nota de Credito: </strong><t t-esc="o.credit_note_type.name"/></t>
                         <t t-if="o.refund_type == 'debit'"><strong>Tipo de Nota de Débito: </strong><t t-esc="o.debit_note_type.name"/></t>
                     </t -->
@@ -520,7 +520,7 @@
                 <div class="receipt-phone client-info">
                   <t t-if="o.name">
 
-		    <t t-if="o.refund_invoice_id">
+		    <t t-if="o.reversed_entry_id">
                       <t t-if="o.refund_type == 'credit'">Nota de Crédito </t>
                       <t t-if="o.refund_type == 'debit'">Nota de Débito </t>
 		    </t>
@@ -533,7 +533,7 @@
 		    
                     <t t-esc="o.name"/>
                     <br/>
-                    <t t-if="o.refund_invoice_id">
+                    <t t-if="o.reversed_entry_id">
                         <t t-if="o.refund_type == 'credit'"><strong>Tipo de Nota de Credito: </strong><t t-esc="o.credit_note_type.name"/></t>
                         <t t-if="o.refund_type == 'debit'"><strong>Tipo de Nota de Débito: </strong><t t-esc="o.debit_note_type.name"/></t>
                     </t>
@@ -628,7 +628,7 @@
                       </span>
                     </p>
                   </div>
-                  <t t-if="o.refund_invoice_id">
+                  <t t-if="o.reversed_entry_id">
                     <p t-if="o.refund_type == 'credit'">Representación impresa de la nota de crédito electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
                     <p t-if="o.refund_type == 'debit'">Representación impresa de la nota de débito electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
                   </t>
