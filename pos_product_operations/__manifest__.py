@@ -71,7 +71,7 @@ This apps allows users to provide Pos Product Operations.
         'views/custom_pos_view.xml',
     ],
     'qweb': [
-        'static/src/xml/product_view.xml',
+        'static/src/xml/product_view.xml'
     ],
     "auto_install": False,
     "installable": True,
