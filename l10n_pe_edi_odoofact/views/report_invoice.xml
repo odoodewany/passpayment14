@@ -350,7 +350,9 @@
                                         <dt class="col-auto col-6 col-sm-5 mb-0">
                                             RELATED DOCUMENT:
                                         </dt>
-                                        <dd class="col-auto col-6 col-sm-7 mb-0" t-esc="o.l10n_pe_edi_reversal_serie + '-' + o.l10n_pe_edi_reversal_number"/>
+                                        <t t-set="l10n_pe_edi_reversal_serie" t-value="o.l10n_pe_edi_reversal_serie or ''" />
+                                        <t t-set="l10n_pe_edi_reversal_number" t-value="o.l10n_pe_edi_reversal_number or ''" />
+                                        <dd class="col-auto col-6 col-sm-7 mb-0" t-esc="l10n_pe_edi_reversal_serie + '-' + l10n_pe_edi_reversal_number"/>
                                     </dl>
                                 </div>
                             </div>
