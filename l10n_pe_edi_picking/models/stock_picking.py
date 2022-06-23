@@ -282,7 +282,7 @@ class StockPicking(models.Model):
     @api.onchange('l10n_pe_edi_picking_arrival_point_district_id')
     def _onchange_arrival_point_district(self):
         if self.l10n_pe_edi_picking_arrival_point_district_id:
-#            self.l10n_pe_edi_picking_arrival_point_ubigeo = self.l10n_pe_edi_picking_arrival_point_district_id.code
+            self.l10n_pe_edi_picking_arrival_point_ubigeo = self.l10n_pe_edi_picking_arrival_point_district_id.code
             if self.l10n_pe_edi_picking_arrival_point_district_id.city_id:
                 self.l10n_pe_edi_picking_arrival_point_province_id = self.l10n_pe_edi_picking_arrival_point_district_id.city_id.id
 
