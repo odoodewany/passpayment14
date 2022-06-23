@@ -52,7 +52,7 @@ class SaleRegisterWizard(models.TransientModel):
     ventas_reg = fields.Binary('File', readonly=True)
     ventas_reg_fname = fields.Char('Filename', readonly=True)
 
-    journal_ids = fields.Many2many('account.journal', string='Diarios')
+    journal_ids = fields.Many2many('account.journal', string='Diarios', domain="[('type','=','sale')]")
 
     def get_report(self):
         """Call when button 'Get Report' clicked.
