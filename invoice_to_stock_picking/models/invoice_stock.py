@@ -179,6 +179,8 @@ class InvoiceStockMove(models.Model):
 			if not self.name:
 				raise UserError(_('Please Validate invoice.'))
 			if not self.invoice_picking_id:
+				starting_ubigeo = self.company_id.partner_id.l10n_pe_district.code if self.company_id.partner_id.l10n_pe_district else ''
+				arrival_ubigeo = self.partner_id.l10n_pe_district.id.code if self.partner_id.l10n_pe_district.id else ''
 				pick = {
 					'picking_type_id': self.picking_transfer_id.id,
 					'partner_id': self.partner_id.id,
@@ -188,12 +190,12 @@ class InvoiceStockMove(models.Model):
 					'l10n_pe_edi_picking_starting_point_state_id': self.company_id.partner_id.state_id.id,
 					'l10n_pe_edi_picking_starting_point_province_id': self.company_id.partner_id.city_id.id,
 					'l10n_pe_edi_picking_starting_point_district_id': self.company_id.partner_id.l10n_pe_district.id,
-					'l10n_pe_edi_picking_starting_point_ubigeo': self.company_id.partner_id.zip,
+					'l10n_pe_edi_picking_starting_point_ubigeo': starting_ubigeo,
 					'l10n_pe_edi_picking_starting_point_street': self.company_id.partner_id.street,
 					'l10n_pe_edi_picking_arrival_point_state_id': self.partner_id.state_id.id,
 					'l10n_pe_edi_picking_arrival_point_province_id': self.partner_id.city_id.id,
 					'l10n_pe_edi_picking_arrival_point_district_id': self.partner_id.l10n_pe_district.id,
-					'l10n_pe_edi_picking_arrival_point_ubigeo': self.partner_id.zip,
+					'l10n_pe_edi_picking_arrival_point_ubigeo': arrival_ubigeo,
 					'l10n_pe_edi_picking_arrival_point_street': self.partner_id.street,
 					'l10n_pe_edi_picking_start_transport_date': self.invoice_date
 				}
