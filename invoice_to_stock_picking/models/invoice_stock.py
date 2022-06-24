@@ -180,7 +180,7 @@ class InvoiceStockMove(models.Model):
 				raise UserError(_('Please Validate invoice.'))
 			if not self.invoice_picking_id:
 				starting_ubigeo = self.company_id.partner_id.l10n_pe_district.code if self.company_id.partner_id.l10n_pe_district else ''
-				arrival_ubigeo = self.partner_id.l10n_pe_district.id.code if self.partner_id.l10n_pe_district.id else ''
+				arrival_ubigeo = self.partner_id.l10n_pe_district.code if self.partner_id.l10n_pe_district else ''
 				pick = {
 					'picking_type_id': self.picking_transfer_id.id,
 					'partner_id': self.partner_id.id,
