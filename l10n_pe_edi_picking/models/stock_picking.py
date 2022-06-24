@@ -183,7 +183,7 @@ class StockPicking(models.Model):
     l10n_pe_edi_picking_carrier_name = fields.Char(
         string="Carrier Name", default=picking_carrier_name)
     l10n_pe_edi_picking_carrier_license_plate = fields.Char(
-        string="License Plate", deafult=picking_carrier_license_plate)
+        string="License Plate", default=picking_carrier_license_plate)
     l10n_pe_edi_picking_driver_id = fields.Many2one(
         'res.partner', string="Driver")
     l10n_pe_edi_picking_driver_doc_type = fields.Many2one(
