@@ -171,7 +171,8 @@ class InvoiceStockMove(models.Model):
 			
 	
 	def action_stock_transfer(self):
-		
+		print ('here______________________________')
+
 		for order in self:
 			if not order.invoice_line_ids:
 				raise UserError(_('Please create some invoice lines.'))
