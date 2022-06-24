@@ -234,6 +234,7 @@ class InvoiceStockMove(models.Model):
 		action = self.env["ir.actions.actions"]._for_xml_id("stock.action_picking_tree_all")
 
 		pickings = self.env['stock.picking'].search([('origin', '=', self.name)])
+		picking = self.env['stock.picking'].browse(self.invoice_picking_id.id)
 		if len(pickings) > 1:
 			action['domain'] = [('id', 'in', pickings.ids)]
 		elif pickings:
@@ -287,8 +288,8 @@ class SupplierInvoiceLine(models.Model):
 				'price_unit': price_unit,
 				'picking_type_id': picking.picking_type_id.id,
 				# 'procurement_id': False,
-				'route_ids': 1 and [
-					(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
+				#'route_ids': 1 and [
+				#	(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
 				'warehouse_id': picking.picking_type_id.warehouse_id.id,
 			}
 			diff_quantity = line.quantity
@@ -319,8 +320,8 @@ class SupplierInvoiceLine(models.Model):
 				'price_unit': price_unit,
 				'picking_type_id': picking.picking_type_id.id,
 				# 'procurement_id': False,
-				'route_ids': 1 and [
-					(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
+				#'route_ids': 1 and [
+				#	(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
 				'warehouse_id': picking.picking_type_id.warehouse_id.id,
 			}
 			diff_quantity = line.quantity
