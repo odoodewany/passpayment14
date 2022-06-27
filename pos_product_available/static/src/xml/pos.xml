@@ -3,7 +3,23 @@
     Copyright 2018-2019 Kolushov Alexandr <https://it-projects.info/team/KolushovAlexandr>
     License MIT (https://opensource.org/licenses/MIT). -->
 <templates id="template" xml:space="preserve">
-    <t t-extend="Product">
+
+    <t t-name="ProductItem" t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('product-name')]" position="inside">
+            <!-- <t t-if="widget.pos.config.show_qtys &amp;&amp; product.type == 'product'">
+                <span t-attf-class="qty-tag #{product.qty_available lte 0 ? 'not-available':''}">
+                    <br></br>
+                    <b>Stock: </b>
+                    <b><t t-esc="props.product.qty_available"/></b>
+                </span>
+            </t> -->
+            <br></br>
+            <span style="font-size:12px;"><b>Stock: </b></span>
+            <b style="font-size:12px;"><t t-esc="props.product.qty_available"/></b>
+        </xpath>
+    </t>
+
+    <!-- <t t-extend="Product">
         <t t-jquery=".product-img" t-operation="append">
             <t t-if="widget.pos.config.show_qtys &amp;&amp; product.type == 'product'">
                 <span
@@ -30,5 +46,5 @@
                 </span>)
             </t>
         </t>
-    </t>
+    </t> -->
 </templates>
