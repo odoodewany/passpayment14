@@ -183,7 +183,7 @@ class StockPicking(models.Model):
     l10n_pe_edi_picking_carrier_name = fields.Char(
         string="Carrier Name", default=picking_carrier_name)
     l10n_pe_edi_picking_carrier_license_plate = fields.Char(
-        string="License Plate", deafult=picking_carrier_license_plate)
+        string="License Plate", default=picking_carrier_license_plate)
     l10n_pe_edi_picking_driver_id = fields.Many2one(
         'res.partner', string="Driver")
     l10n_pe_edi_picking_driver_doc_type = fields.Many2one(
@@ -390,30 +390,13 @@ class StockPicking(models.Model):
     # 		self.l10n_pe_edi_picking_starting_point_street = self.picking_type_id.company_id.street_name
 
     @api.onchange('partner_id')
-    def _onchange_picking_type_id(self):
-        # if self.picking_type_id:
-
-        # 	self.l10n_pe_edi_picking_arrival_point_state_id = self.partner_id.state_id.id
-        # 	self.l10n_pe_edi_picking_arrival_point_province_id = self.partner_id.city_id.id
-        # 	self.l10n_pe_edi_picking_arrival_point_district_id = self.partner_id.l10n_pe_district.id
-        # 	self.l10n_pe_edi_picking_arrival_point_ubigeo = self.partner_id.zip
-        # 	if self.partner_id.l10n_pe_district:
-        # 		self.l10n_pe_edi_picking_arrival_point_ubigeo = self.l10n_pe_edi_picking_arrival_point_district_id.code
-        # 	self.l10n_pe_edi_picking_arrival_point_street = self.partner_id.street
-
+    def _onchange_partner_id(self):
         if self.partner_id:
             self.l10n_pe_edi_picking_arrival_point_state_id = self.partner_id.state_id.id
             self.l10n_pe_edi_picking_arrival_point_province_id = self.partner_id.city_id.id
             self.l10n_pe_edi_picking_arrival_point_district_id = self.partner_id.l10n_pe_district.id
             self.l10n_pe_edi_picking_arrival_point_ubigeo = self.partner_id.zip
             self.l10n_pe_edi_picking_arrival_point_street = self.partner_id.street_name
-
-        ''' else:
-            self.l10n_pe_edi_picking_arrival_point_state_id = 0
-            self.l10n_pe_edi_picking_arrival_point_province_id = 0
-            self.l10n_pe_edi_picking_arrival_point_district_id = 0
-            self.l10n_pe_edi_picking_arrival_point_ubigeo = ""
-            self.l10n_pe_edi_picking_arrival_point_street = "" '''
 
     @api.onchange('l10n_pe_edi_picking_catalog_18_id')
     def _onchange_picking_catalog_18_id(self):

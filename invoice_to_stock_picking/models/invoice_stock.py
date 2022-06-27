@@ -170,44 +170,45 @@ class InvoiceStockMove(models.Model):
 
 			
 	
-	# @api.multi
 	def action_stock_transfer(self):
-		
-		if self.company_id.stock_picking == True:
-			for order in self:
-				if not order.invoice_line_ids:
-					raise UserError(_('Please create some invoice lines.'))
-				if not self.name:
-					raise UserError(_('Please Validate invoice.'))
-				if not self.invoice_picking_id:
-					pick = {
-						'picking_type_id': self.picking_transfer_id.id,
-						'partner_id': self.partner_id.id,
-						'origin': self.name,
-						'location_dest_id': self.partner_id.property_stock_customer.id,
-						'location_id': self.picking_transfer_id.default_location_src_id.id,
-						'l10n_pe_edi_picking_starting_point_state_id': self.company_id.partner_id.state_id.id,
-						'l10n_pe_edi_picking_starting_point_province_id': self.company_id.partner_id.city_id.id,
-						'l10n_pe_edi_picking_starting_point_district_id': self.company_id.partner_id.l10n_pe_district.id,
-						'l10n_pe_edi_picking_starting_point_ubigeo': self.company_id.partner_id.zip,
-						'l10n_pe_edi_picking_starting_point_street': self.company_id.partner_id.street,
-						'l10n_pe_edi_picking_arrival_point_state_id': self.partner_id.state_id.id,
-						'l10n_pe_edi_picking_arrival_point_province_id': self.partner_id.city_id.id,
-						'l10n_pe_edi_picking_arrival_point_district_id': self.partner_id.l10n_pe_district.id,
-						'l10n_pe_edi_picking_arrival_point_ubigeo': self.partner_id.zip,
-						'l10n_pe_edi_picking_arrival_point_street': self.partner_id.street,
-						'l10n_pe_edi_picking_start_transport_date': self.invoice_date
-					}
-					picking = self.env['stock.picking'].create(pick)
-					self.invoice_picking_id = picking.id
-	#                 self.picking_count = len(picking)
-					moves = order.invoice_line_ids.filtered(lambda r: r.product_id.type in ['product', 'consu'])._create_stock_moves_transfer(picking)
-					move_ids = moves._action_confirm()
-					move_ids._action_assign()
-					# picking.button_validate()
-					picking.convert_to_epicking()
-		else:
-			return True
+		print ('here______________________________')
+
+		for order in self:
+			if not order.invoice_line_ids:
+				raise UserError(_('Please create some invoice lines.'))
+			if not self.name:
+				raise UserError(_('Please Validate invoice.'))
+			if not self.invoice_picking_id:
+				starting_ubigeo = self.company_id.partner_id.l10n_pe_district.code if self.company_id.partner_id.l10n_pe_district else ''
+				arrival_ubigeo = self.partner_id.l10n_pe_district.code if self.partner_id.l10n_pe_district else ''
+				pick = {
+					'picking_type_id': self.picking_transfer_id.id,
+					'partner_id': self.partner_id.id,
+					'origin': self.name,
+					'location_dest_id': self.partner_id.property_stock_customer.id,
+					'location_id': self.picking_transfer_id.default_location_src_id.id,
+					'l10n_pe_edi_picking_starting_point_state_id': self.company_id.partner_id.state_id.id,
+					'l10n_pe_edi_picking_starting_point_province_id': self.company_id.partner_id.city_id.id,
+					'l10n_pe_edi_picking_starting_point_district_id': self.company_id.partner_id.l10n_pe_district.id,
+					'l10n_pe_edi_picking_starting_point_ubigeo': starting_ubigeo,
+					'l10n_pe_edi_picking_starting_point_street': self.company_id.partner_id.street,
+					'l10n_pe_edi_picking_arrival_point_state_id': self.partner_id.state_id.id,
+					'l10n_pe_edi_picking_arrival_point_province_id': self.partner_id.city_id.id,
+					'l10n_pe_edi_picking_arrival_point_district_id': self.partner_id.l10n_pe_district.id,
+					'l10n_pe_edi_picking_arrival_point_ubigeo': arrival_ubigeo,
+					'l10n_pe_edi_picking_arrival_point_street': self.partner_id.street,
+					'l10n_pe_edi_picking_start_transport_date': self.invoice_date
+				}
+				picking = self.env['stock.picking'].create(pick)
+				self.invoice_picking_id = picking.id
+#                 self.picking_count = len(picking)
+				moves = order.invoice_line_ids.filtered(lambda r: r.product_id.type in ['product', 'consu'])._create_stock_moves_transfer(picking)
+				move_ids = moves._action_confirm()
+				move_ids._action_assign()
+				# picking.button_validate()
+				picking.convert_to_epicking()
+		#else:
+		#	return True
 		if self.picking_count > 0:
 			picking_type_state = self.env['stock.picking'].search([('origin', '=', self.name),('state', '!=', 'done')])
 			if picking_type_state:
@@ -235,6 +236,7 @@ class InvoiceStockMove(models.Model):
 		action = self.env["ir.actions.actions"]._for_xml_id("stock.action_picking_tree_all")
 
 		pickings = self.env['stock.picking'].search([('origin', '=', self.name)])
+		picking = self.env['stock.picking'].browse(self.invoice_picking_id.id)
 		if len(pickings) > 1:
 			action['domain'] = [('id', 'in', pickings.ids)]
 		elif pickings:
@@ -288,8 +290,8 @@ class SupplierInvoiceLine(models.Model):
 				'price_unit': price_unit,
 				'picking_type_id': picking.picking_type_id.id,
 				# 'procurement_id': False,
-				'route_ids': 1 and [
-					(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
+				#'route_ids': 1 and [
+				#	(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
 				'warehouse_id': picking.picking_type_id.warehouse_id.id,
 			}
 			diff_quantity = line.quantity
@@ -320,8 +322,8 @@ class SupplierInvoiceLine(models.Model):
 				'price_unit': price_unit,
 				'picking_type_id': picking.picking_type_id.id,
 				# 'procurement_id': False,
-				'route_ids': 1 and [
-					(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
+				#'route_ids': 1 and [
+				#	(6, 0, [x.id for x in self.env['stock.location.route'].search([('id', 'in', (2, 3))])])] or [],
 				'warehouse_id': picking.picking_type_id.warehouse_id.id,
 			}
 			diff_quantity = line.quantity
