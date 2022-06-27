@@ -160,6 +160,18 @@ class AccountMove(models.Model):
 			self.l10n_pe_edi_operation_type = '1'
 		return super(AccountMove, self)._onchange_partner_id()
 
+	@api.constrains('partner_id','l10n_pe_edi_operation_type')
+	def _onchange_partner_id(self):
+		if self.partner_id.l10n_latam_identification_type_id.name == 'DNI':
+			if self.l10n_pe_edi_operation_type == 8 or self.l10n_pe_edi_operation_type == 10 or self.l10n_pe_edi_operation_type == 11:
+				raise ValidationError("Factura Invalida, para la creacion de Factura el cliente debe tener RUC")
+
+	@api.constrains('partner_id','l10n_pe_edi_operation_type')
+	def _onchange_partner_id(self):
+		if self.partner_id.l10n_latam_identification_type_id.name == 'RUC':
+			if self.l10n_pe_edi_operation_type == 12:
+				raise ValidationError("Boleta Invalida, para la creacion de Boleta el cliente debe tener DNI")
+
 	@api.onchange('partner_id')
 	def _onchange_partner_id_validation_ruc_dni(self):
 		if self.journal_id.id == 22:
