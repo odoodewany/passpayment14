@@ -35,7 +35,7 @@ class InvoiceStockMove(models.Model):
 	def _compute_deliver_status(self): 
 		if self.picking_count > 0:  
 			if self.name:
-				picking_type_state = self.env['stock.picking'].search([('origin', '=', self.name),('state', '!=', 'done')])
+				picking_type_state = self.env['stock.picking'].search([('origin', '=', self.name),('state', '!=', 'done'),('partner_id','=',self.partner_id.id)])
 				if picking_type_state:
 					self.deliver_status = 'partially' 
 				else:
@@ -230,12 +230,9 @@ class InvoiceStockMove(models.Model):
 #             result['res_id'] = pick_ids or False
 #         return result
 	
-	# @api.multi
 	def action_view_picking_delivery(self):
-		
 		action = self.env["ir.actions.actions"]._for_xml_id("stock.action_picking_tree_all")
-
-		pickings = self.env['stock.picking'].search([('origin', '=', self.name)])
+		pickings = self.env['stock.picking'].search([('origin', '=', self.name), ('partner_id','=',self.partner_id.id)])
 		picking = self.env['stock.picking'].browse(self.invoice_picking_id.id)
 		if len(pickings) > 1:
 			action['domain'] = [('id', 'in', pickings.ids)]
