@@ -407,7 +407,7 @@
                                         <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_free"/>
                                     </td>
                                 </tr>
-                                <t t-if="not ('Ticket' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))"></t>
+                                <t t-if="not ('Ticket' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))">
                                 <t t-foreach="o.amount_by_group" t-as="amount_by_group">
                                     <tr class="o_subtotal" style="">
                                         <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
