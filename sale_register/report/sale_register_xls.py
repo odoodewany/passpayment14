@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import calendar
+from html import entities
 import time
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -129,6 +130,8 @@ class InvoiceReportXls(models.AbstractModel):
 
         entrie_row = 9
 
+        total_untaxed = total_igv = total_isc = total_total = 0
+
         for invoice in invoices:
             currency_rate = invoice.env['res.currency.rate'].search([
                 ('name', '<=', invoice.date),
@@ -161,7 +164,7 @@ class InvoiceReportXls(models.AbstractModel):
                     refund_serie = refund_number = '-'
             igv = 0.0
             isc = 0.0
-            current_cell_format = format21_yellow if invoice.state == 'cancel' else font_size_8_c
+            current_cell_format = font_size_8_c
             # for tax_line in invoice.tax_line_ids:
             #     igv += tax_line.amount if 'IGV' in tax_line.name else 0.0
             #     isc += tax_line.amount if 'ISC' in tax_line.name else 0.0
@@ -195,6 +198,10 @@ class InvoiceReportXls(models.AbstractModel):
             l10n_pe_edi_amount_isc = invoice.l10n_pe_edi_amount_isc * multiplier
             l10n_pe_edi_amount_igv = invoice.l10n_pe_edi_amount_igv * multiplier
             amount_total = invoice.amount_total * multiplier
+            total_untaxed += amount_untaxed
+            total_igv += l10n_pe_edi_amount_igv
+            total_isc += l10n_pe_edi_amount_isc
+            total_total += amount_total
             sheet.write(entrie_row, 10, amount_untaxed, current_cell_format)
             sheet.write(entrie_row, 11, '0.0', current_cell_format)
             sheet.write(entrie_row, 12, '0.0', current_cell_format)
@@ -213,5 +220,9 @@ class InvoiceReportXls(models.AbstractModel):
             entrie_row += 1
 
         # Format
+        sheet.write(entrie_row, 10, total_untaxed, font_size_8_c)
+        sheet.write(entrie_row, 13, total_isc, font_size_8_c)
+        sheet.write(entrie_row, 14, total_igv, font_size_8_c)
+        sheet.write(entrie_row, 16, total_total, font_size_8_c)
 
         sheet.set_column('A:AB', 30)
