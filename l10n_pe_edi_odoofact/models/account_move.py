@@ -415,8 +415,8 @@ class AccountMove(models.Model):
                 if move.debit_origin_id:
                     try:
                         data = move.debit_origin_id.name.split('-')
-                        move.l10n_pe_edi_reversal_serie = data[0]
-                        move.l10n_pe_edi_reversal_number = data[1]
+                        move.l10n_pe_edi_reversal_serie = str(data[0])
+                        move.l10n_pe_edi_reversal_number = str(data[1])
                     except:
                         move.l10n_pe_edi_reversal_serie = ''
                         move.l10n_pe_edi_reversal_number = ''
@@ -424,8 +424,8 @@ class AccountMove(models.Model):
                 if move.reversed_entry_id:
                     try:
                         data = move.reversed_entry_id.name.split('-')
-                        move.l10n_pe_edi_reversal_serie = data[0]
-                        move.l10n_pe_edi_reversal_number = data[1]
+                        move.l10n_pe_edi_reversal_serie = str(data[0])
+                        move.l10n_pe_edi_reversal_number = str(data[1])
                     except:
                         move.l10n_pe_edi_reversal_serie = ''
                         move.l10n_pe_edi_reversal_number = ''
@@ -475,7 +475,6 @@ class AccountMove(models.Model):
             codMotivo = self.l10n_pe_edi_reversal_type_id and self.l10n_pe_edi_reversal_type_id.code or ''
             if self.l10n_latam_document_type_id.internal_type == 'debit_note':
                 codMotivo = self.l10n_pe_edi_debit_type_id and self.l10n_pe_edi_debit_type_id.code or '',
-            reversed_entry_id = self.reversed_entry_id or ''
             if not self.l10n_pe_edi_reversal_serie and not self.l10n_pe_edi_reversal_number and self.move_type in ['in_refund', 'out_refund']:
                 self.get_reversal_origin_data_improved()
             l10n_pe_edi_reversal_serie = self.l10n_pe_edi_reversal_serie or ''
