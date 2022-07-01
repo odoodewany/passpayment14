@@ -453,7 +453,7 @@ class AccountMove(models.Model):
             reversed_entry_id = self.reversed_entry_id or ''
             l10n_pe_edi_reversal_serie = self.l10n_pe_edi_reversal_serie or ''
             l10n_pe_edi_reversal_number = self.l10n_pe_edi_reversal_number or ''
-            origin_document = l10n_pe_edi_reversal_serie + l10n_pe_edi_reversal_number
+            origin_document = l10n_pe_edi_reversal_serie + '-' + l10n_pe_edi_reversal_number
             values['cabecera'] = {
                 'tipOperacion': '01'+str(self.l10n_pe_edi_operation_type).rjust(2, '0'),
                 'fecEmision': datetime.strptime(str(self.invoice_date), "%Y-%m-%d").strftime("%Y-%m-%d"),
