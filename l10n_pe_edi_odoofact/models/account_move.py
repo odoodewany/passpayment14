@@ -450,6 +450,8 @@ class AccountMove(models.Model):
             codMotivo = self.l10n_pe_edi_reversal_type_id and self.l10n_pe_edi_reversal_type_id.code or ''
             if self.l10n_latam_document_type_id.internal_type == 'debit_note':
                 codMotivo = self.l10n_pe_edi_debit_type_id and self.l10n_pe_edi_debit_type_id.code or '',
+            reversed_entry_id = self.reversed_entry_id or ''
+            l10n_pe_edi_reversal_serie = self.l10n_pe_edi_reversal_serie or ''
             values['cabecera'] = {
                 'tipOperacion': '01'+str(self.l10n_pe_edi_operation_type).rjust(2, '0'),
                 'fecEmision': datetime.strptime(str(self.invoice_date), "%Y-%m-%d").strftime("%Y-%m-%d"),
@@ -462,7 +464,7 @@ class AccountMove(models.Model):
                 'codMotivo': codMotivo,
                 'desMotivo': self.ref or '',
                 'tipDocAfectado': self.reversed_entry_id and self.reversed_entry_id.l10n_latam_document_type_id.code or '12',
-                'numDocAfectado': self.reversed_entry_id and self.l10n_pe_edi_reversal_serie + '-' + self.l10n_pe_edi_reversal_number or 'XXXX-99999999',
+                'numDocAfectado': self.reversed_entry_id and l10n_pe_edi_reversal_serie + '-' + self.l10n_pe_edi_reversal_number or 'XXXX-99999999',
                 'sumTotTributos': "%.2f" % abs(self.amount_tax),
                 'sumTotValVenta': "%.2f" % abs(self.amount_untaxed),
                 'sumPrecioVenta': "%.2f" % abs(self.amount_total),
