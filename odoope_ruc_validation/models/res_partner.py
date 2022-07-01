@@ -43,17 +43,20 @@ class ResPartner(models.Model):
     company_partner = fields.Boolean(
         string="Compañía por defecto", default=False)
 
-    @api.constrains("vat", "l10n_latam_identification_type_id")
+    @api.constrains('vat', 'l10n_latam_identification_type_id')
     def _check_ruc_dni(self):
         if self.l10n_latam_identification_type_id.name == 'DNI':
             if not(len(self.vat) == 8):
                 raise ValidationError("Corregir el numero de DNI")
-
-    @api.constrains("vat", "l10n_latam_identification_type_id")
-    def _check_ruc_dni(self):
         if self.l10n_latam_identification_type_id.name == 'RUC':
             if not(len(self.vat) == 11):
                 raise ValidationError("Corregir el numero de RUC")
+
+    ''' @api.constrains('vat', 'l10n_latam_identification_type_id')
+    def _check_ruc_dni(self):
+        if self.l10n_latam_identification_type_id.name == 'RUC':
+            if not(len(self.vat) == 11):
+                raise ValidationError("Corregir el numero de RUC") '''
 
     @api.onchange('vat', 'l10n_latam_identification_type_id')
     def onchange_vat(self):
