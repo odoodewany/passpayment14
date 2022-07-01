@@ -453,13 +453,11 @@ class AccountMove(models.Model):
             if self.l10n_latam_document_type_id.internal_type == 'debit_note':
                 codMotivo = self.l10n_pe_edi_debit_type_id and self.l10n_pe_edi_debit_type_id.code or '',
             reversed_entry_id = self.reversed_entry_id or ''
+            if not self.l10n_pe_edi_reversal_serie and not self.l10n_pe_edi_reversal_number and self.move_type in ['in_refund', 'out_refund']:
+                self.get_reversal_origin_data()
             l10n_pe_edi_reversal_serie = self.l10n_pe_edi_reversal_serie or ''
             l10n_pe_edi_reversal_number = self.l10n_pe_edi_reversal_number or ''
-            if l10n_pe_edi_reversal_serie and l10n_pe_edi_reversal_number:
-                origin_document = l10n_pe_edi_reversal_serie + '-' + l10n_pe_edi_reversal_number
-            else:
-                if self.move_type in ['in_refund', 'out_refund']:
-                    self.get_reversal_origin_data()
+            origin_document = l10n_pe_edi_reversal_serie + '-' + l10n_pe_edi_reversal_number
 
             values['cabecera'] = {
                 'tipOperacion': '01'+str(self.l10n_pe_edi_operation_type).rjust(2, '0'),
