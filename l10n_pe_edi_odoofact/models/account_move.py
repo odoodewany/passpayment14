@@ -201,10 +201,12 @@ class AccountMove(models.Model):
     def _check_partner_id(self):
         if self.partner_id.l10n_latam_identification_type_id.name == 'DNI':
             if 'Factura' in self.l10n_latam_document_type_id.name:
-                raise ValidationError("Factura Invalida, para la creacion de Factura el cliente debe tener RUC")
+                raise ValidationError(
+                    "Factura Invalida, para la creacion de Factura el cliente debe tener RUC")
         if self.partner_id.l10n_latam_identification_type_id.name == 'RUC':
             if 'Boleta' in self.l10n_latam_document_type_id.name:
-                raise ValidationError("Boleta Invalida, para la creacion de Boleta el cliente debe tener DNI")
+                raise ValidationError(
+                    "Boleta Invalida, para la creacion de Boleta el cliente debe tener DNI")
 
     ''' @api.constrains('partner_id','l10n_pe_edi_operation_type')
 	def _onchange_partner_id(self): '''
@@ -453,7 +455,12 @@ class AccountMove(models.Model):
             reversed_entry_id = self.reversed_entry_id or ''
             l10n_pe_edi_reversal_serie = self.l10n_pe_edi_reversal_serie or ''
             l10n_pe_edi_reversal_number = self.l10n_pe_edi_reversal_number or ''
-            origin_document = l10n_pe_edi_reversal_serie + '-' + l10n_pe_edi_reversal_number
+            if l10n_pe_edi_reversal_serie and l10n_pe_edi_reversal_number:
+                origin_document = l10n_pe_edi_reversal_serie + '-' + l10n_pe_edi_reversal_number
+            else:
+                if self.move_type in ['in_refund', 'out_refund']:
+                    self.get_reversal_origin_data()
+
             values['cabecera'] = {
                 'tipOperacion': '01'+str(self.l10n_pe_edi_operation_type).rjust(2, '0'),
                 'fecEmision': datetime.strptime(str(self.invoice_date), "%Y-%m-%d").strftime("%Y-%m-%d"),
