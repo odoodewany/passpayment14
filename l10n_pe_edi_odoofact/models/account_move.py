@@ -200,11 +200,11 @@ class AccountMove(models.Model):
     @api.constrains('partner_id', 'l10n_pe_edi_operation_type')
     def _check_partner_id(self):
         if self.partner_id.l10n_latam_identification_type_id.name == 'DNI':
-            if 'Factura' in self.l10n_latam_document_type_id.name:
+            if self.l10n_latam_document_type_id and 'Factura' in self.l10n_latam_document_type_id.name:
                 raise ValidationError(
                     "Factura Invalida, para la creacion de Factura el cliente debe tener RUC")
         if self.partner_id.l10n_latam_identification_type_id.name == 'RUC':
-            if 'Boleta' in self.l10n_latam_document_type_id.name:
+            if self.l10n_latam_document_type_id and 'Boleta' in self.l10n_latam_document_type_id.name:
                 raise ValidationError(
                     "Boleta Invalida, para la creacion de Boleta el cliente debe tener DNI")
 
