@@ -200,11 +200,13 @@ class AccountMove(models.Model):
     @api.constrains('partner_id', 'l10n_pe_edi_operation_type')
     def _check_partner_id(self):
         if self.partner_id.l10n_latam_identification_type_id.name == 'DNI':
-            if 'Factura' in self.l10n_latam_document_type_id.name:
-                raise ValidationError("Factura Invalida, para la creacion de Factura el cliente debe tener RUC")
+            if self.l10n_latam_document_type_id and 'Factura' in self.l10n_latam_document_type_id.name:
+                raise ValidationError(
+                    "Factura Invalida, para la creacion de Factura el cliente debe tener RUC")
         if self.partner_id.l10n_latam_identification_type_id.name == 'RUC':
-            if 'Boleta' in self.l10n_latam_document_type_id.name:
-                raise ValidationError("Boleta Invalida, para la creacion de Boleta el cliente debe tener DNI")
+            if self.l10n_latam_document_type_id and 'Boleta' in self.l10n_latam_document_type_id.name:
+                raise ValidationError(
+                    "Boleta Invalida, para la creacion de Boleta el cliente debe tener DNI")
 
     @api.onchange('partner_id')
     def _onchange_partner_id_validation_ruc_dni(self):
@@ -403,6 +405,29 @@ class AccountMove(models.Model):
                     move.l10n_pe_edi_reversal_number = move.reversed_entry_id.l10n_pe_edi_number
                     move.l10n_pe_edi_reversal_date = move.reversed_entry_id.invoice_date
 
+    # TODO: Fix
+    def get_reversal_origin_data_improved(self):
+        for move in self:
+            if move.move_type in ['out_invoice', 'out_refund']:
+                if move.debit_origin_id:
+                    try:
+                        data = move.debit_origin_id.name.split('-')
+                        move.l10n_pe_edi_reversal_serie = str(data[0])
+                        move.l10n_pe_edi_reversal_number = str(data[1])
+                    except:
+                        move.l10n_pe_edi_reversal_serie = ''
+                        move.l10n_pe_edi_reversal_number = ''
+                    move.l10n_pe_edi_reversal_date = move.debit_origin_id.invoice_date
+                if move.reversed_entry_id:
+                    try:
+                        data = move.reversed_entry_id.name.split('-')
+                        move.l10n_pe_edi_reversal_serie = str(data[0])
+                        move.l10n_pe_edi_reversal_number = str(data[1])
+                    except:
+                        move.l10n_pe_edi_reversal_serie = ''
+                        move.l10n_pe_edi_reversal_number = ''
+                    move.l10n_pe_edi_reversal_date = move.debit_origin_id.invoice_date
+
     def action_post(self):
         if self.move_type in ['out_invoice', 'out_refund'] and self.l10n_pe_edi_is_einvoice and self.amount_total > 700 and not self.partner_id.vat:
             raise UserError(_('Please Define the Customer Document Number.'))
@@ -447,6 +472,12 @@ class AccountMove(models.Model):
             codMotivo = self.l10n_pe_edi_reversal_type_id and self.l10n_pe_edi_reversal_type_id.code or ''
             if self.l10n_latam_document_type_id.internal_type == 'debit_note':
                 codMotivo = self.l10n_pe_edi_debit_type_id and self.l10n_pe_edi_debit_type_id.code or '',
+            if not self.l10n_pe_edi_reversal_serie and not self.l10n_pe_edi_reversal_number and self.move_type in ['in_refund', 'out_refund']:
+                self.get_reversal_origin_data_improved()
+            l10n_pe_edi_reversal_serie = self.l10n_pe_edi_reversal_serie or ''
+            l10n_pe_edi_reversal_number = self.l10n_pe_edi_reversal_number or ''
+            origin_document = l10n_pe_edi_reversal_serie + '-' + l10n_pe_edi_reversal_number
+
             values['cabecera'] = {
                 'tipOperacion': '01'+str(self.l10n_pe_edi_operation_type).rjust(2, '0'),
                 'fecEmision': datetime.strptime(str(self.invoice_date), "%Y-%m-%d").strftime("%Y-%m-%d"),
@@ -458,8 +489,8 @@ class AccountMove(models.Model):
                 'tipMoneda': self.currency_id.name,
                 'codMotivo': codMotivo,
                 'desMotivo': self.ref or '',
-                'tipDocAfectado': self.reversed_entry_id and self.reversed_entry_id.l10n_latam_document_type_id.code or '12',
-                'numDocAfectado': self.reversed_entry_id and self.l10n_pe_edi_reversal_serie + '-' + self.l10n_pe_edi_reversal_number or 'XXXX-99999999',
+                'tipDocAfectado': self.reversed_entry_id.l10n_latam_document_type_id.code or '12',
+                'numDocAfectado': origin_document or 'XXXX-99999999',
                 'sumTotTributos': "%.2f" % abs(self.amount_tax),
                 'sumTotValVenta': "%.2f" % abs(self.amount_untaxed),
                 'sumPrecioVenta': "%.2f" % abs(self.amount_total),
