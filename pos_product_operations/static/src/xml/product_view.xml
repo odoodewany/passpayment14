@@ -232,10 +232,10 @@
 							<input class='detail barcode' name='barcode' placeholder='Barcode'></input>
 						</div>
 						<div class='client-detail'>
-							<input class='detail client-address-city' name='list_price' placeholder='Sale Price'></input>
+							<input class='detail client-address-city' name='list_price' placeholder='Precio de Venta'></input>
 						</div>
 						<div class='client-detail'>
-							<input class='detail client-price' name='cost_price' placeholder='Cost Price'></input>
+							<input class='detail client-price' name='cost_price' placeholder='Precio de Compra'></input>
 						</div>
 					</div>
 				</div>

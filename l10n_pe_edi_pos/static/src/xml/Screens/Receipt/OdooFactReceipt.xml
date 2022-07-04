@@ -174,7 +174,7 @@
                     <span t-esc="env.pos.format_currency_no_symbol(line.amount)" class="pos-receipt-right-align"/>
                 </div>
             </t>
-    
+            
             <br />
             <div t-if="invoice.invoice_number" >
                 <span style="text-align:lenf;font-size: small;">CHANGE</span> 
@@ -183,7 +183,7 @@
             <div class="pos-receipt-amount receipt-change">
             </div>
             <br/>
-        
+            
             <t  t-if="invoice.invoice_number">
                 <div  class="text-left"  style="font-size:small">
                     <p  style="font-size:small">Printed representation of <span  style="font-size:small" t-esc="invoice.invoice_number"/>. Visit <strong><span  style="font-size:small" t-if="invoice.control_url" t-esc="invoice.control_url" />.</strong></p>       
