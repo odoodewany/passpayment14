@@ -423,10 +423,13 @@
                         <img width="40%" t-attf-src="data:image/*;base64, {{o.qr}}"/>
                       </span>
                     </p -->
-                    
-                    <div t-attf-class="#{'col-12' if report_type != 'html' else 'col-12 col-sm-12'} col-auto mb-12">
-                            <img t-att-src="'/report/barcode/QR/%s|%s|%s|%s|%s|%s|%s|%s|%s|'%(o.company_id.vat,o.l10n_latam_document_type_id.code,o.l10n_pe_edi_serie,o.l10n_pe_edi_number,o.l10n_pe_edi_amount_igv,o.amount_total,o.invoice_date,o.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code,o.partner_id.vat)" class="img-fluid img-thumbnail rounded mx-auto d-block" style="width:100px;height:100px;"/>
-                    </div>
+                    <t t-if="not ('Nota de Pedido' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))">
+                      <t t-if="not ('Ticket' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))">
+                        <div t-attf-class="#{'col-12' if report_type != 'html' else 'col-12 col-sm-12'} col-auto mb-12">
+                                <img t-att-src="'/report/barcode/QR/%s|%s|%s|%s|%s|%s|%s|%s|%s|'%(o.company_id.vat,o.l10n_latam_document_type_id.code,o.l10n_pe_edi_serie,o.l10n_pe_edi_number,o.l10n_pe_edi_amount_igv,o.amount_total,o.invoice_date,o.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code,o.partner_id.vat)" class="img-fluid img-thumbnail rounded mx-auto d-block" style="width:100px;height:100px;"/>
+                        </div>
+                      </t>
+                    </t>
                   </div>
                   <t>
                     <p t-if="o.l10n_latam_document_type_id.code == '07'">Representación impresa de la nota de crédito electrónica: <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span></p>

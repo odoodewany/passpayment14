@@ -136,24 +136,32 @@ odoo.define('pos_product_operations.ProductDetailsEdit', function(require) {'use
 				if (fields.standard_price == '') {
 					fields.standard_price = '0'
 				}
+				console.log("--------------------------------")
+				console.log("Product guradado")
 				let productId = rpc.query({
 					model: 'product.product',
 					method: 'create_from_ui',
 					args: [fields],
 				})
-				.then(function(product_id){
+				.then(
+					function(product_id){
 					self.env.pos.load_new_products();
 					alert('Product Details Saved!!!!');
+					console.log("--------------------------------")
+					console.log(product_id)
+					console.log("--------------------------------")
+					console.log(self.env.pos.load_new_products())
 					self.trigger('close-popup');
 					self.render();
 					// self.trigger('click-showDetails');
 					// self.showScreen('ProductScreen');
-				},function(err, event){
-				self.showPopup('ErrorPopup',{
-					'title': _t('Error: Could not Save Changes'),
-					'body': _t('Added Product Details getting Error.'),
+					},
+					function(err, event){
+					self.showPopup('ErrorPopup',{
+						'title': _t('Error: Could not Save Changes'),
+						'body': _t('Added Product Details getting Error.'),
+					});
 				});
-			});
 			}
 		}
 	}

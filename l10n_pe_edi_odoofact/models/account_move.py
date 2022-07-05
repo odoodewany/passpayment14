@@ -208,9 +208,6 @@ class AccountMove(models.Model):
                 raise ValidationError(
                     "Boleta Invalida, para la creacion de Boleta el cliente debe tener DNI")
 
-    ''' @api.constrains('partner_id','l10n_pe_edi_operation_type')
-	def _onchange_partner_id(self): '''
-
     @api.onchange('partner_id')
     def _onchange_partner_id_validation_ruc_dni(self):
         if self.journal_id.id == 22:
