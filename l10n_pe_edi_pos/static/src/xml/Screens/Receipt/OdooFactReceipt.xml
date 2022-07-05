@@ -135,6 +135,7 @@
                         </tr> 
                     </t>
                 </tbody>
+            </table>
                 <br />
                 <div style="border-top: 1px dashed black; font-size:small">
                     <span><strong>MONTO BASE </strong></span>
@@ -153,15 +154,15 @@
                 <br />
                 <div style="text-align:lenf;font-size: small;">
                     <t t-if="invoice.amount_in_words">
-                        <span style="font-size: 12px;font-weight: bold;">AMOUNT IN LETTERS: </span> 
+                        <span style="font-size: 12px;font-weight: bold;">MONTO EN LETRAS: </span> 
                         <span><t t-esc="invoice.amount_in_words" /></span>
                     </t>
                 </div>
                 <br />
 
-                <div t-if="invoice.invoice_number" style="text-align:lenf;font-size: small;">
-                    <span style="font-size: 12px;font-weight: bold;">PAYMENT METHOD :</span>
-                </div>
+                <!-- <div t-if="invoice.invoice_number" style="text-align:lenf;font-size: small;">
+                    <span style="font-size: 12px;font-weight: bold;">METODO DE PAGO :</span>
+                </div> -->
                 
                 <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">
                     <div>
@@ -170,37 +171,36 @@
                     </div>
                 </t>
                 
-                <br />
+                <br/>
                 <div t-if="invoice.invoice_number" >
-                    <span style="text-align:lenf;font-size: small;">CHANGE</span> 
+                    <span style="text-align:lenf;font-size: small;">CAMBIO</span> 
                     <span t-esc='env.pos.format_currency(receipt.change)' class="pos-receipt-right-align"/>
                 </div>
                 <div class="pos-receipt-amount receipt-change">
                 </div>
                 <br/>
                 
-                <t  t-if="invoice.invoice_number">
+                <!-- <t  t-if="invoice.invoice_number">
                     <div  class="text-left"  style="font-size:small">
-                        <p  style="font-size:small">Printed representation of <span  style="font-size:small" t-esc="invoice.invoice_number"/>. Visit <strong><span  style="font-size:small" t-if="invoice.control_url" t-esc="invoice.control_url" />.</strong></p>       
+                        <p  style="font-size:small">Representacion impresa <span  style="font-size:small" t-esc="invoice.invoice_number"/>. Visit <strong><span  style="font-size:small" t-if="invoice.control_url" t-esc="invoice.control_url" />.</strong></p>       
                     </div>
-                </t>
+                </t> -->
                 <t  t-if="invoice.barcode and invoice.type_of_invoice_document != 'NOTA DE PEDIDO'">
                     <div style="text-align:center;">
                         <img  t-att-src="invoice.barcode" style="width:120px;height:120px;"/>
                     </div> 
                 </t>
-                <t  t-if="invoice.authorization_message">     
+                <!-- <t  t-if="invoice.authorization_message">     
                     <div class="text-left" style="font-size: small">
                         <t t-esc="invoice.authorization_message"/>
                     </div>  
-                </t> 
+                </t>  -->
                 <br/>
-                <div class="pos-receipt-order-data">
+                <!-- <div class="pos-receipt-order-data">
                     <div><t t-esc="receipt.name" /></div>
                     <div><t t-esc="receipt.date.localestring" /></div>
-                </div>
+                </div> -->
                 
-            </table>
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Fin prueba xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
             <!-- <table  id="totals" style="width:100%; font-size:small; font-weight: normal;" >
@@ -289,7 +289,7 @@
                         </tr> 
                     </t>
                 </tbody>
-            </table> --> 
+            </table> -->
             <!-- <br />
             <div style="border-top: 1px dashed black; font-size:small">
                     <span>SUB-TOTAL</span>
