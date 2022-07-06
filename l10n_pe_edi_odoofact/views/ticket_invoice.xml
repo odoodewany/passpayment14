@@ -166,25 +166,39 @@
                 <div class="invoice-center-align">
                   <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" width="150px"/>
                   <div class="info">
-                    <t t-esc="o.company_id.name"/>
-                    <t t-if="o.company_id.phone">
-                      <div>Tel:
-                      <t t-esc="o.company_id.phone"/>
-                      </div>
-                    </t>
-                    <t t-if="o.company_id.vat">
-                      <div>RUC:
-                      <t t-esc="o.company_id.vat"/>
-                      </div>
-                    </t>
-                    <!-- <span class="company_address" t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/> -->
                     
+                    <t t-esc="o.company_id.name"/>
+    
                     <t t-esc="o.company_id.partner_id.street"/><br/>
                     <t t-if="o.company_id.partner_id.country_id"> <t t-esc="o.company_id.partner_id.country_id.name"/> </t>
                     <t t-if="o.company_id.partner_id.state_id"> - <t t-esc="o.company_id.partner_id.state_id.name"/> </t>
                     <t t-if="o.company_id.partner_id.city_id"> - <t t-esc="o.company_id.partner_id.city_id.name"/> </t>
                     <t t-if="o.company_id.partner_id.l10n_pe_district"> - <t t-esc="o.company_id.partner_id.l10n_pe_district.name"/> </t>
-
+    
+                    <t t-if="o.company_id.phone">
+                      <div>Tel:
+                      <t t-esc="o.company_id.phone"/>
+                      </div>
+                    </t>
+    
+                    <t t-if="o.company_id.vat">
+                      <div>RUC:
+                      <t t-esc="o.company_id.vat"/>
+                      </div>
+                    </t>
+                    <div class="invoice-center-align">
+                      <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/>
+                      <br/>
+                      <span class="font-weight-bold text-uppercase" t-esc="o.name"/>
+                    </div>
+                    
+                    <div class="cashier">
+                      <div>--------------------------------</div>
+                      <!-- <div>Served by <t t-esc="receipt.cashier" /></div> -->
+                    </div>
+    
+                    <!-- <span class="company_address" t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/> -->
+                    
                     <!-- <t t-if="o.user_id">
                       <div class="cashier">
                         <div>-</div>
@@ -194,8 +208,8 @@
                       </div>
                     </t> -->
                   </div>
-                  <br/>
                 </div>
+                <br/>
                 <div class="receipt-phone client-info">
                   <t t-if="o.name">
                     <!-- t t-if="o.reversed_entry_id">
@@ -208,44 +222,77 @@
                               <t t-if="o.document_type == 'boleta'">
                       Boleta Electrónica</t>
                     </t -->
-                    <div class="invoice-center-align">
-                    <span class="font-weight-bold text-uppercase" t-esc="o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''"/>
-                    <br/>
-                    <span class="font-weight-bold text-uppercase" t-esc="o.name"/>
-                    </div>
-                    <!-- t t-if="o.reversed_entry_id">
-                        <t t-if="o.refund_type == 'credit'"><strong>Tipo de Nota de Credito: </strong><t t-esc="o.credit_note_type.name"/></t>
-                        <t t-if="o.refund_type == 'debit'"><strong>Tipo de Nota de Débito: </strong><t t-esc="o.debit_note_type.name"/></t>
-                    </t -->
-                    <br/>
-                    <t t-if="o.partner_id">
-                      <!-- t t-if="o.partner_id.catalog_06_id.code == 6">
-                        Razón Social:
+                    
+                    <span  style="font-size: 12px;font-weight: bold;" >CLIENTE</span>
+                    <table  id="totals" style="width:100%; font-size:small; font-weight: normal;" >
+                      <t t-if="o.partner_id">
+                        <!-- <tr t-tif="o.partner_id.vat">
+                          <t t-if=" 'DNI'in o.partner_id.l10n_latam_identification_type_id">
+                            <th class="text-left" style="font-weight: normal; ">
+                                DNI : <t t-esc="o.partner_id.vat"/>
+                            </th>
+                          </t>
+                          
+                          <t t-if=" 'RUC'in o.partner_id.l10n_latam_identification_type_id">
+                            <th class="text-left" style="font-weight: normal; ">
+                                RUC : <t t-esc="o.partner_id.vat"/>
+                            </th>
+                          </t>
+                        </tr> -->
+                        <tr t-if="o.partner_id.name">
+                          <th style="font-weight: normal;" colspan="2" class="text-left">
+                              <t t-esc="o.partner_id.name"/>
+                          </th>
+                        </tr>
+    
+                        <tr t-if="o.partner_id.vat">
+                          <th style="font-weight: normal;" colspan="2" class="text-left">
+                              <span><t t-esc="o.partner_id.l10n_latam_identification_type_id.name"/>: <t t-esc="o.partner_id.vat"/> </span>
+                          </th>
+                        </tr>
+    
+                        <tr> 
+                          <t t-if='o.invoice_date'>
+                              <th style="font-weight: normal;" class="text-left" width="50%">
+                                  <span style="font-size: 12px;font-weight: bold;">FECHA EMISIÓN:</span> <t t-esc="o.invoice_date"/>
+                              </th>
+                          </t>
+                        </tr>
+    
+                        <!-- <t t-if="not ('Nota de Pedido' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))"> -->
+                        <tr>
+                            <t t-if='o.invoice_date_due'>
+                              <th style="font-weight: normal;" class="text-left" width="50%">
+                                <span style="font-size: 12px;font-weight: bold;">FECHA VENCIMIENTO:</span> <t t-esc="o.invoice_date_due"/>
+                              </th>
+                            </t>
+                        </tr>
+                        
+                        <!-- <span class="text-nowrap" t-esc="o.partner_id.commercial_partner_id.l10n_latam_identification_type_id and o.partner_id.commercial_partner_id.l10n_latam_identification_type_id.name or 'DOCUMENTO'"/>:
+                        <t t-esc="o.partner_id.name"/>
+                        <br/>
+    
+                        <t t-esc="o.partner_id.l10n_latam_identification_type_id"/>
+                        <t t-esc="o.partner_id.vat"/>
+                        <div name="extra-customer-info">
+                        </div>
+                        <br/> -->
                       </t>
-                      <t t-else="">
-                        Nombre:
-                      </t -->
-                      <span class="text-nowrap" t-esc="o.partner_id.commercial_partner_id.l10n_latam_identification_type_id and o.partner_id.commercial_partner_id.l10n_latam_identification_type_id.name or 'DOCUMENTO'"/>:
-                      <t t-esc="o.partner_id.name"/>
-                      <br/>
-                      <!--<t t-esc="o.partner_id.catalog_06_id.name"/>:-->
-                      <t t-esc="o.partner_id.vat"/>
-                      <div name="extra-customer-info">
-                      </div>
-                      <br/>
-                    </t>
+                    </table>
                   </t>
                 </div>
-
+                <br/>
+                <br/>
                 <table class="invoice-lines">
                   <thead>
                     <tr>
                       <td>CANT</td>
-                      <td>PRODUCTO</td>
-                      <td>VALOR</td>
+                      <td>DESCRIPCION</td>
+                      <td>P.U.</td>
+                      <td>TOTAL</td>
                     </tr>
                   </thead>
-
+    
                   <tbody>
                     <t t-foreach="o.invoice_line_ids" t-as="line">
                       <tr>
@@ -255,9 +302,13 @@
                         <td t-attf-class="text-left">
                           <span t-field="line.name"/>
                         </td>
+                        <td t-attf-class="text-left">
+                          <span t-field="line.l10n_latam_price_unit"/>
+                        </td>
                         <td class="text-right">
                           <span t-field="line.price_total"/>
                         </td>
+    
                       </tr>
                     </t>
                   </tbody>
@@ -337,6 +388,7 @@
                             <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_base"/>
                         </td>
                     </tr>
+    
                     <tr class="border-black o_subtotal" style="" t-if="o.l10n_pe_edi_amount_discount">
                         <td>
                             <span><strong>DESCUENTO (-)</strong></span>
@@ -345,6 +397,7 @@
                             <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_discount"/>
                         </td>
                     </tr>
+    
                     <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_global_discount">
                         <td>
                             <span><strong>G. DISCOUNT (-)</strong></span>
@@ -353,6 +406,7 @@
                             <span class="text-nowrap" t-field="o.l10n_pe_edi_global_discount"/>
                         </td>
                     </tr>
+    
                     <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_exonerated">
                         <td>
                             <span><strong>EXONERADO</strong></span>
@@ -361,6 +415,7 @@
                             <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_exonerated"/>
                         </td>
                     </tr>
+    
                     <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_unaffected">
                         <td>
                             <span><strong>INAFECTO</strong></span>
@@ -369,6 +424,7 @@
                             <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_unaffected"/>
                         </td>
                     </tr>
+    
                     <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_free">
                         <td>
                             <span><strong>AMOUNT FREE</strong></span>
@@ -377,6 +433,16 @@
                             <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_free"/>
                         </td>
                     </tr>
+    
+                    <!--<tr class="o_subtotal" style="" t-if="o.amount_tax">
+                      <td>
+                          <span><strong>IGV</strong></span>
+                      </td>
+                      <td class="text-right o_price_total">
+                          <span class="text-nowrap" t-field="o.amount_tax"/>
+                      </td>
+                  </tr> -->
+    
                     <t t-foreach="o.amount_by_group" t-as="amount_by_group">
                         <tr class="o_subtotal" style="">
                             <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
@@ -398,12 +464,13 @@
                             </t>
                         </tr>
                     </t>
-                    <tr class="border-black o_total">
+                    
+                     <tr class="border-black o_total">
                         <td><strong>TOTAL</strong></td>
                         <td class="text-right">
                             <span class="text-nowrap" t-field="o.amount_total"/>
                         </td>
-                    </tr>
+                    </tr> 
                 </table>
                 
                 <br/>
@@ -426,7 +493,7 @@
                     <t t-if="not ('Nota de Pedido' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))">
                       <t t-if="not ('Ticket' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))">
                         <div t-attf-class="#{'col-12' if report_type != 'html' else 'col-12 col-sm-12'} col-auto mb-12">
-                                <img t-att-src="'/report/barcode/QR/%s|%s|%s|%s|%s|%s|%s|%s|%s|'%(o.company_id.vat,o.l10n_latam_document_type_id.code,o.l10n_pe_edi_serie,o.l10n_pe_edi_number,o.l10n_pe_edi_amount_igv,o.amount_total,o.invoice_date,o.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code,o.partner_id.vat)" class="img-fluid img-thumbnail rounded mx-auto d-block" style="width:100px;height:100px;"/>
+                          <img t-att-src="'/report/barcode/QR/%s|%s|%s|%s|%s|%s|%s|%s|%s|'%(o.company_id.vat,o.l10n_latam_document_type_id.code,o.l10n_pe_edi_serie,o.l10n_pe_edi_number,o.l10n_pe_edi_amount_igv,o.amount_total,o.invoice_date,o.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code,o.partner_id.vat)" class="img-fluid img-thumbnail rounded mx-auto d-block" style="width:100px;height:100px;"/>
                         </div>
                       </t>
                     </t>
@@ -439,9 +506,9 @@
                     <p t-if="o.l10n_latam_document_type_id.code == '01'">Representación impresa de la factura electrónica: <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span></p>
                     <p t-if="o.l10n_latam_document_type_id.code == '03'">Representación impresa de la boleta de venta electrónica: <span class="font-weight-bold">https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta</span></p>
                   </t>
-                  <div class="invoice-center-align">
+                  <!-- <div class="invoice-center-align">
                     <span t-field="o.invoice_date"/>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
