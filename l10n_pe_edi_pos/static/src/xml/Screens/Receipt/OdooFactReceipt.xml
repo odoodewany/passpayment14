@@ -58,150 +58,11 @@
             </div>
             
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Comienzo Prueba xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-            <table  id="totals" style="width:100%; font-size:small; font-weight: normal;" >
-                <t t-set="client" t-value="receipt.client"/>
-
-                    <t t-if="client">
-                        <span  style="font-size: 12px;font-weight: bold;" >CLIENT</span>
-                            <t t-if="client.vat.length == 8">
-                                <th class="text-left" style="font-weight: normal; ">
-                                    DNI : <t t-esc="client.name"/>
-                                </th>
-                            </t>
-                            <t t-if="client.vat.length == 11">
-                                <th class="text-left" style="font-weight: normal; ">
-                                    RUC : <t t-esc="client.name"/>
-                                </th>
-                            </t>
-                        <tr t-if="client.vat">
-                            <th style="font-weight: normal;" colspan="2" class="text-left">
-                                <t t-esc="client.vat"/>
-                            </th>
-                        </tr>
-                        <br/>
-                    </t>
-
-                    <!-- <tr> 
-                        <t t-if='invoice.date_invoice'>
-                            <th style="font-weight: normal;" class="text-left" width="50%">
-                                <span style="font-size: 12px;font-weight: bold;">DATE INVOICE:</span> <t t-esc="invoice.date_invoice"/>
-                            </th>
-                        </t>
-                    </tr>
-                    <t t-if="invoice.type_of_invoice_document != 'NOTA DE PEDIDO'">
-                    <tr> 
-                        <t t-if='invoice.invoice_date_due'>
-                            <th style="font-weight: normal;" class="text-left" width="50%">
-                                <span style="font-size: 12px;font-weight: bold;">DATE DUE:</span> <t t-esc="invoice.invoice_date_due"/>
-                            </th>
-                        </t>
-                    </tr>
-                    <tr> 
-                        <t t-if='invoice.currency_name and invoice.is_electronic'>
-                            <th style="font-weight: normal;" class="text-left" width="50%">
-                                <span style="font-size: 12px;font-weight: bold;">CURRENCY:</span> <t t-esc="invoice.currency_name"/>
-                            </th>
-                        </t>
-                    </tr>
-                        <tr> 
-                        <t t-if='invoice.igv_percent'>
-                            <th style="font-weight: normal;" class="text-left" width="50%">
-                                <span style="font-size: 12px;font-weight: bold;">IGV:</span> <t t-esc="invoice.igv_percent"/>%
-                            </th>
-                        </t>
-                    </tr>
-                    </t> -->
-            </table>
-            <table id="products_header" style="width:100%; font-size:x-small" class="soticket-table">                   
-                <tr style="border-top:1px dashed black; border-bottom:1px dashed black" class="top-dashed bottom-dashed">
-                    <th class="text-center">CANT</th>
-                    <th class="text-center">PRODUCTO</th>
-                    <th class="text-center">VALOR</th>
-                </tr>
-                <colgroup>
-                    <col width='25%' />
-                    <col width='50%' />
-                    <col width='25%' />
-                </colgroup>
-
-                <tbody>
-                    <t t-foreach="receipt.orderlines" t-as="line">  
-                        <tr> 
-                            <td style="font-size:12px;"><t t-esc="line.quantity"/></td>
-                            <td style="font-size:12px;"><t t-esc="line.product_name"/></td>                                
-                            <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
-                        </tr> 
-                    </t>
-                </tbody>
-            </table>
-                <br/>
-                <div style="border-top: 1px dashed black; font-size:small">
-                    <span><strong>MONTO BASE </strong></span>
-                    <span t-esc="env.pos.format_currency(receipt.total_without_tax)" class="pos-receipt-right-align"/>
-                </div>
-
-                <div style="border-top: 1px dashed black; font-size:small">
-                    <span>IGV</span>
-                    <span t-esc="env.pos.format_currency(receipt.total_tax)"  class="pos-receipt-right-align"/>
-                </div>
-
-                <div  style="border-top: 1px dashed black; font-size:small">
-                    <td><strong>TOTAL</strong></td>                  
-                    <span t-esc='env.pos.format_currency(receipt.total_with_tax)' class="pos-receipt-right-align"/>             
-                </div>
-                <br />
-                <div style="text-align:lenf;font-size: small;">
-                    <t t-if="invoice.amount_in_words">
-                        <span style="font-size: 12px;font-weight: bold;">MONTO EN LETRAS: </span> 
-                        <span><t t-esc="invoice.amount_in_words" /></span>
-                    </t>
-                </div>
-                <br />
-
-                <!-- <div t-if="invoice.invoice_number" style="text-align:lenf;font-size: small;">
-                    <span style="font-size: 12px;font-weight: bold;">METODO DE PAGO :</span>
-                </div> -->
-                
-                <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">
-                    <div>
-                        <t t-esc="line.name" />
-                        <span t-esc="env.pos.format_currency_no_symbol(line.amount)" class="pos-receipt-right-align"/>
-                    </div>
-                </t>
-                
-                <br/>
-                <div t-if="invoice.invoice_number" >
-                    <span style="text-align:lenf;font-size: small;">CAMBIO</span> 
-                    <span t-esc='env.pos.format_currency(receipt.change)' class="pos-receipt-right-align"/>
-                </div>
-                <div class="pos-receipt-amount receipt-change">
-                </div>
-                <br/>
-                
-                <!-- <t  t-if="invoice.invoice_number">
-                    <div  class="text-left"  style="font-size:small">
-                        <p  style="font-size:small">Representacion impresa <span  style="font-size:small" t-esc="invoice.invoice_number"/>. Visit <strong><span  style="font-size:small" t-if="invoice.control_url" t-esc="invoice.control_url" />.</strong></p>       
-                    </div>
-                </t> -->
-                <t  t-if="invoice.barcode and invoice.type_of_invoice_document != 'NOTA DE PEDIDO'">
-                    <div style="text-align:center;">
-                        <img  t-att-src="invoice.barcode" style="width:120px;height:120px;"/>
-                    </div> 
-                </t>
-                <!-- <t  t-if="invoice.authorization_message">     
-                    <div class="text-left" style="font-size: small">
-                        <t t-esc="invoice.authorization_message"/>
-                    </div>  
-                </t>  -->
-                <br/>
-                <!-- <div class="pos-receipt-order-data">
-                    <div><t t-esc="receipt.name" /></div>
-                    <div><t t-esc="receipt.date.localestring" /></div>
-                </div> -->
+            
                 
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Fin prueba xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
-            <!-- <table  id="totals" style="width:100%; font-size:small; font-weight: normal;" >
+            <table  id="totals" style="width:100%; font-size:small; font-weight: normal;" >
                 <t t-set="client" t-value="receipt.client"/>
                 <t t-if="client">
                     <span  style="font-size: 12px;font-weight: bold;" >CLIENT</span>
@@ -260,11 +121,11 @@
                     </t>
                 </tr>
                 </t>
-            </table> -->
+            </table>
 
-            <!-- <br/> -->
+            <br/>
 
-            <!-- <table id="products_header" style="width:100%; font-size:x-small" class="soticket-table">                   
+            <table id="products_header" style="width:100%; font-size:x-small" class="soticket-table">                   
                 <tr style="border-top:1px dashed black; border-bottom:1px dashed black" class="top-dashed bottom-dashed">
                     <th class="text-center">QTY.</th>
                     <th class="text-center">DESCRIPTION</th>
@@ -280,15 +141,15 @@
                 <tbody>
                     <t t-foreach="receipt.orderlines" t-as="line">  
                         <tr> 
-                            <td style="font-size:8px;"><t t-esc="line.quantity"/></td>
-                            <td style="font-size:8px;"><t t-esc="line.product_name"/></td>                                
-                            <td style="font-size:8px;"><t t-esc="env.pos.format_currency_no_symbol(line.price)"/></td>
-                            <td style="font-size:8px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
+                            <td style="font-size:12px;"><t t-esc="line.quantity"/></td>
+                            <td style="font-size:12px;"><t t-esc="line.product_name"/></td>                                
+                            <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price)"/></td>
+                            <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
                         </tr> 
                     </t>
                 </tbody>
-            </table> -->
-            <!-- <br />
+            </table>
+            <br />
             <div style="border-top: 1px dashed black; font-size:small">
                     <span>SUB-TOTAL</span>
                 <span t-esc="env.pos.format_currency(receipt.total_without_tax)" class="pos-receipt-right-align"/>
@@ -354,7 +215,7 @@
             <div class="pos-receipt-order-data">
                 <div><t t-esc="receipt.name" /></div>
                 <div><t t-esc="receipt.date.localestring" /></div>
-            </div> -->
+            </div>
         </div>
         
     </t>
