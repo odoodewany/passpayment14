@@ -45,39 +45,42 @@
               </style>
               <div class="invoice-ticket">
                 <div class="invoice-center-align">
-                  <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" width="150px"/>
+                  <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" width="150px" />
                   <div class="info">
-                    <t t-esc='o.company_id.name'/>
+                    <t t-esc='o.company_id.name' />
                     <t t-if='o.company_id.phone'>
-                      <div>Tel:
-                      <t t-esc='o.company_id.phone'/>
+                      <div>
+                        Tel:
+                        <t t-esc='o.company_id.phone' />
                       </div>
                     </t>
                     <t t-if='o.company_id.vat'>
-                      <div>RUC:
-                      <t t-esc='o.company_id.vat'/>
+                      <div>
+                        RUC:
+                        <t t-esc='o.company_id.vat' />
                       </div>
                     </t>
-                    <span class="company_address" t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                    <span class="company_address" t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}' />
                     <t t-if='o.user_id'>
                       <div class='cashier'>
                         <div>--------------------------------</div>
-                        <div>Atentido por
-                        <t t-esc='o.user_id.name'/>
+                        <div>
+                          Atentido por
+                          <t t-esc='o.user_id.name' />
                         </div>
                       </div>
                     </t>
-                  <div class="invoice-center-align">
-                    <span t-field="o.payment_date"/>
+                    <div class="invoice-center-align">
+                      <span t-field="o.payment_date" />
+                    </div>
                   </div>
-                  </div>
-                  <br/>
+                  <br />
                 </div>
                 <div class="receipt-phone client-info">
                   <t t-if="o.name">
-		    Recibo de Caja
-                    <t t-esc="o.name"/>
-                    <br/>
+                    Recibo de Caja
+                    <t t-esc="o.name" />
+                    <br />
                     <t t-if="o.partner_id">
                       <t t-if="o.partner_id.catalog_06_id.code == 6">
                         Razón Social:
@@ -85,31 +88,33 @@
                       <t t-else="">
                         Nombre:
                       </t>
-                      <t t-esc="o.partner_id.name"/>
-                      <br/>
-		      <t t-if="o.partner_id.vat">
-			<t t-esc="o.partner_id.catalog_06_id.name"/>:
-			<t t-esc="o.partner_id.vat"/>
-		      </t>
-		      <div name="extra-customer-info">
-		      </div>
+                      <t t-esc="o.partner_id.name" />
+                      <br />
+                      <t t-if="o.partner_id.vat">
+                        <t t-esc="o.partner_id.catalog_06_id.name" />
+                        :
+                        <t t-esc="o.partner_id.vat" />
+                      </t>
+                      <div name="extra-customer-info"></div>
                     </t>
                   </t>
-		  <t t-if="o.communication">
-		    Concepto: <span t-esc="o.communication"/>
-		  </t>
-          <br/>
-		  <t t-if="o.communication">
-		    Diario de Pago: <span t-esc="o.journal_id.name"/>
-		  </t>
-		  
+                  <t t-if="o.communication">
+                    Concepto:
+                    <span t-esc="o.communication" />
+                  </t>
+                  <br />
+                  <t t-if="o.communication">
+                    Diario de Pago:
+                    <span t-esc="o.journal_id.name" />
+                  </t>
+
                 </div>
 
                 <table class='invoice-lines'>
                   <tr class="total-info" name="totals">
                     <td>Monto Pagado:</td>
                     <td class="text-right">
-                      <span t-field="o.amount"/>
+                      <span t-field="o.amount" />
                     </td>
                   </tr>
                 </table>
@@ -119,7 +124,7 @@
         </t>
       </t>
     </template>
-    
+
     <template id="report_invoice_ticket_80">
       <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
@@ -465,7 +470,7 @@
                         </tr>
                     </t>
                     
-                     <tr class="border-black o_total">
+                    <tr class="border-black o_total">
                         <td><strong>TOTAL</strong></td>
                         <td class="text-right">
                             <span class="text-nowrap" t-field="o.amount_total"/>
@@ -562,52 +567,61 @@
               </style>
               <div class="invoice-ticket">
                 <div class="invoice-center-align">
-                  <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" width="150px"/>
+                  <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" width="150px" />
                   <div class="info">
-                    <t t-esc='o.company_id.name'/>
+                    <t t-esc='o.company_id.name' />
                     <t t-if='o.company_id.phone'>
-                      <div>Tel:
-                      <t t-esc='o.company_id.phone'/>
+                      <div>
+                        Tel:
+                        <t t-esc='o.company_id.phone' />
                       </div>
                     </t>
                     <t t-if='o.company_id.vat'>
-                      <div>RUC:
-                      <t t-esc='o.company_id.vat'/>
+                      <div>
+                        RUC:
+                        <t t-esc='o.company_id.vat' />
                       </div>
                     </t>
-                    <span class="company_address" t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                    <span class="company_address" t-field="o.company_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}' />
                     <t t-if='o.user_id'>
                       <div class='cashier'>
                         <div>--------------------------------</div>
-                        <div>Atentido por
-                        <t t-esc='o.user_id.name'/>
+                        <div>
+                          Atentido por
+                          <t t-esc='o.user_id.name' />
                         </div>
                       </div>
                     </t>
                   </div>
-                  <br/>
+                  <br />
                 </div>
                 <div class="receipt-phone client-info">
                   <t t-if="o.name">
 
-		    <t t-if="o.reversed_entry_id">
+                    <t t-if="o.reversed_entry_id">
                       <t t-if="o.refund_type == 'credit'">Nota de Crédito </t>
                       <t t-if="o.refund_type == 'debit'">Nota de Débito </t>
-		    </t>
-		    <t t-else="">
+                    </t>
+                    <t t-else="">
                       <t t-if="o.document_type == 'factura'">
 		      Factura Electrónica </t>
                       <t t-if="o.document_type == 'boleta'">
 		      Boleta Electrónica </t>
-		    </t>
-		    
-                    <t t-esc="o.name"/>
-                    <br/>
-                    <t t-if="o.reversed_entry_id">
-                        <t t-if="o.refund_type == 'credit'"><strong>Tipo de Nota de Credito: </strong><t t-esc="o.credit_note_type.name"/></t>
-                        <t t-if="o.refund_type == 'debit'"><strong>Tipo de Nota de Débito: </strong><t t-esc="o.debit_note_type.name"/></t>
                     </t>
-                    <br/>
+
+                    <t t-esc="o.name" />
+                    <br />
+                    <t t-if="o.reversed_entry_id">
+                      <t t-if="o.refund_type == 'credit'">
+                        <strong>Tipo de Nota de Credito: </strong>
+                        <t t-esc="o.credit_note_type.name" />
+                      </t>
+                      <t t-if="o.refund_type == 'debit'">
+                        <strong>Tipo de Nota de Débito: </strong>
+                        <t t-esc="o.debit_note_type.name" />
+                      </t>
+                    </t>
+                    <br />
                     <t t-if="o.partner_id">
                       <t t-if="o.partner_id.catalog_06_id.code == 6">
                         Razón Social:
@@ -615,13 +629,13 @@
                       <t t-else="">
                         Nombre:
                       </t>
-                      <t t-esc="o.partner_id.name"/>
-                      <br/>
-                      <t t-esc="o.partner_id.catalog_06_id.name"/>:
-                      <t t-esc="o.partner_id.vat"/>
-		      <div name="extra-customer-info">
-		      </div>
-                      <br/>
+                      <t t-esc="o.partner_id.name" />
+                      <br />
+                      <t t-esc="o.partner_id.catalog_06_id.name" />
+                      :
+                      <t t-esc="o.partner_id.vat" />
+                      <div name="extra-customer-info"></div>
+                      <br />
                     </t>
                   </t>
                 </div>
@@ -638,20 +652,20 @@
                   <tbody>
                     <t t-foreach="o.invoice_line_ids" t-as="line">
                       <tr>
-                        <td >
-                          <span t-field="line.quantity"/>
+                        <td style="font-size:12px;">
+                          <span t-field="line.quantity" />
                         </td>
-                        <td t-attf-class="text-left">
+                        <td t-attf-class="text-left" style="font-size:12px;">
                           <span t-field="line.name" />
                         </td>
-                        <td class="text-right">
-                          <span t-field="line.price_total"/>
+                        <td class="text-right" style="font-size:12px;">
+                          <span t-field="line.price_total" />
                         </td>
                       </tr>
                     </t>
                   </tbody>
                 </table>
-                <br/>
+                <br />
                 <table class='invoice-lines'>
                   <tr>
                     <td>Subtotal:</td>
@@ -662,7 +676,7 @@
                   <t t-foreach="o.tax_line_ids" t-as="taxdetail">
                     <tr>
                       <td>
-                        <span t-field="taxdetail.name"/>
+                        <span t-field="taxdetail.name" />
                       </td>
                       <td class="text-right">
                         <span t-field="taxdetail.amount_total" />
@@ -672,42 +686,53 @@
                   <tr class="total-info" name="totals">
                     <td>Total:</td>
                     <td class="text-right">
-                      <span t-field="o.amount_total"/>
+                      <span t-field="o.amount_total" />
                     </td>
                   </tr>
                 </table>
-                <br/>
+                <br />
                 <div class="invoice-info">
-                  <p>SON: <t t-esc="o.get_total_in_words()"/></p>
+                  <p>
+                    SON:
+                    <t t-esc="o.get_total_in_words()" />
+                  </p>
                   <t t-if="o.digest">
-                    <span t-field="o.digest"/>
+                    <span t-field="o.digest" />
                   </t>
                   <div class="invoice-center-align">
                     <p t-if="o.show_barcode()">
                       <span t-if="o.barcode">
-                        <img width="65%"
-                             t-attf-src="data:image/*;base64, {{o.barcode}}"
-                             />
+                        <img width="65%" t-attf-src="data:image/*;base64, {{o.barcode}}" />
                       </span>
                     </p>
                     <p t-if="o.show_qr()">
                       <span t-if="o.qr">
-                        <img width="50%"
-                             t-attf-src="data:image/*;base64, {{o.qr}}"
-                             />
+                        <img width="50%" t-attf-src="data:image/*;base64, {{o.qr}}" />
                       </span>
                     </p>
                   </div>
                   <t t-if="o.reversed_entry_id">
-                    <p t-if="o.refund_type == 'credit'">Representación impresa de la nota de crédito electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
-                    <p t-if="o.refund_type == 'debit'">Representación impresa de la nota de débito electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
+                    <p t-if="o.refund_type == 'credit'">
+                      Representación impresa de la nota de crédito electrónica:
+                      <span t-field="o.company_id.partner_id.url_invoice" />
+                    </p>
+                    <p t-if="o.refund_type == 'debit'">
+                      Representación impresa de la nota de débito electrónica:
+                      <span t-field="o.company_id.partner_id.url_invoice" />
+                    </p>
                   </t>
                   <t t-else="">
-                    <p t-if="o.document_type == 'factura'">Representación impresa de la factura electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
-                    <p t-if="o.document_type == 'boleta'">Representación impresa de la boleta de venta electrónica: <span t-field="o.company_id.partner_id.url_invoice"/></p>
+                    <p t-if="o.document_type == 'factura'">
+                      Representación impresa de la factura electrónica:
+                      <span t-field="o.company_id.partner_id.url_invoice" />
+                    </p>
+                    <p t-if="o.document_type == 'boleta'">
+                      Representación impresa de la boleta de venta electrónica:
+                      <span t-field="o.company_id.partner_id.url_invoice" />
+                    </p>
                   </t>
                   <div class="invoice-center-align">
-                    <span t-field="o.date_invoice"/>
+                    <span t-field="o.date_invoice" />
                   </div>
                 </div>
               </div>
