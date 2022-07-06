@@ -63,7 +63,6 @@
 
                     <t t-if="client">
                         <span  style="font-size: 12px;font-weight: bold;" >CLIENT</span>
-                        <tr t-if="client.vat and client.vat != '00000000' and client.vat != '11111111'">
                             <t t-if="client.vat.length == 8">
                                 <th class="text-left" style="font-weight: normal; ">
                                     DNI : <t t-esc="client.name"/>
@@ -74,7 +73,6 @@
                                     RUC : <t t-esc="client.name"/>
                                 </th>
                             </t>
-                        </tr> 
                         <tr t-if="client.vat">
                             <th style="font-weight: normal;" colspan="2" class="text-left">
                                 <t t-esc="client.vat"/>
@@ -129,14 +127,14 @@
                 <tbody>
                     <t t-foreach="receipt.orderlines" t-as="line">  
                         <tr> 
-                            <td style="font-size:8px;"><t t-esc="line.quantity"/></td>
-                            <td style="font-size:8px;"><t t-esc="line.product_name"/></td>                                
-                            <td style="font-size:8px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
+                            <td style="font-size:12px;"><t t-esc="line.quantity"/></td>
+                            <td style="font-size:12px;"><t t-esc="line.product_name"/></td>                                
+                            <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
                         </tr> 
                     </t>
                 </tbody>
             </table>
-                <br />
+                <br/>
                 <div style="border-top: 1px dashed black; font-size:small">
                     <span><strong>MONTO BASE </strong></span>
                     <span t-esc="env.pos.format_currency(receipt.total_without_tax)" class="pos-receipt-right-align"/>
