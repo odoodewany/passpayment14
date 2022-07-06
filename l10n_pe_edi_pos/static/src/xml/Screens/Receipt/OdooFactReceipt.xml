@@ -141,10 +141,10 @@
                 <tbody>
                     <t t-foreach="receipt.orderlines" t-as="line">  
                         <tr> 
-                            <td style="font-size:8px;"><t t-esc="line.quantity"/></td>
-                            <td style="font-size:8px;"><t t-esc="line.product_name"/></td>                                
-                            <td style="font-size:8px;"><t t-esc="env.pos.format_currency_no_symbol(line.price)"/></td>
-                            <td style="font-size:8px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
+                            <td style="font-size:12px;"><t t-esc="line.quantity"/></td>
+                            <td style="font-size:12px;"><t t-esc="line.product_name"/></td>                                
+                            <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price)"/></td>
+                            <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
                         </tr> 
                     </t>
                 </tbody>
