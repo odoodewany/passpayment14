@@ -228,8 +228,8 @@
                       Boleta Electrónica</t>
                     </t -->
                     
-                    <span  style="font-size: 12px;font-weight: bold;" >CLIENTE</span>
-                    <table  id="totals" style="width:100%; font-size:small; font-weight: normal;" >
+                    <span style="font-size: 12px;font-weight: bold;">CLIENTE</span>
+                    <table id="totals" style="width:100%; font-size:small; font-weight: normal;">
                       <t t-if="o.partner_id">
                         <!-- <tr t-tif="o.partner_id.vat">
                           <t t-if=" 'DNI'in o.partner_id.l10n_latam_identification_type_id">
@@ -244,20 +244,20 @@
                             </th>
                           </t>
                         </tr> -->
+                        <tr t-if="o.partner_id.vat">
+                          <th style="font-weight: normal;" colspan="2" class="text-left">
+                              <span><strong><t t-esc="o.partner_id.l10n_latam_identification_type_id.name"/>:</strong> <t t-esc="o.partner_id.vat"/> </span>
+                          </th>
+                        </tr>
+                        
                         <tr t-if="o.partner_id.name">
                           <th style="font-weight: normal;" colspan="2" class="text-left">
                               <t t-esc="o.partner_id.name"/>
                           </th>
                         </tr>
     
-                        <tr t-if="o.partner_id.vat">
-                          <th style="font-weight: normal;" colspan="2" class="text-left">
-                              <span><t t-esc="o.partner_id.l10n_latam_identification_type_id.name"/>: <t t-esc="o.partner_id.vat"/> </span>
-                          </th>
-                        </tr>
-    
                         <tr> 
-                          <t t-if='o.invoice_date'>
+                          <t t-if="o.invoice_date">
                               <th style="font-weight: normal;" class="text-left" width="50%">
                                   <span style="font-size: 12px;font-weight: bold;">FECHA EMISIÓN:</span> <t t-esc="o.invoice_date"/>
                               </th>
@@ -266,7 +266,7 @@
     
                         <!-- <t t-if="not ('Nota de Pedido' in (o.l10n_latam_document_type_id and o.l10n_latam_document_type_id.report_name or ''))"> -->
                         <tr>
-                            <t t-if='o.invoice_date_due'>
+                            <t t-if="o.invoice_date_due">
                               <th style="font-weight: normal;" class="text-left" width="50%">
                                 <span style="font-size: 12px;font-weight: bold;">FECHA VENCIMIENTO:</span> <t t-esc="o.invoice_date_due"/>
                               </th>
@@ -288,32 +288,36 @@
                 </div>
                 <br/>
                 <br/>
-                <table class="invoice-lines">
-                  <thead>
-                    <tr>
-                      <td>CANT</td>
-                      <td>DESCRIPCION</td>
-                      <td>P.U.</td>
-                      <td>TOTAL</td>
-                    </tr>
-                  </thead>
-    
+                <table style="width:100%; font-size:x-small" class="soticket-table">
+                  <tr style="border-top:1px dashed black; border-bottom:1px dashed black" class="top-dashed bottom-dashed">
+                    <td class="text-left">CANT</td>
+                    <td class="text-left">DESCRIPCION</td>
+                    <td class="text-left">P.U.</td>
+                    <td class="text-left">TOTAL</td>
+                  </tr>
+                    
+                  <colgroup>
+                    <col width='15%' />
+                    <col width='45%' />
+                    <col width='20%' />
+                    <col width='20%' />
+                  </colgroup>
+                  
                   <tbody>
                     <t t-foreach="o.invoice_line_ids" t-as="line">
                       <tr>
                         <td>
-                          <span t-field="line.quantity"/>
+                          <span style="font-size:12px;" t-field="line.quantity"/>
                         </td>
                         <td t-attf-class="text-left">
-                          <span t-field="line.name"/>
+                          <span style="font-size:12px;" t-field="line.name"/>
                         </td>
                         <td t-attf-class="text-left">
-                          <span t-field="line.l10n_latam_price_unit"/>
+                          <span style="font-size:12px;" t-field="line.price_unit"/>
                         </td>
                         <td class="text-right">
-                          <span t-field="line.price_total"/>
+                          <span style="font-size:12px;" t-field="line.price_total"/>
                         </td>
-    
                       </tr>
                     </t>
                   </tbody>
@@ -387,7 +391,7 @@
                 <table class="table table-sm" style="page-break-inside: avoid;">
                     <tr class="o_subtotal" style="" t-if="o.l10n_pe_edi_amount_base">
                         <td>
-                            <span><strong>MONTO BASE </strong></span>
+                            <span><strong>SUB-TOTAL </strong></span>
                         </td>
                         <td class="text-right o_price_total">
                             <span class="text-nowrap" t-field="o.l10n_pe_edi_amount_base"/>
@@ -480,7 +484,10 @@
                 
                 <br/>
                 <div class="invoice-info" name="invoice-info">
-                  <p>SON: <t t-esc="o.l10n_pe_edi_amount_in_words"/></p>
+                  <p><strong>IMPORTE EN LETRAS</strong> <t t-esc="o.l10n_pe_edi_amount_in_words"/></p>
+                  <t><strong>METODO DE PAGO: </strong><span class="text-nowrap" t-field="o.payment_reference_selection" /></t>
+                  <br/>
+                  <br/>
                   <!-- t t-if="o.digest">
                     <span t-field="o.digest"/>
                   </t -->
