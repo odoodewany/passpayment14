@@ -22,6 +22,7 @@ class ResCompany(models.Model):
     l10n_pe_dni_validation = fields.Boolean(string="DNI Validation")
     l10n_pe_api_dni_connection = fields.Selection([
         ('jne','JNE'),
+        ('sunat','SUNAT'),
         ('facturacion_electronica','Facturacion Electronica DNI'),
         ('free_api','Free Api')
     ], string='Api DNI Connection', default='jne')

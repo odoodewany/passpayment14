@@ -185,6 +185,16 @@ class ResPartner(models.Model):
             data = False
         return data
 
+    @api.model
+    def sunat_dni_api(self, dni):
+        '''Consults DNI using SUNAT API'''
+        sunat_api_url = 'https://ww1.sunat.gob.pe/ol-ti-itatencionf5030/registro/solicitante?tipDocu=1&numDocu=%s'
+        try:
+            sunat_api_request = requests.post(sunat_api_url % dni)
+            print (sunat_api_request)
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e)
+
     def _extract_csv_from_zip(self, url_zip, name_zip):
         nombre_txt = name_zip.replace('.zip', '.txt')
         res = requests.get(url_zip)
@@ -358,6 +368,8 @@ class ResPartner(models.Model):
             data = self.facturacion_electronica_dni_connection(dni)
         elif company.l10n_pe_api_dni_connection == 'free_api':
             data = self.free_api_connection(dni)
+        elif company.l10n_pe_api_dni_connection == 'sunat':
+            data = self.sunat_dni_api(dni)
         else:
             data = False
         return data
