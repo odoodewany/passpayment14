@@ -13,6 +13,8 @@ from odoo import _, api, fields, models
 from odoo.addons.odoope_ruc_validation.models import sunatconstants
 import requests
 import json
+import logging
+_logger = logging.getLogger(__name__)
 from zipfile import ZipFile
 from bs4 import BeautifulSoup
 from io import BytesIO
@@ -189,11 +191,19 @@ class ResPartner(models.Model):
     def sunat_dni_api(self, dni):
         '''Consults DNI using SUNAT API'''
         sunat_api_url = 'https://ww1.sunat.gob.pe/ol-ti-itatencionf5030/registro/solicitante?tipDocu=1&numDocu=%s'
+        data = {}
         try:
-            sunat_api_request = requests.post(sunat_api_url % dni)
-            print (sunat_api_request)
-        except requests.exceptions.RequestException as e:
-            raise SystemExit(e)
+            sunat_api_request = requests.post(sunat_api_url % dni, timeout=(15))
+            result = sunat_api_request.json()
+            name = result.get('nombreSoli') + " " + \
+                result.get('apePatSoli') + " " + result.get('apeMatSoli')
+            data['nombre'] = name
+    
+        except Exception as e:
+            self.alert_warning_vat = True
+            data = False
+            print(e)
+        return data
 
     def _extract_csv_from_zip(self, url_zip, name_zip):
         nombre_txt = name_zip.replace('.zip', '.txt')
@@ -351,7 +361,7 @@ class ResPartner(models.Model):
             result = r.json()
             name = result.get('result').get('Paterno') + " " + result.get(
                 'result').get('Materno') + " " + result.get('result').get('Nombre')
-            data['nombre'] = name
+            data['nombre'] = name            
         except Exception:
             self.alert_warning_vat = True
             data = False
