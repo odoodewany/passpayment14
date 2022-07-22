@@ -322,7 +322,7 @@
                                                                 <td style="text-align: center;">
                                                                     <span t-esc="o.currency_id.symbol" />
                                                                     <span>
-                                                                        <t t-esc="'{0:,.2f}'.format(float(quote[1]))" />
+                                                                        <t t-esc="'{0:,.2f}'.format(float(quote[1])-o.detraction_amount)" />
                                                                     </span>
                                                                 </td>
                                                             </tr>
@@ -378,7 +378,7 @@
                                                         <td style="text-align: center;">
                                                             <span t-esc="o.currency_id.symbol" />
                                                             <span>
-                                                                <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
+                                                                <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.detraction_amount)" />
                                                             </span>
                                                         </td>
                                                     </tr>
