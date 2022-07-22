@@ -155,8 +155,6 @@
             </xpath>
             <field name="payment_reference" position="after">
                 <field name="payment_reference_selection" />
-            </field>
-            <field name="journal_id" position="after">
                 <field name="detraction_amount" />
             </field>
 		</field>
