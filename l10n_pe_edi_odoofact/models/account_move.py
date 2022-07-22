@@ -49,6 +49,11 @@ CURRENCY = {
 class AccountMove(models.Model):
 
     _inherit = 'account.move'
+
+    # Detraction
+
+    detraction_amount = fields.Float('Monto de Detracción', digits=(12, 2))
+
     invoice_date = fields.Date(string='Invoice/Bill Date', readonly=True, index=True, copy=False, default=datetime.now(),
                                states={'draft': [('readonly', False)]})
     payment_reference_selection = fields.Selection([
@@ -345,7 +350,7 @@ class AccountMove(models.Model):
         """Transform the amount to text
         """
         for move in self:
-            amount_base, amount = divmod(move.amount_total, 1)
+            amount_base, amount = divmod(move.amount_total - move.detraction_amount, 1)
             amount = round(amount, 2)
             amount = int(round(amount * 100, 2))
 

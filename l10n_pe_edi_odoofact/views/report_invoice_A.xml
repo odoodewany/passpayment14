@@ -243,7 +243,7 @@
                                             Monto neto pendiente de pago:
                                         </dt>
                                         <dd class="col-auto col-7 col-sm-7 mb-0">
-                                            <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(net_amount))"/></span>
+                                            <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(net_amount)-o.detraction_amount)"/></span>
                                             <!-- span t-esc="net_amount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/ -->
                                         </dd>
                                     </dl>
@@ -278,7 +278,7 @@
                                                             <span><t t-esc="quote[0]"/></span>
                                                         </td>
                                                         <td style="text-align: center;">
-                                                            <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(quote[1]))"/></span>
+                                                            <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(quote[1])-o.detraction_amount)"/></span>
                                                         </td>    
                                                     </tr>
                                                     <t t-set="index" t-value="index + 1"/>
@@ -308,7 +308,7 @@
                                                         <span t-field="o.invoice_date_due" t-field-options='{"format": "yyyy-MM-dd"}'/>
                                                     </td>
                                                     <td style="text-align: center;">
-                                                        <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(net_amount))"/></span>
+                                                        <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(net_amount)-detraction_amount)"/></span>
                                                     </td>    
                                                 </tr>
                                                 <tr/> 
