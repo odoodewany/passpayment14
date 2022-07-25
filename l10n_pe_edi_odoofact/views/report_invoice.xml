@@ -293,7 +293,7 @@
                                         <dd class="col-auto col-7 col-sm-7 mb-0">
                                             <span t-esc="o.currency_id.symbol" />
                                             <span>
-                                                <t t-if="is_detraction">
+                                                <t t-if="o.is_detraction">
                                                     <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.invoice_detraction_amount)" />
                                                 </t>
                                                 <t t-else="">
@@ -346,7 +346,7 @@
                                                                 <td style="text-align: center;">
                                                                     <span t-esc="o.currency_id.symbol" />
                                                                     <span>
-                                                                        <t t-if="is_detraction">
+                                                                        <t t-if="o.is_detraction">
                                                                             <t t-esc="'{0:,.2f}'.format(float(quote[1])-o.invoice_detraction_amount)" />
                                                                         </t>
                                                                         <t t-else="">
@@ -407,7 +407,7 @@
                                                         <td style="text-align: center;">
                                                             <span t-esc="o.currency_id.symbol" />
                                                             <span>
-                                                                <t t-if="is_detraction">
+                                                                <t t-if="o.is_detraction">
                                                                     <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.invoice_detraction_amount)" />
                                                                 </t>
                                                                 <t t-else="">
