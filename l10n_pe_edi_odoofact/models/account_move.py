@@ -52,7 +52,7 @@ class AccountMove(models.Model):
 
     # Detraction
 
-    detraction_amount = fields.Float('Monto de Detracción', digits=(12, 2))
+    """ detraction_amount = fields.Float('Monto de Detracción', digits=(12, 2)) """
 
     invoice_date = fields.Date(string='Invoice/Bill Date', readonly=True, index=True, copy=False, default=datetime.now(),
                                states={'draft': [('readonly', False)]})
@@ -163,10 +163,13 @@ class AccountMove(models.Model):
                                              compute='_compute_amount', currency_field='currency_id')
 
     # detraction_type = fields.Many2one('account.detraction.type', string='Tipo de Det.', copy=False, compute='_get_detraction_amount', store=True)
+    is_detraction = fields.Boolean(string='Sujeto a Detracción')
+    invoice_detraction_percent = fields.Float(string='Porc. de Detracción')
     invoice_detraction_type = fields.Many2one(
         'account.detraction.type', string='Tipo de Detracción', copy=False)
-    invoice_detraction_amount = fields.Float(
-        string='Monto de Det.', compute='_get_invoice_detraction_amount', store=True)
+    invoice_detraction_amount = fields.Monetary(
+        string='Monto de Det.', compute='_get_invoice_detraction_amount_percent', store=True)
+    referencial_value = fields.Char(string='Valor referencial')
     # detraction_amount = fields.Float(string='Monto de Det.', compute='_get_detraction_amount', store=True)
     # detraction_code = fields.Char(string='Num. Det.', compute='_get_detraction_amount', store=True)
     # detraction_date = fields.Date(string='Fecha de Det.', compute='_get_detraction_amount', store=True)
@@ -188,12 +191,19 @@ class AccountMove(models.Model):
     # 			invoice.detraction_code = False
     # 			invoice.detraction_date = False
 
-    @api.depends('invoice_detraction_type')
+    """ @api.depends('invoice_detraction_type')
     def _get_invoice_detraction_amount(self):
         for invoice in self:
             if invoice.invoice_detraction_type:
                 invoice.invoice_detraction_amount = Decimal(
-                    invoice.invoice_detraction_type.amount * invoice.amount_total / 100.0).quantize(0, ROUND_HALF_UP)
+                    invoice.invoice_detraction_type.amount * invoice.amount_total / 100.0).quantize(0, ROUND_HALF_UP) """
+
+    @api.depends('invoice_detraction_percent','amount_total')
+    def _get_invoice_detraction_amount_percent(self):
+        for request in self:
+            if request.is_detraction:
+                request.invoice_detraction_amount = Decimal(
+                    request.invoice_detraction_percent * request.amount_total / 100.0).quantize(2, ROUND_HALF_UP)
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):

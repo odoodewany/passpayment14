@@ -18,6 +18,7 @@ from odoo.exceptions import ValidationError, UserError, AccessError
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
+    account_number_bn = fields.Char(string="Número de cuenta Banco de la Nación")
     l10n_pe_ruc_validation = fields.Boolean(string="RUC Validation")
     l10n_pe_dni_validation = fields.Boolean(string="DNI Validation")
     l10n_pe_api_dni_connection = fields.Selection([
