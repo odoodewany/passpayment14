@@ -274,7 +274,7 @@
                                         <dd class="col-auto col-7 col-sm-7 mb-0">
                                             <span t-esc="o.currency_id.symbol" />
                                             <span>
-                                                <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
+                                                <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.detraction_amount)" />
                                             </span>
                                             <!-- span t-esc="net_amount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/ -->
                                         </dd>
