@@ -95,7 +95,7 @@
             <group name="accounting_info_group" position="after">
                 <group string="Detracción" name="detraction_extra_group">
                     <field name="invoice_detraction_type"/>
-                    <field name="invoice_detraction_amount"/>                    
+                    <field name="invoice_detraction_amount"/>                 
                 </group>
                 <group string="Extra data" name="invoice_extra_group">
                     <label for="l10n_pe_edi_serie" string="E-invoice Number" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt'))]}"/>
@@ -155,7 +155,11 @@
             </xpath>
             <field name="payment_reference" position="after">
                 <field name="payment_reference_selection" />
-                <field name="detraction_amount" />
+                <field name="is_detraction"/>
+                    <field name="invoice_detraction_percent" string="% de Detracción" placeholder="12.00" attrs="{'invisible': [('is_detraction','=',False)]}"/>
+                    <field name="amount_total" string="Monto Total" attrs="{'invisible': [('is_detraction','=',False)]}" readonly="True"/>
+                    <field name="invoice_detraction_amount" string="Monto de Detracción" attrs="{'invisible': [('is_detraction','=',False)]}"/>
+                    <field name="referencial_value" attrs="{'invisible': [('is_detraction','=',False)]}"/>
             </field>
 		</field>
 	</record>

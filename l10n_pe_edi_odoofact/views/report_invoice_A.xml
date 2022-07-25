@@ -185,6 +185,25 @@
                         </tbody>
                     </table>
 
+                    <t t-if="o.is_detraction">
+                        <table>
+                                <tr>
+                                    <br/>
+                                    Operación sujeta SPOT cuenta de Detracción:
+                                    <span t-field="o.company_id.account_number_bn"/>
+                                </tr>
+                                <tr>
+                                    <br/>
+                                    Valor referencial:
+                                    <span t-field="o.referencial_value"/>
+                                </tr>
+                                <tr>
+                                    <br/>Monto de detracción:
+                                    <span t-field="o.invoice_detraction_amount"/>
+                                </tr>
+                        </table>
+                    </t>
+
                     <div id="total" class="row">
                         <div t-attf-class="#{'col-8' if report_type != 'html' else 'col-12 col-sm-8'} col-auto mb-2">
                             <div class="card mb-2">
@@ -243,7 +262,15 @@
                                             Monto neto pendiente de pago:
                                         </dt>
                                         <dd class="col-auto col-7 col-sm-7 mb-0">
-                                            <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(net_amount)-o.detraction_amount)"/></span>
+                                            <span t-esc="o.currency_id.symbol"/> 
+                                            <span>
+                                                <t t-if="is_detraction">
+                                                    <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.invoice_detraction_amount)" />
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
+                                                </t>                                   
+                                            </span>
                                             <!-- span t-esc="net_amount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/ -->
                                         </dd>
                                     </dl>
@@ -278,7 +305,15 @@
                                                             <span><t t-esc="quote[0]"/></span>
                                                         </td>
                                                         <td style="text-align: center;">
-                                                            <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(quote[1])-o.detraction_amount)"/></span>
+                                                            <span t-esc="o.currency_id.symbol"/> 
+                                                            <span>
+                                                                        <t t-if="is_detraction">
+                                                                            <t t-esc="'{0:,.2f}'.format(float(quote[1])-o.invoice_detraction_amount)" />
+                                                                        </t>
+                                                                        <t t-else="">
+                                                                            <t t-esc="'{0:,.2f}'.format(float(quote[1]))" />
+                                                                        </t>
+                                                            </span>
                                                         </td>    
                                                     </tr>
                                                     <t t-set="index" t-value="index + 1"/>
@@ -308,7 +343,14 @@
                                                         <span t-field="o.invoice_date_due" t-field-options='{"format": "yyyy-MM-dd"}'/>
                                                     </td>
                                                     <td style="text-align: center;">
-                                                        <span t-esc="o.currency_id.symbol"/> <span><t t-esc="'{0:,.2f}'.format(float(net_amount)-o.detraction_amount)"/></span>
+                                                        <span t-esc="o.currency_id.symbol"/> 
+                                                        <span>
+                                                                <t t-if="is_detraction">
+                                                                    <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.invoice_detraction_amount)" />
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
+                                                                </t>  </span>
                                                     </td>    
                                                 </tr>
                                                 <tr/> 

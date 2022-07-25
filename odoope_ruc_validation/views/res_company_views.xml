@@ -6,6 +6,9 @@
             <field name="model">res.company</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
+            <xpath expr="//sheet//notebook//page[@name='general_info']//group//group[2]" position="inside">
+                <field name="account_number_bn"/>    
+            </xpath> 
             <xpath expr="//page[1]" position="after">
                <page string="RUC/DNI Validation(PE)">
                     <group>
