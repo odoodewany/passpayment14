@@ -351,7 +351,7 @@ class AccountMove(models.Model):
         """Transform the amount to text
         """
         for move in self:
-            amount_base, amount = divmod(move.amount_total - move.detraction_amount, 1)
+            amount_base, amount = divmod(move.amount_total, 1)
             amount = round(amount, 2)
             amount = int(round(amount * 100, 2))
 
