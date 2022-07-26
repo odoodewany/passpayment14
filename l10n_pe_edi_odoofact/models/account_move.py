@@ -202,8 +202,10 @@ class AccountMove(models.Model):
     def _get_invoice_detraction_amount_percent(self):
         for request in self:
             if request.is_detraction:
-                request.invoice_detraction_amount = Decimal(
-                    request.invoice_detraction_percent * request.amount_total / 100.0).quantize(2, ROUND_HALF_UP)
+                request.invoice_detraction_amount = "{:.2f}".format(
+                    round(float(request.invoice_detraction_percent * request.amount_total / 100.0),1))
+                """ Decimal(
+                request.invoice_detraction_percent * request.amount_total / 100.0).quantize(2, ROUND_HALF_UP) """
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
