@@ -54,6 +54,7 @@
         'views/ticket_invoice.xml',
         'views/report_invoice_A.xml',
         'views/report_template.xml',
+        'views/edit_view_payment_term_line_form.xml'
     ],
     'installable': True,
     'images': ['static/description/banner.png'],
