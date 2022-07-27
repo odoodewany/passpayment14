@@ -5,6 +5,8 @@
         <field name="model">account.payment.term.line</field>
         <field name="inherit_id" ref="account.view_payment_term_line_form"/>
         <field name="arch" type="xml">
+            <!-- Se quito el campo dentro de fecha de vencimiento//
+            agregar linea//Calculo de fecha de vencimiento// debajo de debido por generar confusion -->
             <xpath expr="//form//div[2]" position="replace">
                 
             </xpath>
