@@ -457,8 +457,8 @@ class AccountMove(models.Model):
     def _get_adicional_cabecera(self):
         account_number_bn = self.company_id.account_number_bn or ''
         invoice_detraction_type = self.invoice_detraction_type.name if self.invoice_detraction_type else ''
-        invoice_detraction_percent = self.invoice_detraction_percent or 0.0
-        invoice_detraction_amount = self.invoice_detraction_amount or 0.0
+        invoice_detraction_percent = "%.2f" % self.invoice_detraction_percent or '0.0'
+        invoice_detraction_amount = "%.2f" % self.invoice_detraction_amount or '0.0'
         adicional_cabecera_dict = {
             "ctaBancoNacionDetraccion": account_number_bn,
             "codBienDetraccion": invoice_detraction_type,
@@ -470,7 +470,8 @@ class AccountMove(models.Model):
 
     def _get_relacionados(self):
         relacionados = []
-        pickings = self.l10n_pe_edi_picking_number_ids + self.l10n_pe_edi_transportist_picking_number_ids
+        pickings = self.l10n_pe_edi_picking_number_ids + \
+            self.l10n_pe_edi_transportist_picking_number_ids
         for picking in pickings:
             indDocRelacionado = '1'
             if picking.type == '1':
@@ -491,7 +492,6 @@ class AccountMove(models.Model):
                 }
             )
         return relacionados
-
 
     def get_invoice_values_sfs(self):
         """
@@ -558,9 +558,9 @@ class AccountMove(models.Model):
                 'ublVersionId': '2.1',
                 'customizationId': '2.0',
             }
-        
+
         if self.is_detraction:
-            values['cabecera']['adicionalCabecera'] = self._get_adicional_cabecera()            
+            values['cabecera']['adicionalCabecera'] = self._get_adicional_cabecera()
         values['detalle'] = []
         values['tributos'] = []
         values['leyendas'] = [{
@@ -985,8 +985,8 @@ class AccountMove(models.Model):
         return self.company_id.l10n_pe_edi_ose_id.code
 
     def action_document_send(self):
-        """ 
-        This method creates the request to PSE/OSE provider 
+        """
+        This method creates the request to PSE/OSE provider
         """
         for move in self:
             if not move.company_id.l10n_pe_edi_send_invoice:
@@ -1222,8 +1222,8 @@ class AccountMove(models.Model):
         return super(AccountMove, self)._deduce_sequence_number_reset(name)
 
     def action_open_edi_request(self):
-        """ 
-        This method opens the EDI request 
+        """
+        This method opens the EDI request
         """
         self.ensure_one()
         if self.l10n_pe_edi_request_id:
