@@ -198,12 +198,12 @@ class AccountMove(models.Model):
                 invoice.invoice_detraction_amount = Decimal(
                     invoice.invoice_detraction_type.amount * invoice.amount_total / 100.0).quantize(0, ROUND_HALF_UP) """
 
-    @api.depends('invoice_detraction_percent','amount_total')
+    @api.depends('invoice_detraction_percent', 'amount_total')
     def _get_invoice_detraction_amount_percent(self):
         for request in self:
             if request.is_detraction:
                 request.invoice_detraction_amount = "{:.2f}".format(
-                    round(float(request.invoice_detraction_percent * request.amount_total / 100.0),1))
+                    round(float(request.invoice_detraction_percent * request.amount_total / 100.0), 1))
                 """ Decimal(
                 request.invoice_detraction_percent * request.amount_total / 100.0).quantize(2, ROUND_HALF_UP) """
 
@@ -454,6 +454,20 @@ class AccountMove(models.Model):
             move.l10n_pe_edi_cron_count = 5
         super(AccountMove, self).action_post()
 
+    def _get_adicional_cabecera(self):
+        account_number_bn = self.company_id.account_number_bn or ''
+        invoice_detraction_type = self.invoice_detraction_type.name if self.invoice_detraction_type else ''
+        invoice_detraction_percent = self.invoice_detraction_percent or 0.0
+        invoice_detraction_amount = self.invoice_detraction_amount or 0.0
+        adicional_cabecera_dict = {
+            "ctaBancoNacionDetraccion": account_number_bn,
+            "codBienDetraccion": invoice_detraction_type,
+            "porDetraccion": invoice_detraction_percent,
+            "mtoDetraccion": invoice_detraction_amount,
+            "codMedioPago": "",
+        }
+        return adicional_cabecera_dict
+
     def get_invoice_values_sfs(self):
         """
         Prepare the dict of values to create the request for electronic invoice. Valid for SFS.
@@ -519,6 +533,8 @@ class AccountMove(models.Model):
                 'ublVersionId': '2.1',
                 'customizationId': '2.0',
             }
+        if self.is_detraction:
+            values['adicionalCabecera'] = self._get_adicional_cabecera()
         values['detalle'] = []
         values['tributos'] = []
         values['leyendas'] = [{
@@ -837,6 +853,7 @@ class AccountMove(models.Model):
         if currency_exchange == 0:
             raise UserError(
                 _('The currency rate should be different to 0.0, Please check the rate at %s') % self.invoice_date)
+        detraction = 'true' if self.is_detraction else 'false'
         values = {
             'company_id': self.company_id.id,
             'l10n_pe_edi_shop_id': self.l10n_pe_edi_shop_id and self.l10n_pe_edi_shop_id.id or False,
@@ -880,7 +897,7 @@ class AccountMove(models.Model):
             'total_otros_cargos': abs(self.l10n_pe_edi_amount_others),
             'total_gratuita': abs(self.l10n_pe_edi_amount_free),
             'total': abs(self.amount_total),
-            'detraccion': 'false',
+            'detraccion': detraction,
             'observaciones': self.narration or '',
             'documento_que_se_modifica_tipo': self.reversed_entry_id and
             (self.l10n_pe_edi_reversal_serie and self.l10n_pe_edi_reversal_serie[0] == 'F' and '1' or '2') or
