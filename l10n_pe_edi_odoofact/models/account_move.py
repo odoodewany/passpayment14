@@ -170,6 +170,7 @@ class AccountMove(models.Model):
     invoice_detraction_amount = fields.Monetary(
         string='Monto de Det.', compute='_get_invoice_detraction_amount_percent', store=True)
     referencial_value = fields.Char(string='Valor referencial')
+    l10n_pe_edi_payment_mean_id = fields.Many2one('l10n_pe_edi.catalog.59', string='Medio de pago')
     # detraction_amount = fields.Float(string='Monto de Det.', compute='_get_detraction_amount', store=True)
     # detraction_code = fields.Char(string='Num. Det.', compute='_get_detraction_amount', store=True)
     # detraction_date = fields.Date(string='Fecha de Det.', compute='_get_detraction_amount', store=True)
@@ -459,12 +460,13 @@ class AccountMove(models.Model):
         invoice_detraction_type = self.invoice_detraction_type.name if self.invoice_detraction_type else ''
         invoice_detraction_percent = str(self.invoice_detraction_percent) or '0'
         invoice_detraction_amount = "%.2f" % self.invoice_detraction_amount or '0.0'
+        codMedioPago = self.l10n_pe_edi_payment_mean_id.code or ''
         adicional_cabecera_dict = {
             "ctaBancoNacionDetraccion": account_number_bn,
             "codBienDetraccion": invoice_detraction_type,
             "porDetraccion": invoice_detraction_percent,
             "mtoDetraccion": invoice_detraction_amount,
-            "codMedioPago": "",
+            "codMedioPago": codMedioPago,
         }
         return adicional_cabecera_dict
 

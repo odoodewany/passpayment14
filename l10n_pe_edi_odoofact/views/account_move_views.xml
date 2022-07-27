@@ -154,6 +154,7 @@
                     <field name="l10n_pe_edi_global_discount"/>  
             </xpath>
             <field name="payment_reference" position="after">
+                <field name="l10n_pe_edi_payment_mean_id" />
                 <field name="payment_reference_selection" />
                 <field name="is_detraction"/>
                     <field name="invoice_detraction_percent" string="% de Detracción" placeholder="12.00" attrs="{'invisible': [('is_detraction','=',False)]}"/>
