@@ -534,7 +534,7 @@ class AccountMove(models.Model):
                 'customizationId': '2.0',
             }
         if self.is_detraction:
-            values['adicionalCabecera'] = self._get_adicional_cabecera()
+            values['cabecera']['adicionalCabecera'] = self._get_adicional_cabecera()
         values['detalle'] = []
         values['tributos'] = []
         values['leyendas'] = [{
