@@ -458,7 +458,7 @@ class AccountMove(models.Model):
         account_number_bn = self.company_id.account_number_bn or ''
         invoice_detraction_type = self.invoice_detraction_type.name if self.invoice_detraction_type else ''
         invoice_detraction_percent = "%.2f" % self.invoice_detraction_percent or '0.0'
-        invoice_detraction_amount = "%.2f" % self.invoice_detraction_amount or '0.0'
+        invoice_detraction_amount = str(self.invoice_detraction_amount) or '0'
         adicional_cabecera_dict = {
             "ctaBancoNacionDetraccion": account_number_bn,
             "codBienDetraccion": invoice_detraction_type,
