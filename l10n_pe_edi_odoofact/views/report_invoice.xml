@@ -234,23 +234,41 @@
                     <div id="total" class="row">
                         <div t-attf-class="#{'col-8' if report_type != 'html' else 'col-12 col-sm-8'} col-auto mb-2">
                             <div class="card mb-2">
-                                <div class="card-body">
-                                    <t t-set="net_amount" t-value="0" />
-                                    <t t-set="total_quotes" t-value="0" />
-                                    <t t-if="o.invoice_payment_term_id">
-                                        <t t-set="quotes" t-value="o.invoice_payment_term_id.compute(o.amount_total, date_ref=o.invoice_date)" />
-                                        <t t-foreach="quotes" t-as="quote">
-                                            <t t-if="quote[0] &gt; o.invoice_date.strftime('%Y-%m-%d')">
-                                                <t t-set="net_amount" t-value="net_amount + float(quote[1])" />
-                                                <t t-set="total_quotes" t-value="total_quotes + 1" />
+                                <div class="card-body">                     
+                                    <t t-if="o.is_detraction">        
+                                        <t t-set="net_amount" t-value="0" />                                    
+                                        <t t-set="total_quotes" t-value="0" /> 
+                                        <t t-if="o.invoice_payment_term_id">
+                                            <t t-set="quotes" t-value="o.invoice_payment_term_id.compute(o.amount_total-o.invoice_detraction_amount, date_ref=o.invoice_date)" />
+                                            <t t-foreach="quotes" t-as="quote">
+                                                <t t-if="quote[0] &gt; o.invoice_date.strftime('%Y-%m-%d')">
+                                                    <t t-set="net_amount" t-value="net_amount + float(quote[1])" />
+                                                    <t t-set="total_quotes" t-value="total_quotes + 1" />
+                                                </t>
                                             </t>
                                         </t>
+                                        <t t-else="o.invoice_date_due and o.invoice_date &gt; o.invoice_date_due">
+                                                <t t-set="net_amount" t-value="o.amount_total-o.invoice_detraction_amount" />
+                                                <t t-set="total_quotes" t-value="1" />
+                                        </t>                                            
                                     </t>
-                                    <t t-else="o.invoice_date_due and o.invoice_date &gt; o.invoice_date_due">
-                                        <t t-set="net_amount" t-value="o.amount_total" />
-                                        <t t-set="total_quotes" t-value="1" />
+                                    <t t-else="">        
+                                        <t t-set="net_amount" t-value="0" />                                    
+                                        <t t-set="total_quotes" t-value="0" /> 
+                                        <t t-if="o.invoice_payment_term_id">
+                                            <t t-set="quotes" t-value="o.invoice_payment_term_id.compute(o.amount_total, date_ref=o.invoice_date)" />
+                                            <t t-foreach="quotes" t-as="quote">
+                                                <t t-if="quote[0] &gt; o.invoice_date.strftime('%Y-%m-%d')">
+                                                    <t t-set="net_amount" t-value="net_amount + float(quote[1])" />
+                                                    <t t-set="total_quotes" t-value="total_quotes + 1" />
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <t t-else="o.invoice_date_due and o.invoice_date &gt; o.invoice_date_due">
+                                            <t t-set="net_amount" t-value="o.amount_total" />
+                                            <t t-set="total_quotes" t-value="1" />
+                                        </t>                                            
                                     </t>
-
                                     <dl class="row mb-0" t-if="o.l10n_pe_edi_service_order">
                                         <dt class="col-auto col-6 col-sm-5 mb-0">
                                             PURCHASE/SERVICE ORDER:
@@ -293,8 +311,8 @@
                                         <dd class="col-auto col-7 col-sm-7 mb-0">
                                             <span t-esc="o.currency_id.symbol" />
                                             <span>
-                                                <t t-if="o.is_detraction">
-                                                    <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.invoice_detraction_amount)" />
+                                                <t t-if="o.is_detraction">                                                
+                                                   <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
                                                 </t>
                                                 <t t-else="">
                                                     <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
@@ -329,33 +347,66 @@
                                                 </thead>
                                                 <tbody class="invoice_tbody">
                                                     <t t-set="index" t-value="1" />
-                                                    <t t-set="quotes" t-value="o.invoice_payment_term_id.compute(o.amount_total, date_ref=o.invoice_date)" />
-                                                    <t t-foreach="quotes" t-as="quote">
-                                                        <t t-if="quote[0] &gt; o.invoice_date.strftime('%Y-%m-%d')">
-                                                            <tr t-att-class="'o_line_note'">
-                                                                <td style="text-align: center;">
-                                                                    <span>
-                                                                        <t t-esc="index" />
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align: center;">
-                                                                    <span>
-                                                                        <t t-esc="quote[0]" />
-                                                                    </span>
-                                                                </td>
-                                                                <td style="text-align: center;">
-                                                                    <span t-esc="o.currency_id.symbol" />
-                                                                    <span>
-                                                                        <t t-if="o.is_detraction">
-                                                                            <t t-esc="'{0:,.2f}'.format(float(quote[1])-o.invoice_detraction_amount)" />
-                                                                        </t>
-                                                                        <t t-else="">
-                                                                            <t t-esc="'{0:,.2f}'.format(float(quote[1]))" />
-                                                                        </t>
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                            <t t-set="index" t-value="index + 1" />
+                                                    <t t-if="o.is_detraction">
+                                                        <t t-set="quotes" t-value="o.invoice_payment_term_id.compute(o.amount_total-o.invoice_detraction_amount, date_ref=o.invoice_date)" />
+                                                        <t t-foreach="quotes" t-as="quote">
+                                                            <t t-if="quote[0] &gt; o.invoice_date.strftime('%Y-%m-%d')">
+                                                                <tr t-att-class="'o_line_note'">
+                                                                    <td style="text-align: center;">
+                                                                        <span>
+                                                                            <t t-esc="index" />
+                                                                        </span>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <span>
+                                                                            <t t-esc="quote[0]" />
+                                                                        </span>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <span t-esc="o.currency_id.symbol" />
+                                                                        <span>
+                                                                            <t t-if="o.is_detraction">
+                                                                                <t t-esc="'{0:,.2f}'.format(float(quote[1]))" />
+                                                                            </t>
+                                                                            <t t-else="">
+                                                                                <t t-esc="'{0:,.2f}'.format(float(quote[1]))" />
+                                                                            </t>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <t t-set="index" t-value="index + 1" />
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-set="quotes" t-value="o.invoice_payment_term_id.compute(o.amount_total, date_ref=o.invoice_date)" />
+                                                        <t t-foreach="quotes" t-as="quote">
+                                                            <t t-if="quote[0] &gt; o.invoice_date.strftime('%Y-%m-%d')">
+                                                                <tr t-att-class="'o_line_note'">
+                                                                    <td style="text-align: center;">
+                                                                        <span>
+                                                                            <t t-esc="index" />
+                                                                        </span>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <span>
+                                                                            <t t-esc="quote[0]" />
+                                                                        </span>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <span t-esc="o.currency_id.symbol" />
+                                                                        <span>
+                                                                            <t t-if="o.is_detraction">
+                                                                                <t t-esc="'{0:,.2f}'.format(float(quote[1]))" />
+                                                                            </t>
+                                                                            <t t-else="">
+                                                                                <t t-esc="'{0:,.2f}'.format(float(quote[1]))" />
+                                                                            </t>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <t t-set="index" t-value="index + 1" />
+                                                            </t>
                                                         </t>
                                                     </t>
 
@@ -408,7 +459,7 @@
                                                             <span t-esc="o.currency_id.symbol" />
                                                             <span>
                                                                 <t t-if="o.is_detraction">
-                                                                    <t t-esc="'{0:,.2f}'.format(float(net_amount)-o.invoice_detraction_amount)" />
+                                                                    <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
                                                                 </t>
                                                                 <t t-else="">
                                                                     <t t-esc="'{0:,.2f}'.format(float(net_amount))" />
