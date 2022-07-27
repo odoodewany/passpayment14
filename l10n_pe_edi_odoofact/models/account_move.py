@@ -468,6 +468,31 @@ class AccountMove(models.Model):
         }
         return adicional_cabecera_dict
 
+    def _get_relacionados(self):
+        relacionados = []
+        pickings = self.l10n_pe_edi_picking_number_ids + self.l10n_pe_edi_transportist_picking_number_ids
+        for picking in pickings:
+            indDocRelacionado = '1'
+            if picking.type == '1':
+                tipDocRelacionado = '09'
+            elif picking.type == '2':
+                tipDocRelacionado = '31'
+            numDocRelacionado = picking.name
+
+            relacionados.append(
+                {
+                    'indDocRelacionado': indDocRelacionado,
+                    'numIdeAnticipo': '-',
+                    'tipDocRelacionado': tipDocRelacionado,
+                    'numDocRelacionado': numDocRelacionado,
+                    'tipDocEmisor': '',
+                    'numDocEmisor': '',
+                    'mtoDocRelacionado': '',
+                }
+            )
+        return relacionados
+
+
     def get_invoice_values_sfs(self):
         """
         Prepare the dict of values to create the request for electronic invoice. Valid for SFS.
@@ -533,14 +558,16 @@ class AccountMove(models.Model):
                 'ublVersionId': '2.1',
                 'customizationId': '2.0',
             }
+        
         if self.is_detraction:
-            values['cabecera']['adicionalCabecera'] = self._get_adicional_cabecera()
+            values['cabecera']['adicionalCabecera'] = self._get_adicional_cabecera()            
         values['detalle'] = []
         values['tributos'] = []
         values['leyendas'] = [{
             'codLeyenda': '1000',
             'desLeyenda': 'SON ' + self.l10n_pe_edi_amount_in_words,
         }]
+        values['relacionados'] = self._get_relacionados()
         tax_groups = []
         codT = {'IGV': 'VAT', 'IVAP': 'VAT', 'ISC': 'EXC', 'ICBPER': 'OTH',
                 'EXP': 'FRE', 'GRA': 'FRE', 'EXO': 'VAT', 'INA': 'FRE', 'OTROS': 'OTH'}
