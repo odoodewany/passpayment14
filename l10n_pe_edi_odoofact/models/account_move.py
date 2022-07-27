@@ -170,6 +170,7 @@ class AccountMove(models.Model):
     invoice_detraction_amount = fields.Monetary(
         string='Monto de Det.', compute='_get_invoice_detraction_amount_percent', store=True)
     referencial_value = fields.Char(string='Valor referencial')
+    l10n_pe_edi_detraction_product_id = fields.Many2one('l10n_pe_edi.catalog.54', string='Bien o Servicio sujeto a detraccion')
     l10n_pe_edi_payment_mean_id = fields.Many2one('l10n_pe_edi.catalog.59', string='Medio de pago')
     # detraction_amount = fields.Float(string='Monto de Det.', compute='_get_detraction_amount', store=True)
     # detraction_code = fields.Char(string='Num. Det.', compute='_get_detraction_amount', store=True)
@@ -457,7 +458,7 @@ class AccountMove(models.Model):
 
     def _get_adicional_cabecera(self):
         account_number_bn = self.company_id.account_number_bn or ''
-        invoice_detraction_type = self.invoice_detraction_type.name if self.invoice_detraction_type else ''
+        invoice_detraction_type = self.l10n_pe_edi_detraction_product_id.code if self.l10n_pe_edi_detraction_product_id else ''
         invoice_detraction_percent = str(self.invoice_detraction_percent) or '0'
         invoice_detraction_amount = "%.2f" % self.invoice_detraction_amount or '0.0'
         codMedioPago = self.l10n_pe_edi_payment_mean_id.code or ''
