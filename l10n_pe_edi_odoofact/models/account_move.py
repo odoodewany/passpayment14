@@ -170,8 +170,10 @@ class AccountMove(models.Model):
     invoice_detraction_amount = fields.Monetary(
         string='Monto de Det.', compute='_get_invoice_detraction_amount_percent', store=True)
     referencial_value = fields.Char(string='Valor referencial')
-    l10n_pe_edi_detraction_product_id = fields.Many2one('l10n_pe_edi.catalog.54', string='Bien o Servicio sujeto a detraccion')
-    l10n_pe_edi_payment_mean_id = fields.Many2one('l10n_pe_edi.catalog.59', string='Medio de pago')
+    l10n_pe_edi_detraction_product_id = fields.Many2one(
+        'l10n_pe_edi.catalog.54', string='Bien o Servicio sujeto a detraccion')
+    l10n_pe_edi_payment_mean_id = fields.Many2one(
+        'l10n_pe_edi.catalog.59', string='Medio de pago')
     # detraction_amount = fields.Float(string='Monto de Det.', compute='_get_detraction_amount', store=True)
     # detraction_code = fields.Char(string='Num. Det.', compute='_get_detraction_amount', store=True)
     # detraction_date = fields.Date(string='Fecha de Det.', compute='_get_detraction_amount', store=True)
@@ -459,7 +461,8 @@ class AccountMove(models.Model):
     def _get_adicional_cabecera(self):
         account_number_bn = self.company_id.account_number_bn or ''
         invoice_detraction_type = self.l10n_pe_edi_detraction_product_id.code if self.l10n_pe_edi_detraction_product_id else ''
-        invoice_detraction_percent = str(self.invoice_detraction_percent) or '0'
+        invoice_detraction_percent = str(
+            self.invoice_detraction_percent) or '0'
         invoice_detraction_amount = "%.2f" % self.invoice_detraction_amount or '0.0'
         codMedioPago = self.l10n_pe_edi_payment_mean_id.code or ''
         adicional_cabecera_dict = {
@@ -495,6 +498,18 @@ class AccountMove(models.Model):
                 }
             )
         return relacionados
+
+    def _get_leyenda(self):
+        leyenda = [{
+            'codLeyenda': '1000',
+            'desLeyenda': 'SON ' + self.l10n_pe_edi_amount_in_words,
+        }]
+        if self.is_detraction:
+            leyenda.append({
+                'codLeyenda': '2006',
+                'desLeyenda': self.narration,
+            })
+        return leyenda
 
     def get_invoice_values_sfs(self):
         """
@@ -566,10 +581,7 @@ class AccountMove(models.Model):
             values['cabecera']['adicionalCabecera'] = self._get_adicional_cabecera()
         values['detalle'] = []
         values['tributos'] = []
-        values['leyendas'] = [{
-            'codLeyenda': '1000',
-            'desLeyenda': 'SON ' + self.l10n_pe_edi_amount_in_words,
-        }]
+        values['leyendas'] = self._get_leyenda()
         values['relacionados'] = self._get_relacionados()
         tax_groups = []
         codT = {'IGV': 'VAT', 'IVAP': 'VAT', 'ISC': 'EXC', 'ICBPER': 'OTH',
