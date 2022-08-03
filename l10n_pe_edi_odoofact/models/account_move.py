@@ -665,13 +665,15 @@ class AccountMove(models.Model):
             }
             values['detallePago'] = []
             if self.invoice_date_due and self.invoice_date_due > self.invoice_date:
+                invoice_detraction_amount = self.self.invoice_detraction_amount or 0
+                amount_total = self.amount_total - invoice_detraction_amount
                 values['datoPago'] = {
                     'formaPago': 'Credito',
-                    'mtoNetoPendientePago': "%.2f" % abs(self.amount_total),
+                    'mtoNetoPendientePago': "%.2f" % abs(amount_total),
                     'tipMonedaMtoNetoPendientePago': self.currency_id.name,
                 }
                 dato_line = {
-                    'mtoCuotaPago': "%.2f" % abs(self.amount_total),
+                    'mtoCuotaPago': "%.2f" % abs(amount_total),
                     'fecCuotaPago': datetime.strptime(str(self.invoice_date_due), "%Y-%m-%d").strftime("%Y-%m-%d"),
                     'tipMonedaCuotaPago': self.currency_id.name,
                 }
@@ -680,7 +682,7 @@ class AccountMove(models.Model):
                     values['detallePago'].pop()
                     counted_total = 0.0
                     pterm_list = self.invoice_payment_term_id.compute(
-                        self.amount_total, date_ref=self.invoice_date)
+                        amount_total, date_ref=self.invoice_date)
                     for line in pterm_list:
                         if line[0] == datetime.strptime(str(self.invoice_date), "%Y-%m-%d").strftime("%Y-%m-%d"):
                             counted_total += float(line[1])
@@ -693,7 +695,7 @@ class AccountMove(models.Model):
                             }
                             values['detallePago'].append(dato_line)
                     values['datoPago']["mtoNetoPendientePago"] = "%.2f" % (
-                        abs(self.amount_total) - counted_total)
+                        abs(amount_total) - counted_total)
 
         _logger.info(values)
         ruc_inv = self.company_id.vat
