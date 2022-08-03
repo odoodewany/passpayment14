@@ -507,6 +507,10 @@ class AccountMove(models.Model):
         if self.is_detraction:
             leyenda.append({
                 'codLeyenda': '2006',
+                'desLeyenda': 'Operación sujeta a SPOT',
+            })
+        if self.narration:
+            leyenda.append({
                 'desLeyenda': self.narration,
             })
         return leyenda
