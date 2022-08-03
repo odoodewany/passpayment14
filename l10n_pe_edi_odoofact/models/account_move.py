@@ -665,7 +665,7 @@ class AccountMove(models.Model):
             }
             values['detallePago'] = []
             if self.invoice_date_due and self.invoice_date_due > self.invoice_date:
-                invoice_detraction_amount = self.self.invoice_detraction_amount or 0
+                invoice_detraction_amount = self.invoice_detraction_amount or 0
                 amount_total = self.amount_total - invoice_detraction_amount
                 values['datoPago'] = {
                     'formaPago': 'Credito',
