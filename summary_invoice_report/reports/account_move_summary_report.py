@@ -26,16 +26,15 @@ class SummaryAccountMoveLine(models.TransientModel):
     def calculate_and_view(self):
         ''' self.move_line_ids = [(5, 0, 0)] '''
         
-        real_object_list = []
-
+        ''' real_object_list = []
         for data in self.move_line_ids:
-            real_object_list.append(data.id)
+            real_object_list.append(data.id) '''
         ''' print(real_object_list)
         print(self.env.user.company_ids) '''
 
         compañias = self.env.context.get('allowed_company_ids', False)
 
-        query = [('product_id', '!=', False), ('id', 'in', real_object_list), ('company_id', 'in', compañias)]
+        query = [('product_id', '!=', False), ('company_id', 'in', compañias)]
         ''' query = [('product_id', '!=', False), ('company_id', '=', self.env.company.id)] '''
 
         if self.initial_date:
