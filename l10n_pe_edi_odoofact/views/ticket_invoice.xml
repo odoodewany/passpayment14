@@ -306,18 +306,32 @@
                   <tbody>
                     <t t-foreach="o.invoice_line_ids" t-as="line">
                       <tr>
-                        <td>
-                          <span style="font-size:12px;" t-field="line.quantity"/>
-                        </td>
-                        <td t-attf-class="text-left">
-                          <span style="font-size:12px;" t-field="line.name"/>
-                        </td>
-                        <td t-attf-class="text-left">
-                          <span style="font-size:12px;" t-field="line.price_unit"/>
-                        </td>
-                        <td class="text-right">
-                          <span style="font-size:12px;" t-field="line.price_total"/>
-                        </td>
+                        <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                          <td>
+                            <span style="font-size:12px;" t-field="line.quantity"/>
+                          </td>
+                          <td t-attf-class="text-left">
+                            <span style="font-size:12px;" t-field="line.name"/>
+                          </td>
+                          <td t-attf-class="text-left">
+                            <span style="font-size:12px;" t-field="line.price_unit"/>
+                          </td>
+                          <td class="text-right">
+                            <span style="font-size:12px;" t-field="line.price_total"/>
+                          </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                          <td colspan="99">
+                            <span style="font-size:12px;" t-field="line.name" t-options="{'widget': 'text'}" />
+                          </td>
+                          <t t-set="current_section" t-value="line" />
+                          <t t-set="current_subtotal" t-value="0" />
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                          <td colspan="99">
+                            <span style="font-size:12px;" t-field="line.name" t-options="{'widget': 'text'}" />
+                          </td>
+                        </t>
                       </tr>
                     </t>
                   </tbody>
