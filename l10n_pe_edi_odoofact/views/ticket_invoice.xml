@@ -339,7 +339,7 @@
                             <t t-if="line.name == line_pos.product_id.name">
                                 <tr t-att-class="'o_line_note'">
                                     <td class="text-left" colspan="6">
-                                        <span t-field="line_pos.note" t-options="{'widget': 'text'}" />
+                                        <span style="font-size:12px;" t-field="line_pos.note" t-options="{'widget': 'text'}" />
                                     </td>
                                 </tr>
                             </t>
