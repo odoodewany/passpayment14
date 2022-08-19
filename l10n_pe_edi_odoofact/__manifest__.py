@@ -25,7 +25,7 @@
                 'l10n_pe', 
                 'l10n_latam_base', 
                 'l10n_latam_invoice_document',
-                'l10n_pe_edi_catalog'],
+                'l10n_pe_edi_catalog', 'point_of_sale'],
     'data': [
         'wizard/account_move_reversal_view.xml',
         'wizard/account_debit_note_view.xml',

@@ -295,7 +295,7 @@
                     <td class="text-left">P.U.</td>
                     <td class="text-left">TOTAL</td>
                   </tr>
-                    
+                  
                   <colgroup>
                     <col width='15%' />
                     <col width='45%' />
@@ -320,6 +320,7 @@
                             <span style="font-size:12px;" t-field="line.price_total"/>
                           </td>
                         </t>
+
                         <t t-if="line.display_type == 'line_section'">
                           <td colspan="99">
                             <span style="font-size:12px;" t-field="line.name" t-options="{'widget': 'text'}" />
@@ -333,6 +334,17 @@
                           </td>
                         </t>
                       </tr>
+                      <t t-if="line.lines_pos_acc_mo_li">
+                        <t t-foreach="line.lines_pos_acc_mo_li" t-as="line_pos">
+                            <t t-if="line.name == line_pos.product_id.name">
+                                <tr t-att-class="'o_line_note'">
+                                    <td class="text-left" colspan="6">
+                                        <span t-field="line_pos.note" t-options="{'widget': 'text'}" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </t>
                     </t>
                   </tbody>
                 </table>

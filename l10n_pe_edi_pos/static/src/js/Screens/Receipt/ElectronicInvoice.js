@@ -1,7 +1,7 @@
 odoo.define('l10n_pe_edi_pos.ElectronicInvoice', function (require) {
 
-    
-    const PaymentScreen = require('point_of_sale.PaymentScreen');
+
+const PaymentScreen = require('point_of_sale.PaymentScreen');
 const { useListener } = require('web.custom_hooks');
 const Registries = require('point_of_sale.Registries');
 

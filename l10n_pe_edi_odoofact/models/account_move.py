@@ -174,6 +174,19 @@ class AccountMove(models.Model):
         'l10n_pe_edi.catalog.54', string='Bien o Servicio sujeto a detraccion')
     l10n_pe_edi_payment_mean_id = fields.Many2one(
         'l10n_pe_edi.catalog.59', string='Medio de pago')
+
+    lines_pos = fields.One2many(string="Lineas en POS",
+        related="pos_order_ids.lines")
+
+    @api.depends('lines_pos','invoice_line_ids')
+    def _compute_act_invoice_line_ids(self):
+        print("Ingreso 1")
+        _logger.info("##################################")
+        dict_lines_pos = dict()
+        for line1 in self.lines_pos:
+            dict_lines_pos[line1.display_name] = line1.note
+        print(dict_lines_pos)
+
     # detraction_amount = fields.Float(string='Monto de Det.', compute='_get_detraction_amount', store=True)
     # detraction_code = fields.Char(string='Num. Det.', compute='_get_detraction_amount', store=True)
     # detraction_date = fields.Date(string='Fecha de Det.', compute='_get_detraction_amount', store=True)
@@ -1309,7 +1322,11 @@ class AccountMoveLine(models.Model):
     def _get_igv_type(self):
         return self.env['l10n_pe_edi.catalog.07'].search([('code', '=', '10')], limit=1)
 
+    lines_pos_acc_mo_li = fields.One2many(string="Lineas en POS",
+        related="move_id.lines_pos")
+
     # ==== Business fields ====
+    ''' nota = fields.Char(string="Nota") '''
     l10n_pe_edi_price_base = fields.Monetary(string='Subtotal without discounts', store=True,
                                              readonly=True, currency_field='currency_id', help="Total amount without discounts and taxes")
     l10n_pe_edi_price_unit_excluded = fields.Float(

@@ -129,7 +129,7 @@
                 <tr style="border-top:1px dashed black; border-bottom:1px dashed black" class="top-dashed bottom-dashed">
                     <th class="text-center">QTY.</th>
                     <th class="text-center">DESCRIPTION</th>
-                    <th class="text-center">P.U.</th>
+                    <th class="text-center">P.U</th>
                     <th class="text-center">TOTAL</th>
                 </tr>
                 <colgroup>
@@ -139,13 +139,16 @@
                     <col width='20%' />
                 </colgroup>
                 <tbody>
-                    <t t-foreach="receipt.orderlines" t-as="line">  
+                    <t t-foreach="receipt.orderlines" t-as="line"> 
                         <tr> 
                             <td style="font-size:12px;"><t t-esc="line.quantity"/></td>
                             <td style="font-size:12px;"><t t-esc="line.product_name"/></td>                                
                             <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price)"/></td>
                             <td style="font-size:12px;"><t t-esc="env.pos.format_currency_no_symbol(line.price_display)"/></td>
                         </tr> 
+                        <tr>
+                            <td style="font-size:12px;"><t t-esc="line.note"/></td>
+                        </tr>
                     </t>
                 </tbody>
             </table>

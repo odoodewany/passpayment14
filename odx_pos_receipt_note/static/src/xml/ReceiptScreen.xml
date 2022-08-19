@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="L10nPeEdiPosReceipt" t-inherit="l10n_pe_edi_pos.L10nPeEdiPosReceipt" t-inherit-mode="extension" owl="1">
+        <!-- <xpath expr="//tbody//t" position="after">
+            <tr>
+                <td style="font-size:12px;">-</td>
+                <td style="font-size:12px;">-</td>
+                <t t-if="line.note">
+                    <td style="font-size:12px;"><t t-esc="line.note" /></td>
+                </t>
+                <t t-else="">
+                    <td style="font-size:12px;">-</td>
+                </t>
+                <td style="font-size:12px;">-</td>
+            </tr>
+        </xpath> -->
+        <xpath expr="//table[hasclass('soticket-table')]" position="after">
+            <!-- <t t-if="note">
+                <span style="font-size:12px;"><t t-esc="note" /></span>
+            </t> -->
+        </xpath>
+    </t>
+</templates>
+<!-- <t t-name="L10nPeEdiPosReceipt" t-inherit="l10n_pe_edi_pos.L10nPeEdiPosReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//tbody//t" position="inside">
+            <tr> 
+                <td style="font-size:12px;">-</td>
+                <td style="font-size:12px;">-</td>                                
+                <td style="font-size:12px;">-</td>
+                <td style="font-size:12px;">-</td>
+            </tr> 
+        </xpath>
+    </t> -->
+    <!-- <templates id="template" xml:space="preserve">
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+    	<xpath expr="//div[hasclass('orderlines')]/t//t[2]" position="after">
+            <t t-if="line.note">
+                <li class="info orderline-note">
+                    <i class="fa fa-tag" role="img" aria-label="Note" title="Note"/>
+                    <i><t t-esc="line.note" /></i>
+                </li>
+            </t>
+    	</xpath>
+    </t>
+</templates> -->
