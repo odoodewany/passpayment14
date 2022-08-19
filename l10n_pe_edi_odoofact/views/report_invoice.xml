@@ -212,11 +212,13 @@
                                 <t t-if="line.lines_pos_acc_mo_li">
                                     <t t-foreach="line.lines_pos_acc_mo_li" t-as="line_pos">
                                         <t t-if="line.name == line_pos.product_id.name">
-                                            <tr t-att-class="'o_line_note'">
-                                                <td class="text-left" colspan="6">
-                                                    <span t-field="line_pos.note" t-options="{'widget': 'text'}" />
-                                                </td>
-                                            </tr>
+                                            <t t-if="line_pos.note">
+                                                <tr t-att-class="'o_line_note'">
+                                                    <td class="text-left" colspan="6">
+                                                        <span t-field="line_pos.note" t-options="{'widget': 'text'}" />
+                                                    </td>
+                                                </tr>
+                                            </t>
                                         </t>
                                     </t>
                                 </t>
