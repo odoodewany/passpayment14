@@ -156,11 +156,11 @@
                 <field name="l10n_pe_edi_global_discount" />
             </xpath>
             <field name="payment_reference" position="after">
-                <field name="l10n_pe_edi_payment_mean_id" />
+                <field name="l10n_pe_edi_payment_mean_id" attrs="{'required': [('is_detraction','=',True)]}"/>
                 <field name="payment_reference_selection" />
                 <field name="is_detraction" />
-                <field name="l10n_pe_edi_detraction_product_id" />
-                <field name="invoice_detraction_percent" string="% de Detracción" placeholder="12.00" attrs="{'invisible': [('is_detraction','=',False)]}" />
+                <field name="l10n_pe_edi_detraction_product_id" attrs="{'required': [('is_detraction','=',True)]}"/>
+                <field name="invoice_detraction_percent" string="% de Detracción" placeholder="12.00" attrs="{'invisible': [('is_detraction','=',False)],'required': [('is_detraction','=',True)]}" />
                 <field name="amount_total" string="Monto Total" attrs="{'invisible': [('is_detraction','=',False)]}" readonly="True" />
                 <field name="invoice_detraction_amount" string="Monto de Detracción" attrs="{'invisible': [('is_detraction','=',False)]}" />
                 <field name="referencial_value" attrs="{'invisible': [('is_detraction','=',False)]}" />
